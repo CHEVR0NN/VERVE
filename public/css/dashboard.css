@@ -83,7 +83,7 @@
   --ink:        #1e1e22; /* Deep obsidian text */
   --ink-rgb:    30, 30, 34;
   --white:      #1e1e22;
-  --muted:      #7a7a85; /* Soft slate gray */
+  --muted:      #6e6e78; /* Soft slate gray, darkened from #7a7a85 for AA contrast on white/alabaster (was ~4.2:1, now ~5:1) */
 
   /* --- Rose Gold Accent (Calibrated for Light Background contrast) --- */
   --gold:       #bc7f74; /* Deeper metallic rose gold */
@@ -103,7 +103,7 @@
 
   --panel-bg:   #ffffff;
   --panel-hi:   #f0eee9;
-  --hairline:   rgba(var(--ink-rgb), 0.07);
+  --hairline:   rgba(var(--ink-rgb), 0.12);
 }
 
 /* Follow the OS preference until the user explicitly picks a theme via
@@ -118,7 +118,7 @@
     --ink:        #1e1e22;
     --ink-rgb:    30, 30, 34;
     --white:      #1e1e22;
-    --muted:      #7a7a85;
+    --muted:      #6e6e78;
     --gold:       #bc7f74; /* rose gold */
     --gold-light: #d9a59c;
     --gold-dim:   #8c534a;
@@ -131,7 +131,7 @@
     --shadow-lg:  0 20px 44px -18px rgba(30, 30, 34, 0.1);
     --panel-bg:   #ffffff;
     --panel-hi:   #f0eee9;
-    --hairline:   rgba(var(--ink-rgb), 0.07);
+    --hairline:   rgba(var(--ink-rgb), 0.12);
   }
 }
 
@@ -144,12 +144,35 @@ body {
   background: var(--bg);
   background-image:
     radial-gradient(46vw 46vw at 92% -8%, color-mix(in srgb, var(--teal) 10%, transparent), transparent 62%),
-    radial-gradient(40vw 40vw at -6% 12%, color-mix(in srgb, var(--coral) 8%, transparent), transparent 62%);
+    radial-gradient(40vw 40vw at -6% 12%, color-mix(in srgb, var(--coral) 8%, transparent), transparent 62%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: auto, auto, 180px 180px;
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-blend-mode: normal, normal, overlay;
   background-attachment: fixed;
   overflow: visible;
   height: auto;
   color: var(--ink);
   transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Small uppercase gold labels/CTAs sit on white/alabaster card & page
+   backgrounds in light mode, where --gold only measures ~3.3:1 contrast
+   (fails AA's 4.5:1 for small text). Dark mode already clears 7.5:1 with
+   plain --gold there, so this override is scoped to light mode only. */
+:root[data-theme="light"] .section-eyebrow,
+:root[data-theme="light"] .next-res-chip__label,
+:root[data-theme="light"] .action-card__cta,
+:root[data-theme="light"] .btn-secondary:hover {
+  color: var(--gold-dim);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .section-eyebrow,
+  :root:not([data-theme]) .next-res-chip__label,
+  :root:not([data-theme]) .action-card__cta,
+  :root:not([data-theme]) .btn-secondary:hover {
+    color: var(--gold-dim);
+  }
 }
 
 /* Keep closed dialogs hidden — our display:flex on .modal-dialog would
@@ -4112,7 +4135,7 @@ dialog:not([open]) {
 
 .event-register-max {
   font-size: 12px;
-  color: var(--text-muted, #888);
+  color: var(--muted);
   margin: 0;
 }
 
