@@ -123,7 +123,7 @@
     <form id="waiveFeeForm">
       <!-- Reason category -->
       <div class="field">
-        <label class="field__label" for="waiverReasonCategory">Reason Category <span style="color:#c0392b">*</span></label>
+        <label class="field__label" for="waiverReasonCategory">Reason Category <span style="color:#c96a5e">*</span></label>
         <select class="field__input field__select" id="waiverReasonCategory" required>
           <option value="">Select a reason…</option>
           <option value="Medical emergency">Medical emergency</option>
@@ -137,7 +137,7 @@
 
       <!-- Additional notes -->
       <div class="field">
-        <label class="field__label" for="waiverNotes">Additional Notes <span id="waiverNotesRequired" style="color:#c0392b;display:none">*</span></label>
+        <label class="field__label" for="waiverNotes">Additional Notes <span id="waiverNotesRequired" style="color:#c96a5e;display:none">*</span></label>
         <textarea class="field__input field__textarea" id="waiverNotes" rows="3" placeholder="Provide any supporting details…"></textarea>
       </div>
 
@@ -158,9 +158,9 @@
 
   <style>
     .waiver-summary {
-      background: var(--console-row-alt, #f7f7fb);
-      border: 1px solid rgba(0,35,102,0.1);
-      border-radius: 6px;
+      background: var(--console-row-alt, #151518);
+      border: 1px solid rgba(243,243,245,0.1);
+      border-radius: 0;
       padding: 14px 18px;
       margin-bottom: 22px;
       display: grid;
@@ -177,13 +177,13 @@
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: rgba(0,35,102,0.45);
+      color: rgba(243,243,245,0.45);
       min-width: 110px;
       flex-shrink: 0;
     }
     .waiver-summary__value {
       font-family: var(--font-ui, 'Quicksand', sans-serif);
-      color: #1a1a2e;
+      color: #f3f3f5;
       font-weight: 500;
     }
     .field__textarea {
@@ -199,14 +199,14 @@
       gap: 10px;
       font-family: var(--font-ui, 'Quicksand', sans-serif);
       font-size: 12.5px;
-      color: #2c3e6b;
+      color: #b8b8c0;
       cursor: pointer;
       line-height: 1.5;
     }
     .field__checkbox-label input[type="checkbox"] {
       margin-top: 2px;
       flex-shrink: 0;
-      accent-color: var(--navy, #002366);
+      accent-color: var(--gold, #BFB194);
       width: 15px;
       height: 15px;
       cursor: pointer;

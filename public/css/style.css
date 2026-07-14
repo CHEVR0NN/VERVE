@@ -7,24 +7,30 @@
 }
 
 :root {
-  /* Gold scale — WCAG AA usage:
-     --gold (#ad974f)       dark backgrounds only (navy, ink) — 5.1:1 on navy
-     --gold-light (#c9b06a) dark backgrounds only             — 7.5:1 on navy
-     --gold-dim (#7a6a38)   light backgrounds (white, cream)  — 5.0:1 on white */
-  --gold:       #ad974f;
-  --gold-light: #c9b06a;
-  --gold-dim:   #7a6a38;
-  --navy:       #002366;
-  --navy-deep:  #001540;
-  --white:      #f8f9fa;
-  --ink:        #020001;
-  --muted:      #3a3630;
+  /* ── Verve luxury contract ─────────────────────────────
+     Obsidian ground #0a0a0c · structure #1e1e22 · raised card #151518
+     Rose gold #BFB194 / #E8DFD0 · crimson rose #c25972 (success)
+     champagne #e3cbb3 (pending) — razor-thin hairlines, no card-soup */
+  --gold:       #BFB194; /* rose gold highlight */
+  --gold-light: #E8DFD0; /* pale rose-gold glow */
+  --gold-dim:   #9a8e73; /* muted rose gold — metadata on obsidian */
+  --navy:       #1e1e22; /* sleek structural charcoal */
+  --navy-deep:  #111113; /* recessed structure (sidebars, chrome) */
+  --bg:         #0a0a0c; /* deep obsidian ground */
+  --card:       #151518; /* raised card surface */
+  --white:      #f3f3f5; /* platinum text */
+  --ink:        #f3f3f5; /* primary text on obsidian */
+  --muted:      #8e8e96; /* secondary steel-gray text */
+  --crimson:    #c25972; /* approvals / success */
+  --champagne:  #e3cbb3; /* pending / attention */
+  --platinum:   #e0e0e0;
+  --platinum-light: #ffffff;
+  --hairline:   rgba(243,243,245,0.09);
 
   --font-display: 'Faculty Glyphic', Georgia, serif;
   --font-ui:      'Quicksand', 'Palatino Linotype', sans-serif;
   --font-secondary: 'Quicksand', sans-serif;
   --font-body:    'Quicksand', sans-serif;
-  --font-cursive: 'Tangerine';
 }
 
 html, body {
@@ -35,7 +41,7 @@ html, body {
 
 body {
   font-family: var(--font-ui);
-  background: var(--navy-deep);
+  background: var(--bg);
   color: var(--ink);
 }
 
@@ -53,7 +59,7 @@ body {
   position: relative;
   width: 30%;
   min-width: 320px;
-  background: var(--white);
+  background: var(--card);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +68,7 @@ body {
 
   /* Subtle texture via CSS noise-ish gradient */
   background-image:
-    linear-gradient(160deg, #ffffff 0%, #f0ede6 100%);
+    linear-gradient(160deg, #17171a 0%, #131316 100%);
 }
 
 .panel__inner {
@@ -117,7 +123,7 @@ body {
 .brand__est {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 11.5px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   color: var(--gold-dim);
   text-transform: uppercase;
@@ -137,16 +143,16 @@ body {
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--gold-dim);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .portal-heading__title {
   font-family: var(--font-display);
   font-size: 52px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1;
-  color: var(--navy);
-  letter-spacing: -0.01em;
+  color: var(--ink);
+  letter-spacing: 0.08em;
 }
 
 /* ── FORM FIELDS ─────────────────────── */
@@ -180,7 +186,7 @@ body {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #c8c4bc;
+  border-bottom: 1px solid rgba(243,243,245,0.16);
   outline: none;
   padding: 8px 0 10px;
   font-family: var(--font-ui);
@@ -193,7 +199,7 @@ body {
 }
 
 .field__input::placeholder {
-  color: #b0aba3;
+  color: #6c6c74;
   font-style: italic;
   font-family: var(--font-display);
   font-size: 17px;
@@ -220,7 +226,7 @@ body {
 
 .field__error {
   font-size: 11.5px;
-  color: #c0392b;
+  color: #c96a5e;
   letter-spacing: 0.06em;
   min-height: 1em;
   display: none;
@@ -231,11 +237,11 @@ body {
 }
 
 .field--error .field__input {
-  border-bottom-color: #c0392b;
+  border-bottom-color: #c96a5e;
 }
 
 .field--error .field__line {
-  background: #c0392b;
+  background: #c96a5e;
   width: 100%;
 }
 
@@ -245,34 +251,32 @@ body {
   margin-top: 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   text-align: center;
   width: 100%;
-  padding: 14px 24px;
-  background: var(--navy);
-  color: var(--gold-light);
-  border: 1px solid rgba(173, 151, 79, 0.4);
+  padding: 15px 24px;
+  background: linear-gradient(135deg, #e8e8eb 0%, #ffffff 48%, #cfcfd4 100%);
+  color: #1a191f;
+  border: none;
   cursor: pointer;
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 13px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   position: relative;
   overflow: hidden;
-  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease, border-color 0.3s ease, color 0.3s ease;
+  transition: box-shadow 0.3s ease, filter 0.3s ease, transform 0.2s ease;
 }
 
 .btn-access:hover {
-  background: var(--gold);
-  color: var(--navy);
-  border-color: var(--gold);
-  box-shadow: 0 8px 24px rgba(173, 151, 79, 0.35);
-  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 0 0 1px rgba(191,177,148,0.6), 0 8px 28px -8px rgba(191,177,148,0.5);
+  transform: translateY(-1px);
 }
 
 .btn-access:hover .btn-access__arrow {
-  color: var(--navy);
+  color: #1a191f;
   transform: translateX(4px);
 }
 
@@ -301,7 +305,7 @@ body {
 }
 
 .footer-sep {
-  color: #c8c4bc;
+  color: rgba(243,243,245,0.16);
   font-size: 12px;
 }
 
@@ -332,7 +336,7 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, rgba(0,23,64,0.72) 0%, rgba(0,23,64,0.08) 40%, transparent 100%),
+    linear-gradient(to right, rgba(10,10,12,0.72) 0%, rgba(10,10,12,0.08) 40%, transparent 100%),
     linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%);
   pointer-events: none;
 }
@@ -352,7 +356,7 @@ body {
   font-family: var(--font-display);
   font-style: italic;
   font-size: 17px;
-  color: var(--gold-light);
+  color: var(--gold-dim);
   letter-spacing: 0.08em;
   font-weight: 800;
 }

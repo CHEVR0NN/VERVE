@@ -29,7 +29,7 @@
       text-transform: uppercase;
       color: var(--gold-light);
       background: var(--navy);
-      border: 1px solid rgba(173,151,79,0.35);
+      border: 1px solid rgba(191,177,148,0.35);
       padding: 10px 20px;
       cursor: pointer;
       margin-right: 14px;
@@ -37,13 +37,13 @@
     }
     .file-upload__input::file-selector-button:hover {
       background: var(--gold);
-      color: var(--navy);
+      color: #1a191f;
     }
     .file-upload__preview {
       max-width: 220px;
       max-height: 160px;
       object-fit: cover;
-      border: 1px solid rgba(0,35,102,0.1);
+      border: 1px solid rgba(243,243,245,0.1);
       display: none;
     }
     .file-upload__name {
@@ -54,9 +54,9 @@
       display: none;
     }
     .event-card-preview {
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(0,35,102,0.1);
-      border-top: 3px solid var(--gold);
+      background: #151518;
+      border: 1px solid rgba(243,243,245,0.1);
+      border-top: 1px solid var(--gold);
       padding: 24px 28px;
       display: flex;
       gap: 20px;
@@ -66,7 +66,7 @@
       width: 120px;
       height: 90px;
       object-fit: cover;
-      border: 1px solid rgba(0,35,102,0.08);
+      border: 1px solid rgba(243,243,245,0.08);
       flex-shrink: 0;
     }
     .event-card-preview__info {
@@ -79,7 +79,7 @@
       font-family: var(--font-display);
       font-size: 18px;
       font-weight: 600;
-      color: var(--navy);
+      color: var(--ink);
     }
     .event-card-preview__meta {
       font-family: var(--font-ui);
@@ -120,8 +120,8 @@
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      background: rgba(192,57,43,0.1);
-      color: #c0392b;
+      background: rgba(201,106,94,0.1);
+      color: #c96a5e;
       padding: 4px 10px;
     }
     .badge-img {
@@ -130,8 +130,8 @@
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      background: rgba(39,174,96,0.1);
-      color: #1a7a3c;
+      background: rgba(194,89,114,0.1);
+      color: #c25972;
       padding: 4px 10px;
     }
   </style>
@@ -272,7 +272,7 @@
     <button class="modal-close" data-close>&times;</button>
     <h3 id="viewEventTitle"></h3>
     <div style="display:flex;flex-direction:column;gap:16px;">
-      <img id="viewEventImg" src="" alt="" style="max-width:100%;max-height:300px;object-fit:cover;border:1px solid rgba(0,35,102,0.1);display:none;" />
+      <img id="viewEventImg" src="" alt="" style="max-width:100%;max-height:300px;object-fit:cover;border:1px solid rgba(243,243,245,0.1);display:none;" />
       <div style="display:flex;gap:20px;flex-wrap:wrap;">
         <div>
           <span class="form-step__label">Venue</span>

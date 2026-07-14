@@ -9,34 +9,34 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
   <style>
-    .inbox-thread { background: rgba(255,255,255,0.92); border: 1px solid rgba(0,35,102,0.08); border-top: 3px solid var(--gold); margin-bottom: 18px; }
+    .inbox-thread { background: #151518; border: 1px solid rgba(243,243,245,0.08); border-top: 1px solid var(--gold); margin-bottom: 18px; }
     .inbox-thread__head { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; cursor: pointer; transition: background 0.15s; }
-    .inbox-thread__head:hover { background: rgba(173,151,79,0.04); }
-    .inbox-thread__title { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--navy); }
+    .inbox-thread__head:hover { background: rgba(191,177,148,0.04); }
+    .inbox-thread__title { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--ink); }
     .inbox-thread__meta { font-family: var(--font-ui); font-size: 12px; color: var(--muted); }
-    .inbox-thread__badge { background: var(--gold); color: #fff; font-family: var(--font-display); font-size: 14px; font-weight: 600; padding: 2px 10px; border-radius: 10px; letter-spacing: 0.06em; }
+    .inbox-thread__badge { background: var(--gold); color: #1a191f; font-family: var(--font-display); font-size: 14px; font-weight: 600; padding: 2px 10px; border-radius: 0; letter-spacing: 0.06em; }
     .inbox-thread__chevron { font-size: 14px; color: var(--muted); transition: transform 0.2s; }
     .inbox-thread__head.is-open .inbox-thread__chevron { transform: rotate(180deg); }
-    .inbox-thread__body { display: none; border-top: 1px solid rgba(0,35,102,0.06); padding: 18px 24px; }
+    .inbox-thread__body { display: none; border-top: 1px solid rgba(243,243,245,0.06); padding: 18px 24px; }
     .inbox-thread__body.is-open { display: block; }
-    .inbox-notice { font-family: var(--font-ui); font-size: 13px; color: var(--muted); padding: 10px 14px; background: rgba(0,35,102,0.03); margin-bottom: 14px; border-left: 3px solid var(--gold); }
-    .inbox-notice strong { color: var(--navy); }
+    .inbox-notice { font-family: var(--font-ui); font-size: 13px; color: var(--muted); padding: 10px 14px; background: rgba(243,243,245,0.03); margin-bottom: 14px; border-left: 1px solid var(--gold); }
+    .inbox-notice strong { color: var(--ink); }
     .inbox-messages { display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto; margin-bottom: 14px; }
     .inbox-msg { display: flex; gap: 10px; align-items: flex-start; }
     .inbox-msg--mgmt { flex-direction: row-reverse; }
     .inbox-msg__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--navy); color: var(--gold-light); font-family: var(--font-display); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .inbox-msg--mgmt .inbox-msg__avatar { background: var(--gold); color: #fff; }
-    .inbox-msg__bubble { max-width: 70%; padding: 8px 14px; border-radius: 10px; background: #f4f5f7; border-top-left-radius: 2px; }
-    .inbox-msg--mgmt .inbox-msg__bubble { background: rgba(173,151,79,0.12); border-top-left-radius: 10px; border-top-right-radius: 2px; }
-    .inbox-msg__name { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--navy); }
+    .inbox-msg--mgmt .inbox-msg__avatar { background: var(--gold); color: #1a191f; }
+    .inbox-msg__bubble { max-width: 70%; padding: 8px 14px; border-radius: 0; background: #1e1e22; }
+    .inbox-msg--mgmt .inbox-msg__bubble { background: rgba(191,177,148,0.12); }
+    .inbox-msg__name { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--ink); }
     .inbox-msg__name em { font-weight: 500; color: var(--gold); font-size: 13px; }
-    .inbox-msg__time { font-family: var(--font-ui); font-size: 10px; color: #aaa; margin-left: 8px; }
+    .inbox-msg__time { font-family: var(--font-ui); font-size: 10px; color: #6c6c74; margin-left: 8px; }
     .inbox-msg__text { font-family: var(--font-ui); font-size: 13px; color: var(--ink); line-height: 1.55; margin: 2px 0 0; }
     .inbox-reply-form { display: flex; gap: 10px; }
-    .inbox-reply-input { flex: 1; padding: 10px 14px; border: 1px solid rgba(0,35,102,0.14); font-family: var(--font-ui); font-size: 13px; color: var(--ink); outline: none; transition: border-color 0.2s; }
-    .inbox-reply-input:focus { border-color: var(--gold); }
-    .inbox-reply-input::placeholder { color: #bbb; font-style: italic; }
-    .inbox-reply-btn { padding: 10px 20px; background: var(--navy); color: var(--gold-light); border: 1px solid rgba(173,151,79,0.3); font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; flex-shrink: 0; transition: background 0.2s, color 0.2s; }
+    .inbox-reply-input { flex: 1; padding: 10px 14px; border: none; border-bottom: 1px solid rgba(243,243,245,0.14); background: rgba(243,243,245,0.03); font-family: var(--font-ui); font-size: 13px; color: var(--ink); outline: none; transition: border-color 0.2s; }
+    .inbox-reply-input:focus { border-bottom-color: var(--gold); }
+    .inbox-reply-input::placeholder { color: #6c6c74; font-style: italic; }
+    .inbox-reply-btn { padding: 10px 20px; background: var(--navy); color: var(--gold-light); border: 1px solid rgba(191,177,148,0.3); font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; flex-shrink: 0; transition: background 0.2s, color 0.2s; }
     .inbox-reply-btn:hover { background: var(--gold); color: var(--navy); }
     .inbox-empty { text-align: center; padding: 48px; font-family: var(--font-display); font-size: 16px; color: var(--muted); font-style: italic; opacity: .7; }
   </style>

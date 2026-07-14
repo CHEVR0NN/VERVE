@@ -128,13 +128,13 @@
     {
       _id: uid('evt'), event_name: 'Members’ Night: Wine & Canapes', event_description: 'An evening of curated wines and light bites in the Lounge — members and one guest each welcome.',
       event_date: addDays(T, 10), event_duration: '7:00pm - 10:00pm', event_venue: 'Lounge 1962',
-      image_url: '', pdf_url: '', pdf_filename: '', created_by: 'Admin', status: 'active',
+      image_url: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1600&auto=format&fit=crop', pdf_url: '', pdf_filename: '', created_by: 'Admin', status: 'active',
       createdAt: isoNow(), updatedAt: isoNow(),
     },
     {
       _id: uid('evt'), event_name: 'Junior Tennis Clinic', event_description: 'A weekend clinic for junior members, ages 6-14, run by our resident coaches.',
       event_date: addDays(T, 18), event_duration: '9:00am - 11:00am', event_venue: 'Tennis Courts',
-      image_url: '', pdf_url: '', pdf_filename: '', created_by: 'Admin', status: 'active',
+      image_url: 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?q=80&w=1600&auto=format&fit=crop', pdf_url: '', pdf_filename: '', created_by: 'Admin', status: 'active',
       createdAt: isoNow(), updatedAt: isoNow(),
     },
   ];

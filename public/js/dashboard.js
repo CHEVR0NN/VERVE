@@ -1103,7 +1103,7 @@
     if (!guestQuotaInfo) return;
     if (guestQuotaRemaining <= 0) {
       guestQuotaInfo.textContent = `You have reached your monthly limit of 4 guests (${guestQuotaUsed}/4 used). The quota resets on the 1st of next month.`;
-      guestQuotaInfo.style.color = '#c0392b';
+      guestQuotaInfo.style.color = '#c96a5e';
     } else {
       const noun = guestQuotaRemaining === 1 ? 'guest' : 'guests';
       guestQuotaInfo.textContent = `You can register ${guestQuotaRemaining} more ${noun} this month (${guestQuotaUsed}/4 used).`;

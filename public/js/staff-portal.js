@@ -13,7 +13,7 @@
     }
     el.textContent = message;
     el.style.opacity = '1';
-    el.style.background = isError ? '#c0392b' : '#1a7a3c';
+    el.style.background = isError ? '#c96a5e' : '#c25972';
     el.style.color = '#fff';
     clearTimeout(_notifyTimer);
     _notifyTimer = setTimeout(() => { el.style.opacity = '0'; }, 5000);
@@ -244,14 +244,14 @@
         qrName.textContent   = contact?.name || '—';
         qrMeta.textContent   = `${contact?.facility_or_venue || '—'} · ${contact?.slot_date || '—'}`;
         qrStatus.textContent = 'Check-in successful.';
-        qrStatus.style.color = '#1a7a3c';
+        qrStatus.style.color = '#c25972';
       } else {
         qrBadge.classList.add('qr-result__badge--invalid');
         qrBadge.textContent  = '✗';
         qrName.textContent   = 'Not Valid';
         qrMeta.textContent   = '—';
         qrStatus.textContent = REJECTION_MESSAGES[reason] || message || 'Verification failed.';
-        qrStatus.style.color = '#c0392b';
+        qrStatus.style.color = '#c96a5e';
       }
     }
 
@@ -449,7 +449,7 @@
             <td>${b.updatedAt ? new Date(b.updatedAt).toLocaleString('en-SG') : '—'}</td>
             <td>${b.fee_waived
               ? `<span style="color:green">Waived${b.waiver_by ? ' · ' + escapeHtml(b.waiver_by) : ''}</span>`
-              : '<span style="color:#c0392b">Pending</span>'}</td>
+              : '<span style="color:#c96a5e">Pending</span>'}</td>
             <td>${!b.fee_waived
               ? `<button class="btn-sm btn-secondary" onclick="openWaiver('${ref}')">Waive Fee</button>`
               : '—'}</td>

@@ -13,7 +13,7 @@
     }
     el.textContent = message;
     el.style.opacity = '1';
-    el.style.background = isError ? '#c0392b' : '#1a7a3c';
+    el.style.background = isError ? '#c96a5e' : '#c25972';
     el.style.color = '#fff';
     clearTimeout(_notifyTimer);
     _notifyTimer = setTimeout(() => { el.style.opacity = '0'; }, 5000);
@@ -52,7 +52,7 @@
         if (!inboxLink) return;
         badge = document.createElement('span');
         badge.id = 'inboxNavBadge';
-        badge.style.cssText = 'display:none;align-items:center;justify-content:center;background:#c0392b;color:#fff;border-radius:50%;min-width:18px;height:18px;font-size:0.7rem;font-weight:700;margin-left:auto;padding:0 3px;';
+        badge.style.cssText = 'display:none;align-items:center;justify-content:center;background:#c96a5e;color:#fff;border-radius:50%;min-width:18px;height:18px;font-size:0.7rem;font-weight:700;margin-left:auto;padding:0 3px;';
         inboxLink.style.cssText += ';display:flex;align-items:center;';
         inboxLink.appendChild(badge);
       }
@@ -261,8 +261,8 @@
       card.className = card.className.replace(/gauge-card--(green|orange|red)/g, '').trim();
       card.classList.add(`gauge-card--${colour}`);
       badge.textContent = colour === 'green' ? 'Available' : colour === 'orange' ? 'Partially Booked' : 'Full';
-      badge.style.color = colour === 'green' ? '#1a7a3c' : colour === 'orange' ? '#e67e22' : '#c0392b';
-      if (bar) bar.style.background = colour === 'green' ? '#1a7a3c' : colour === 'orange' ? '#e67e22' : '#c0392b';
+      badge.style.color = colour === 'green' ? '#c25972' : colour === 'orange' ? '#d9a878' : '#c96a5e';
+      if (bar) bar.style.background = colour === 'green' ? '#c25972' : colour === 'orange' ? '#d9a878' : '#c96a5e';
     }
 
     async function loadOccupancy() {
@@ -362,28 +362,28 @@
 
     // Dashboard-matching colour palette
     const COLORS = {
-      navy:      '#002366',
-      navyDeep:  '#001540',
-      gold:      '#ad974f',
-      goldLight: '#c9b06a',
-      goldDim:   '#7a6a38',
+      navy:      '#1e1e22',
+      navyDeep:  '#0a0a0c',
+      gold:      '#BFB194',
+      goldLight: '#E8DFD0',
+      goldDim:   '#9a8e73',
       white:     '#f8f9fa',
-      green:     '#27ae60',
-      red:       '#c0392b',
-      amber:     '#c9930a',
-      blue:      '#0050aa',
+      green:     '#c25972',
+      red:       '#c96a5e',
+      amber:     '#e3cbb3',
+      blue:      '#7d9bc4',
     };
 
-    const VENUE_COLORS = ['#002366', '#ad974f', '#c9b06a', '#7a6a38', '#0050aa', '#27ae60'];
+    const VENUE_COLORS = ['#BFB194', '#c25972', '#e3cbb3', '#7d9bc4', '#a98bc0', '#8e8e96'];
     const STATUS_COLORS = {
-      'Confirmed':  '#ad974f',
-      'Checked In': '#27ae60',
-      'No-Show':    '#c0392b',
-      'Cancelled':  '#666666',
-      'Pending':    '#c9930a',
-      'Overdue':    '#e67e22',
-      'Walkin':     '#0050aa',
-      'Completed':  '#2c6e49',
+      'Confirmed':  '#BFB194',
+      'Checked In': '#c25972',
+      'No-Show':    '#c96a5e',
+      'Cancelled':  '#8e8e96',
+      'Pending':    '#e3cbb3',
+      'Overdue':    '#d9a878',
+      'Walkin':     '#7d9bc4',
+      'Completed':  '#d98ba0',
     };
     // Map any booking_status variant to its canonical GHL picklist value
     function normalizeStatus(raw) {
@@ -412,7 +412,7 @@
       if (key === 'guest_pass' || key === 'guest pass' || key === 'guest') return 'Guest';
       return 'Facility'; // facility, advance, block, cancellation, etc.
     }
-    const TYPE_COLORS  = { 'Facility': '#002366', 'Dining': '#ad974f', 'Walkin': '#0050aa', 'Guest': '#c9b06a' };
+    const TYPE_COLORS  = { 'Facility': '#BFB194', 'Dining': '#c25972', 'Walkin': '#7d9bc4', 'Guest': '#e3cbb3' };
     const TYPE_LABELS  = { 'Facility': 'Facility', 'Dining': 'Dining', 'Walkin': 'Walk-in', 'Guest': 'Guest' };
 
     // Shared Chart.js defaults
@@ -420,7 +420,7 @@
     if (typeof Chart !== 'undefined') {
       Chart.defaults.font.family = chartFont.family;
       Chart.defaults.font.size   = 12;
-      Chart.defaults.color       = '#3a3630';
+      Chart.defaults.color       = '#8e8e96';
     }
 
     function destroyCharts() {
@@ -495,7 +495,7 @@
               label: 'Bookings',
               data: sortedDates.map(d => dateCounts[d]),
               borderColor: COLORS.navy,
-              backgroundColor: 'rgba(0,35,102,0.08)',
+              backgroundColor: 'rgba(191,177,148,0.10)',
               borderWidth: 2,
               pointBackgroundColor: COLORS.gold,
               pointBorderColor: COLORS.navy,
@@ -513,7 +513,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(173,151,79,0.35)',
+                borderColor: 'rgba(191,177,148,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
                 titleFont: { family: "'Faculty Glyphic', Georgia, serif", size: 14, weight: '600' },
@@ -522,12 +522,12 @@
             },
             scales: {
               x: {
-                grid: { color: 'rgba(0,35,102,0.06)' },
+                grid: { color: 'rgba(243,243,245,0.06)' },
                 ticks: { font: chartFont, color: COLORS.goldDim },
               },
               y: {
                 beginAtZero: true,
-                grid: { color: 'rgba(0,35,102,0.06)' },
+                grid: { color: 'rgba(243,243,245,0.06)' },
                 ticks: { font: chartFont, color: COLORS.goldDim, stepSize: 1 },
               },
             },
@@ -567,7 +567,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(173,151,79,0.35)',
+                borderColor: 'rgba(191,177,148,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -608,7 +608,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(173,151,79,0.35)',
+                borderColor: 'rgba(191,177,148,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -649,7 +649,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(173,151,79,0.35)',
+                borderColor: 'rgba(191,177,148,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -678,7 +678,7 @@
               backgroundColor: hourKeys.map(h => {
                 const c = hourCounts[h];
                 const max = Math.max(...Object.values(hourCounts));
-                return c >= max * 0.8 ? COLORS.gold : 'rgba(0,35,102,0.65)';
+                return c >= max * 0.8 ? COLORS.gold : 'rgba(243,243,245,0.28)';
               }),
               borderColor: 'transparent',
               borderWidth: 0,
@@ -693,7 +693,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(173,151,79,0.35)',
+                borderColor: 'rgba(191,177,148,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -705,7 +705,7 @@
               },
               y: {
                 beginAtZero: true,
-                grid: { color: 'rgba(0,35,102,0.06)' },
+                grid: { color: 'rgba(243,243,245,0.06)' },
                 ticks: { font: chartFont, color: COLORS.goldDim, stepSize: 1 },
               },
             },
@@ -746,7 +746,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(173,151,79,0.35)',
+                borderColor: 'rgba(191,177,148,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -909,11 +909,11 @@
           else if (m.count >= 3) cls = 'row--amber';
 
           const flagBadge = m.is_flagged
-            ? `<span style="display:inline-block;margin-left:6px;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:600;background:#c0392b;color:#fff;">Flagged</span>`
+            ? `<span style="display:inline-block;margin-left:6px;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:600;background:#c96a5e;color:#fff;">Flagged</span>`
             : '';
 
           return `
-          <tr class="${cls}" style="${m.count >= 5 ? 'background:rgba(192,57,43,0.1)' : m.count >= 3 ? 'background:rgba(184,134,11,0.1)' : ''}">
+          <tr class="${cls}" style="${m.count >= 5 ? 'background:rgba(201,106,94,0.1)' : m.count >= 3 ? 'background:rgba(227,203,179,0.1)' : ''}">
             <td>${m.name || '—'}${flagBadge}</td>
             <td>${m.membership_number}</td>
             <td><strong>${m.count}</strong></td>
@@ -921,7 +921,7 @@
             <td>${m.facility || '—'}</td>
             <td>
               ${m.is_flagged ? '' : `<button class="btn-sm btn-secondary" onclick="mgmtFlagMember('${m.membership_number}')">Flag</button>`}
-              ${m.count >= 5 && !m.is_flagged ? `<button class="btn-sm btn-secondary" style="color:#c0392b" onclick="mgmtFlagMember('${m.membership_number}')">Restrict</button>` : ''}
+              ${m.count >= 5 && !m.is_flagged ? `<button class="btn-sm btn-secondary" style="color:#c96a5e" onclick="mgmtFlagMember('${m.membership_number}')">Restrict</button>` : ''}
             </td>
           </tr>`;
         }).join('');
@@ -994,11 +994,11 @@
         tbody.innerHTML = members.map(m => {
           const flagged   = m.sameGuestMax >= 2;
           const memNum    = escapeHtml(m.membership_number || '');
-          const rowStyle  = flagged ? 'background:rgba(184,134,11,0.1)' : '';
+          const rowStyle  = flagged ? 'background:rgba(227,203,179,0.1)' : '';
 
           // Detail rows for each guest record (initially hidden)
           const guestRows = (m.records || []).map(r => `
-            <div class="guest-record-row" style="display:grid;grid-template-columns:1.4fr 1.6fr 1.2fr 1fr 1fr 1fr;gap:8px;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.92em;">
+            <div class="guest-record-row" style="display:grid;grid-template-columns:1.4fr 1.6fr 1.2fr 1fr 1fr 1fr;gap:8px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.07);font-size:0.92em;">
               <span><strong>${escapeHtml(r.guest_name)}</strong></span>
               <span>${escapeHtml(r.guest_email) || '—'}${r.guest_phone ? ' · ' + escapeHtml(r.guest_phone) : ''}</span>
               <span>${escapeHtml(r.facility_or_venue)}${r.booking_shift ? ' · ' + escapeHtml(r.booking_shift) : ''}</span>
@@ -1013,15 +1013,15 @@
             <td>${memNum || '—'}</td>
             <td>${m.quota}</td>
             <td>${m.used}</td>
-            <td>${flagged ? `<strong style="color:#b8860b">${m.sameGuestMax}</strong>` : m.sameGuestMax}</td>
+            <td>${flagged ? `<strong style="color:#e3cbb3">${m.sameGuestMax}</strong>` : m.sameGuestMax}</td>
             <td>
               <button class="btn-sm btn-secondary" id="guest-expand-${memNum}" onclick="mgmtToggleGuestRecords('${memNum}')">View Guests</button>
               <button class="btn-sm btn-secondary" onclick="mgmtAdjustQuota('${memNum}')">Adjust Quota</button>
             </td>
           </tr>
           <tr id="guest-records-${memNum}" style="display:none;">
-            <td colspan="6" style="background:rgba(0,0,0,0.02);padding:0;">
-              <div style="display:grid;grid-template-columns:1.4fr 1.6fr 1.2fr 1fr 1fr 1fr;gap:8px;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,0.1);font-weight:600;font-size:0.85em;color:#555;">
+            <td colspan="6" style="background:rgba(255,255,255,0.03);padding:0;">
+              <div style="display:grid;grid-template-columns:1.4fr 1.6fr 1.2fr 1fr 1fr 1fr;gap:8px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.1);font-weight:600;font-size:0.85em;color:#a0a0a8;">
                 <span>Guest Name</span>
                 <span>Contact</span>
                 <span>Venue</span>
@@ -1096,9 +1096,9 @@
 
         tbody.innerHTML = rows.map(b => {
           let feeStatus = 'Pending';
-          let statusColor = '#c0392b';
-          if (b.fee_waived) { feeStatus = 'Waived'; statusColor = '#b8860b'; }
-          else if (/late_fee_paid/i.test(b.booking_status)) { feeStatus = 'Paid'; statusColor = '#1a7a3c'; }
+          let statusColor = '#c96a5e';
+          if (b.fee_waived) { feeStatus = 'Waived'; statusColor = '#e3cbb3'; }
+          else if (/late_fee_paid/i.test(b.booking_status)) { feeStatus = 'Paid'; statusColor = '#c25972'; }
 
           return `
           <tr>
@@ -1437,7 +1437,7 @@
             <td>${b.membership_number === 'MGMT' ? 'Management' : b.membership_number === 'STAFF' ? 'Staff' : b.membership_number}</td>
             <td>
               <button class="btn-sm btn-secondary" onclick="mgmtEditBlock('${b.booking_reference}','${(b.facility_or_venue || '').replace(/'/g,"\\'")}','${slotDate}','${slotDateTo || slotDate || ''}','${blockStart}','${blockEnd}','${reason}')">Edit</button>
-              <button class="btn-sm btn-secondary" style="color:#c0392b" onclick="mgmtRemoveBlock('${b.booking_reference}')">Remove</button>
+              <button class="btn-sm btn-secondary" style="color:#c96a5e" onclick="mgmtRemoveBlock('${b.booking_reference}')">Remove</button>
             </td>
           </tr>`;
         }).join('');

@@ -4,7 +4,7 @@ html, body {
 }
 
 body {
-  background: var(--navy-deep, #001540);
+  background: var(--navy-deep, #0a0a0c);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +31,7 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(0,21,64,0.35) 0%, rgba(0,21,64,0.1) 40%, rgba(0,0,0,0.42) 100%);
+    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.42) 100%);
 }
 
 /* ── CENTER CONTAINER ─────────────────── */
@@ -83,7 +83,7 @@ body {
 .gw-brand__rule {
   width: 1px;
   height: 32px;
-  background: linear-gradient(to bottom, transparent, rgba(173,151,79,0.7), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(191,177,148,0.7), transparent);
 }
 
 /* ── HEADING ─────────────────────────── */
@@ -97,7 +97,7 @@ body {
   font-family: var(--font-display, 'Faculty Glyphic', serif);
   font-style: italic;
   font-size: 15px;
-  color: rgba(201, 176, 106, 0.95);
+  color: rgba(232,223,208, 0.95);
   letter-spacing: 0.14em;
   display: block;
   margin-bottom: 6px;
@@ -118,17 +118,18 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 1px;
   width: 100%;
-  background: rgba(173,151,79,0.28);
-  border: 1px solid rgba(173,151,79,0.28);
-  box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+  background: rgba(191,177,148,0.22); /* razor hairline seams between cards */
+  border: none;
+  border-top: 1px solid rgba(191,177,148,0.45);
+  box-shadow: none;
   animation: fadeUp 0.75s ease both;
   animation-delay: 0.22s;
 }
 
-/* Cards now use the same light cream as the login panel */
+/* Raised obsidian cards on the deep ground */
 .pcard {
   position: relative;
-  background: linear-gradient(160deg, #ffffff 0%, #f0ede6 100%);
+  background: var(--card, #151518);
   padding: 52px 44px 44px;
   display: flex;
   flex-direction: column;
@@ -142,8 +143,8 @@ body {
 }
 
 .pcard:hover {
-  background: linear-gradient(160deg, #fdfaf4 0%, #ede8dc 100%);
-  box-shadow: inset 0 0 0 1px rgba(173,151,79,0.18);
+  background: #1a1a1e;
+  box-shadow: none;
 }
 
 /* top accent line (gold, expands on hover) */
@@ -154,7 +155,7 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(to right, transparent, var(--gold, #ad974f), transparent);
+  background: linear-gradient(to right, transparent, var(--gold, #BFB194), transparent);
   transform: scaleX(0);
   transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
 }
@@ -181,15 +182,16 @@ body {
   font-size: 10.5px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--gold-dim, #7a6a38);
+  color: var(--gold-dim, #9a8e73);
   display: block;
 }
 
 .pcard__title {
   font-family: var(--font-display, 'Faculty Glyphic', serif);
   font-size: 34px;
-  font-weight: 400;
-  color: var(--navy, #002366);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--ink, #f3f3f5);
   line-height: 1.1;
   margin-top: 4px;
 }
@@ -197,7 +199,7 @@ body {
 .pcard__desc {
   font-family: var(--font-ui, 'Quicksand', sans-serif);
   font-size: 13px;
-  color: var(--muted, #3a3630);
+  color: var(--muted, #8e8e96);
   line-height: 1.7;
   letter-spacing: 0.02em;
   opacity: 0.75;
@@ -211,22 +213,21 @@ body {
   margin-top: auto;
   display: flex;
   align-items: center;
-  padding: 13px 20px;
-  background: var(--navy, #002366);
-  color: var(--gold-light, #c9b06a);
-  border: 1px solid rgba(173, 151, 79, 0.35);
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #e8e8eb 0%, #ffffff 48%, #cfcfd4 100%);
+  color: #1a191f;
+  border: none;
   font-family: var(--font-display, 'Faculty Glyphic', serif);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
 }
 
 .pcard:hover .pcard__cta {
-  background: var(--gold, #ad974f);
-  color: var(--navy, #002366);
-  border-color: var(--gold, #ad974f);
+  filter: brightness(1.05);
+  box-shadow: 0 0 0 1px rgba(191,177,148,0.6), 0 8px 28px -8px rgba(191,177,148,0.5);
 }
 
 /* line span no longer used — hidden */

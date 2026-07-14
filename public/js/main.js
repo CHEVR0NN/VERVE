@@ -17,7 +17,7 @@
   // ── Inject general error message element ─────────────────────────────────
   const errorEl = document.createElement('p');
   errorEl.style.cssText = [
-    'color:#c0392b', 'font-size:0.78rem', 'letter-spacing:0.08em',
+    'color:#c96a5e', 'font-size:0.78rem', 'letter-spacing:0.08em',
     'margin:-8px 0 14px', 'min-height:1.1em', 'text-align:center',
     'font-family:inherit',
   ].join(';');
