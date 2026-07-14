@@ -1029,10 +1029,10 @@ dialog:not([open]) {
   font-family: var(--font-ui);
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 3px 7px;
-  border-radius: 2px;
+  padding: 4px 10px;
+  border-radius: 999px;
   white-space: nowrap;
 }
 .timing-chip--soon { background: color-mix(in srgb, var(--coral) 42%, transparent); color: var(--ink); }
@@ -4988,12 +4988,11 @@ dialog:not([open]) {
 }
 .action-card:hover .action-card__cta { gap: 11px; }
 
-/* Activity & Concierge feed (full width, below the actions) */
+/* Activity & Concierge feed (full width, below the actions; guests stacks below bookings) */
 .home-feed {
   grid-column: 1 / -1;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 22px;
   min-width: 0;
 }
@@ -5003,7 +5002,7 @@ dialog:not([open]) {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 24px 24px 26px;
-  flex: 1 1 320px;
+  flex: initial;
   border-right: none;
   min-height: 0;
 }
