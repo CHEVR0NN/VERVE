@@ -165,7 +165,7 @@ dialog:not([open]) {
   height: 38px;
   background: transparent;
   border: 1px solid var(--hairline);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   color: rgba(var(--ink-rgb), 0.7);
   cursor: pointer;
   display: flex;
@@ -799,7 +799,7 @@ dialog:not([open]) {
 .btn-action {
   align-self: flex-end;
   padding: 10px 24px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--navy);
   color: #fff;
   border: 1px solid transparent;
@@ -1087,6 +1087,7 @@ dialog:not([open]) {
   text-transform: uppercase;
   background: transparent;
   border: 1px solid rgba(var(--ink-rgb), 0.18);
+  border-radius: var(--radius-sm);
   color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
@@ -1120,6 +1121,7 @@ dialog:not([open]) {
   padding: 0;
   background: transparent;
   border: 1px solid rgba(var(--ink-rgb), 0.18);
+  border-radius: var(--radius-sm);
   color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
@@ -1161,6 +1163,7 @@ dialog:not([open]) {
   text-transform: uppercase;
   background: transparent;
   border: 1px solid rgba(var(--ink-rgb), 0.18);
+  border-radius: var(--radius-sm);
   color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
@@ -1182,6 +1185,7 @@ dialog:not([open]) {
   text-transform: uppercase;
   background: transparent;
   border: 1px solid rgba(192, 57, 43, 0.24);
+  border-radius: var(--radius-sm);
   color: #c0392b;
   cursor: pointer;
   transition: all 0.2s;
@@ -1638,6 +1642,7 @@ dialog:not([open]) {
   background: transparent;
   color: var(--ink);
   border: 1px solid transparent;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-family: var(--font-ui);
   font-size: 12px;
@@ -2375,6 +2380,7 @@ dialog:not([open]) {
   background: var(--gold);
   color: var(--navy-deep);
   border: none;
+  border-radius: var(--radius-sm);
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 600;
@@ -2860,6 +2866,7 @@ dialog:not([open]) {
   transform: translateY(-50%);
   background: rgba(10, 28, 21, 0.55);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.3);
+  border-radius: var(--radius-sm);
   color: var(--gold-light);
   font-size: 30px;
   width: 44px;
@@ -2997,6 +3004,7 @@ dialog:not([open]) {
   padding: 7px 16px;
   background: transparent;
   border: 1px solid rgba(var(--ink-rgb), 0.14);
+  border-radius: var(--radius-sm);
   color: var(--muted);
   font-family: var(--font-ui);
   font-size: 10px;
@@ -3575,7 +3583,7 @@ dialog:not([open]) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   transition: color 0.2s, background 0.2s;
 }
 
@@ -4470,7 +4478,7 @@ dialog:not([open]) {
 .btn-profile-icon {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
   background: var(--gold-light);
   border: 1px solid var(--gold-dim);
   cursor: pointer;
@@ -4699,7 +4707,7 @@ dialog:not([open]) {
   border: 1px solid rgba(var(--ink-rgb), 0.18);
   background: var(--panel-bg);
   color: var(--ink);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.15s;
 }
