@@ -238,7 +238,7 @@
       <!-- EVENTS CAROUSEL -->
       <div class="event-carousel" id="eventCarousel">
         <div class="event-carousel__track" id="eventCarouselTrack">
-          <!-- populated by JS from the EVENTS array (static + backend) -->
+          <!-- populated by JS from CURATED_EXPERIENCES -->
 
           <!-- Slide 1: Annual Dinner & Dance -->
           <!-- <article class="event-slide"
@@ -646,56 +646,8 @@
 <script src="./js/dashboard.js"></script>
 
 <script>
-// ── Static club events (always shown) ─────────────────────────────────
-const STATIC_EVENTS = [
-  {
-    title: 'Verve & Kickstart Training Sessions',
-    date:  'Thursday, 31 December 2026 | 12:00am - 11:30pm',
-    venue: 'Meridian Green & Verve @ Eastgate',
-    desc:  'Calling All Parents: Start Your Child\'s Football Journey at Verve!\nAre you looking for a premier football environment for your young athlete? We are proud to partner with Kickstart FC to offer the latest youth training sessions right in the heart of the city.\nWe are excited to invite players from U6, U8, U10, and U12 categories to join us at our brand-new venue at Meridian Green. We also continue to host sessions at Verve @ Eastgate, ensuring your child has the best facilities to develop their skills.',
-    pdf:   './asset/events/1.pdf',
-    img:   './asset/events/1.jpg',
-    ticket_form_id: '5lLXjx162DNpZkTkjh5z',
-  },
-  {
-    title: 'DanceSport Section: Dondang Sayang',
-    date:  'Tuesday, 28 April 2026 | 7:00pm - 11:00pm',
-    venue: 'GRAND BALLROOM',
-    desc:  'This enchanting evening features a timeless blend of song, poetry, and dance, setting the stage for a journey filled with rhythm and club community joy. We invite you to come adorned in your most charming Peranakan-inspired attire, from vibrant batiks to elegant kebayas, and let your outfit tell a story as enchanting as the night itself.',
-    pdf:   '',
-    img:   './asset/events/2.jpg',
-    ticket_form_id: 'can82O8AOvRRoNIj5OrY',
-  },
-  {
-    title: 'DanceSport Section: Fun Dance 2026',
-    date:  'Tuesday, 21 April 2026 | 7:00pm - 10:00pm',
-    venue: 'Lounge 1962',
-    desc:  'This exhilarating evening is designed for dancers of all levels to come together and celebrate the pure joy of rhythm in a vibrant social setting. Come and be part of a community that moves as one, where every beat is an invitation to celebrate the spirit of dance.',
-    pdf:   './asset/events/3.pdf',
-    img:   './asset/events/3.jpg',
-    ticket_form_id: 'du6kSfGFJe4830BIrcUV',
-  },
-  {
-    title: 'Line Dance Section: Peranakan Fiesta',
-    date:  'Monday, 20 April 2026 | 7:00pm - 11:00pm',
-    venue: 'Lounge 1962',
-    desc:  'Step into a world of timeless tradition at our Peranakan Fiesta. This enchanting afternoon blends the heritage of song and poetry with the high-energy joy of line dancing. We invite you to come adorned in your most charming Peranakan-inspired attire, vibrant batiks and elegant kebayas, as your outfit tells a story as captivating as the music itself.',
-    pdf:   './asset/events/4.pdf',
-    img:   './asset/events/4.jpg',
-    ticket_form_id: 'QLelG9YcFMzPj4XaSR3o',
-  },
-  {
-    title: 'The Big Bunny Bash: Shake, Hunt, Create, & Celebrate!',
-    date:  'Sunday, 19 April 2026 | 2:00pm - 6:00pm',
-    venue: 'Lounge 1962',
-    desc:  'Hop into a whimsical wonderland for The Big Bunny Bash, a vibrant Easter celebration designed to captivate every young explorer. This festive afternoon blends high-energy rhythm with creative magic, starting with a heart-racing Zumba Blast followed by a thrilling Egg-sploration to uncover hidden treasures. Children can then retreat to the Creative Clubhouse to master festive egg painting and cupcake decoration before departing with a handpicked Goodie Bag.',
-    pdf:   './asset/events/5.pdf',
-    img:   './asset/events/5.jpg',
-    ticket_form_id: 'Jdz8nNvG6kWhsBzfVm3U',
-  }
-];
-
-// ── Curated Experiences (static showcase grid — not ticketed/dated) ────
+// ── Curated Experiences: the only content shown in the Club Events
+//    carousel and grid ────────────────────────────────────────────────
 const CURATED_EXPERIENCES = [
   {
     title: 'The Grand Sommelier’s Table: Rare Vintages & Caviar',
@@ -783,50 +735,9 @@ const CURATED_EXPERIENCES = [
   },
 ];
 
-// ── Merge static + dynamic events from backend ────────────────────────
-let EVENTS = [...CURATED_EXPERIENCES, ...STATIC_EVENTS];
-const EVENTS_API = 'https://backend-production-41dc3.up.railway.app/api/events/active';
-
-function formatEventDate(dateStr, duration) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr + 'T00:00:00+08:00');
-  const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Singapore' };
-  const formatted = d.toLocaleDateString('en-SG', options);
-  return duration ? formatted + ' | ' + duration : formatted;
-}
-
-(async function loadEventsFromBackend() {
-  try {
-    const token = localStorage.getItem('vrv_token');
-    const res = await fetch(EVENTS_API, {
-      headers: token ? { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' } : {},
-    });
-    const data = await res.json();
-    if (data.success && data.events && data.events.length) {
-      const backendEvents = data.events.map(function(ev) {
-        return {
-          title: ev.title || '',
-          date:  formatEventDate(ev.date, ev.duration),
-          venue: ev.venue || 'Verve',
-          desc:  ev.desc || '',
-          pdf:   ev.pdf || '',
-          img:   ev.img || '',
-          duration: ev.duration || '',
-          _id:   ev._id || '',
-        };
-      });
-      // Prepend backend-created events before the curated + static ones
-      EVENTS = [...backendEvents, ...CURATED_EXPERIENCES, ...STATIC_EVENTS];
-    }
-  } catch (e) {
-    console.warn('Failed to load events from backend:', e);
-  }
-  // Update event count badge
-  var evtBadge = document.querySelector('.dash-tab[data-tab="events"] .tab-badge');
-  if (evtBadge) evtBadge.textContent = EVENTS.length;
-  // Dispatch custom event so the render functions below can fire
-  document.dispatchEvent(new CustomEvent('events-loaded'));
-})();
+// Event count badge (fixed — content is static, no backend fetch needed)
+var evtBadge = document.querySelector('.dash-tab[data-tab="events"] .tab-badge');
+if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
 </script>
 
 <!-- ══════════════════════════════════════
@@ -1384,7 +1295,7 @@ function formatEventDate(dateStr, duration) {
     if (!carouselTrack) return;
     carouselTrack.innerHTML = '';
     carouselDots.innerHTML  = '';
-    EVENTS.forEach(function(ev) { carouselTrack.appendChild(buildSlide(ev)); });
+    CURATED_EXPERIENCES.forEach(function(ev) { carouselTrack.appendChild(buildSlide(ev)); });
     slides = Array.from(carouselTrack.querySelectorAll('.event-slide'));
     slides.forEach(function(_, i) {
       const dot = document.createElement('button');
@@ -1407,14 +1318,8 @@ function formatEventDate(dateStr, duration) {
     }
   }
 
-  // Initial render (for hardcoded fallback or if events already loaded)
   renderGrid();
   renderCarousel();
-
-  // Re-render carousel when ticketed events load from backend
-  // (the Exclusive Experiences grid above is a static showcase and
-  // doesn't depend on backend event data)
-  document.addEventListener('events-loaded', renderCarousel);
 
 })();
 </script>
