@@ -2387,7 +2387,7 @@ dialog:not([open]) {
   transform: translateY(-2px);
 }
 
-/* ── EVENTS SUB-SECTION (supporting grid) */
+/* ── EVENTS SUB-SECTION (Exclusive Experiences) */
 
 .events-sub-section {
   padding: 44px 52px 60px;
@@ -2416,173 +2416,6 @@ dialog:not([open]) {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gold-dim);
-}
-
-/* ── EVENT CARDS (supporting grid) ──── */
-
-.events-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 24px;
-}
-
-.event-card {
-  background: var(--panel-bg);
-  border: 1px solid rgba(var(--ink-rgb), 0.09);
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.3s;
-}
-
-.event-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(to right, var(--gold), var(--gold-light));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.event-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(var(--ink-rgb), 0.12), 0 4px 12px rgba(var(--gold-dim-rgb), 0.1);
-  border-color: rgba(var(--gold-dim-rgb), 0.35);
-}
-.event-card:hover::after { transform: scaleX(1); }
-
-.event-card__img-wrap { overflow: hidden; }
-
-.event-card__img {
-  height: 260px;
-  background-size: cover;
-  background-position: center top;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-.event-card:hover .event-card__img { transform: scale(1.06); }
-
-.event-card__date-chip {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(10, 28, 21, 0.82);
-  color: var(--gold-light);
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  padding: 5px 10px;
-  border: 1px solid rgba(var(--gold-dim-rgb), 0.3);
-}
-
-.event-card__body {
-  padding: 20px 22px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  flex: 1;
-}
-
-.event-card__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Light-background category pills for cards */
-.event-card .event-cat-pill {
-  font-size: 8.5px;
-}
-.event-card .event-cat--gala     { background: rgba(var(--gold-dim-rgb), 0.1); color: var(--gold-dim); border: 1px solid rgba(var(--gold-dim-rgb), 0.2); }
-.event-card .event-cat--sports   { background: rgba(0,60,160,0.07); color: #004ab0; border: 1px solid rgba(0,60,160,0.15); }
-.event-card .event-cat--dining   { background: rgba(160,20,40,0.07); color: #a01828; border: 1px solid rgba(160,20,40,0.15); }
-.event-card .event-cat--family   { background: rgba(0,130,90,0.07); color: #006840; border: 1px solid rgba(0,130,90,0.15); }
-.event-card .event-cat--wellness { background: rgba(30,140,30,0.07); color: #1a7a1a; border: 1px solid rgba(30,140,30,0.15); }
-.event-card .event-cat--social   { background: rgba(100,50,180,0.07); color: #5a28a8; border: 1px solid rgba(100,50,180,0.15); }
-
-.event-card__seats-flag {
-  font-family: var(--font-ui);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #1a7a1a;
-}
-.event-card__seats-flag--low { color: #c0392b; }
-
-.event-card__title {
-  font-family: var(--font-display);
-  font-size: 21px;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: 0.01em;
-  line-height: 1.2;
-}
-
-.event-card__meta {
-  font-family: var(--font-ui);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  opacity: 0.65;
-}
-
-.event-card__excerpt {
-  font-family: var(--font-ui);
-  font-size: 12.5px;
-  color: var(--muted);
-  line-height: 1.6;
-  flex: 1;
-}
-
-.event-card__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(var(--ink-rgb), 0.07);
-}
-
-.event-card__price {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-}
-.event-card__price--free {
-  color: var(--gold-dim);
-  font-size: 16px;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-}
-
-.btn-event-view {
-  padding: 8px 18px;
-  background: transparent;
-  border: 1px solid rgba(var(--ink-rgb), 0.2);
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-event-view:hover {
-  background: var(--navy);
-  color: var(--gold-light);
-  border-color: var(--ink);
 }
 
 /* ── EVENT DETAIL MODAL ───────────────── */
@@ -3887,162 +3720,118 @@ dialog:not([open]) {
   margin-top: 5px;
 }
 
-/* ── EVENTS GRID ─────────────────────── */
+/* ── EXCLUSIVE EXPERIENCES GRID ───────── */
 
-.events-grid {
+.exp-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 28px;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .exp-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+}
+@media (min-width: 1024px) {
+  .exp-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* ── EVENT CARD ──────────────────────── */
+/* ── EXPERIENCE CARD: ultra-thin frame, no heavy shadow ── */
 
-.event-card {
-  background: var(--panel-bg);
-  border: 1px solid rgba(var(--ink-rgb), 0.1);
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
+.exp-card {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
   overflow: hidden;
+  transition: border-color 0.4s ease-out;
 }
 
-.event-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 3px;
-  background: linear-gradient(to right, var(--gold), var(--gold-light), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
+.exp-card:hover {
+  border-color: rgba(var(--gold-dim-rgb), 0.55);
 }
 
-.event-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(var(--gold-dim-rgb), 0.4);
-  box-shadow: 0 16px 40px rgba(var(--gold-dim-rgb), 0.15);
+.exp-card__img-wrap {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(var(--gold-dim-rgb), 0.35), rgba(var(--rose-glow-rgb), 0.25)),
+    var(--panel-hi);
 }
 
-.event-card:hover::before { transform: translateX(0); }
-
-.event-card__img {
+.exp-card__img {
   width: 100%;
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.5s ease;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease, opacity 0.3s ease;
 }
 
-.event-card:hover .event-card__img {
-  transform: scale(1.04);
+.exp-card:hover .exp-card__img {
+  transform: scale(1.05);
 }
 
-.event-card__date-pill {
+.exp-card__badge {
   position: absolute;
   top: 14px;
   right: 14px;
-  background: var(--navy-deep);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--gold-light);
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  padding: 5px 11px;
+  background: rgba(10, 10, 12, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.4);
+  border-radius: 999px;
+  padding: 4px 12px;
+  white-space: nowrap;
 }
 
-.event-card__body {
-  padding: 22px 24px 24px;
+.exp-card__body {
+  padding: 22px 24px 26px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: 1;
+  gap: 9px;
 }
 
-.event-card__cat {
-  font-family: var(--font-ui);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold-dim);
-}
-
-.event-card__title {
+.exp-card__title {
   font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 19px;
+  font-weight: 300;
+  letter-spacing: 0.03em;
   color: var(--ink);
-  letter-spacing: 0.01em;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
-.event-card__meta {
-  font-family: var(--font-ui);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  opacity: 0.7;
-}
-
-.event-card__excerpt {
-  font-family: var(--font-ui);
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.55;
-  flex: 1;
-}
-
-.btn-event-view {
-  align-self: flex-start;
-  margin-top: 8px;
-  padding: 9px 20px;
-  background: transparent;
-  border: 1px solid rgba(var(--ink-rgb), 0.22);
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  transition: all 0.22s;
-}
-
-.btn-event-view:hover {
-  background: var(--navy);
-  color: var(--gold-light);
-  border-color: var(--ink);
-}
-
-/* ── EVENT CARD REGISTER BUTTON & BTN GROUP ── */
-
-.event-card__btns {
+.exp-card__venue {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 7px;
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.exp-card__venue::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
 }
 
-.btn-event-register {
-  padding: 8px 18px;
-  background: var(--gold);
-  border: 1px solid var(--gold);
-  color: var(--navy-deep);
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-event-register:hover {
-  background: var(--gold-light);
-  border-color: var(--gold-light);
+.exp-card__desc {
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .btn-hero-register {
@@ -4317,7 +4106,7 @@ dialog:not([open]) {
   .event-hero__tagline { display: none; }
   .event-hero__price-num { font-size: 28px; }
   .events-sub-section { padding: 28px 20px 40px; }
-  .events-grid { grid-template-columns: 1fr; gap: 16px; }
+  .exp-grid { gap: 16px; }
   .event-modal { width: 95%; max-height: 90vh; }
   .event-modal__img-wrap { height: 180px; }
   .notices-page { padding: 28px 20px 40px; }
