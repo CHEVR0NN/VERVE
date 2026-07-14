@@ -45,24 +45,24 @@
   --muted:      #8e8e96; /* Muted steel gray */
 
   /* --- Premium Rose Gold Accent (Replaces Gold) --- */
-  --gold:       #BFB194; /* Luxury rose gold */
-  --gold-light: #E8DFD0; /* Pale rose-gold glow */
-  --gold-dim:   #96896F; /* Deep muted rose gold */
-  --gold-dim-rgb: 150, 137, 111;
+  --gold:       #D49A8F; /* Luminous rose gold */
+  --gold-light: #F5E6E3; /* Warm champagne glow */
+  --gold-dim:   #a97c72; /* Deep muted rose gold */
+  --gold-dim-rgb: 169, 124, 114;
 
   /* --- Secondary Luxury Accents --- */
-  --teal:       #c25972; /* Crimson rose accent */
-  --coral:      #e3cbb3; /* Warm champagne accent */
+  --teal:       #c25972; /* Crimson blush accent */
+  --coral:      #E8A297; /* Warm sunset coral — active highlight */
 
   /* --- Platinum & Rose Gold (metallic — identical in both themes) --- */
   --platinum:      #e0e0e0;
   --platinum-light: #ffffff;
   --platinum-rgb:  224, 224, 224;
-  --rose-glow-rgb: 191, 177, 148; /* #BFB194 rose gold, for outer glow */
+  --rose-glow-rgb: 212, 154, 143; /* #D49A8F rose gold, for outer glow */
 
   /* --- Structures & Shadows --- */
-  --radius:     0;
-  --radius-sm:  0;
+  --radius:     20px;
+  --radius-sm:  14px;
   --shadow:     0 1px 0 rgba(255,255,255,0.04) inset, 0 16px 40px -22px rgba(0,0,0,0.6);
   --shadow-lg:  0 1px 0 rgba(255,255,255,0.05) inset, 0 30px 60px -26px rgba(0,0,0,0.7);
 
@@ -86,18 +86,18 @@
   --muted:      #6e6e78; /* Soft slate gray, darkened from #7a7a85 for AA contrast on white/alabaster (was ~4.2:1, now ~5:1) */
 
   /* --- Rose Gold Accent (Calibrated for Light Background contrast) --- */
-  --gold:       #8f8060; /* Deep rose gold on alabaster */
-  --gold-light: #b3a583;
-  --gold-dim:   #6d5f42;
-  --gold-dim-rgb: 109, 95, 66;
+  --gold:       #a9685a; /* Deep rose gold on alabaster */
+  --gold-light: #c98f80;
+  --gold-dim:   #7d4b40;
+  --gold-dim-rgb: 125, 75, 64;
 
   /* --- Secondary Luxury Accents --- */
   --teal:       #a8435b; /* Rich deep crimson rose */
-  --coral:      #cfae93; /* Soft warm sand/champagne */
+  --coral:      #c46a53; /* Deep sunset coral, calibrated for alabaster */
 
   /* --- Structures & Shadows --- */
-  --radius:     0;
-  --radius-sm:  0;
+  --radius:     20px;
+  --radius-sm:  14px;
   --shadow:     0 10px 28px -16px rgba(30,30,34,0.14);
   --shadow-lg:  0 22px 48px -20px rgba(30,30,34,0.16);
 
@@ -119,14 +119,14 @@
     --ink-rgb:    30, 30, 34;
     --white:      #1e1e22;
     --muted:      #6e6e78;
-    --gold:       #8f8060; /* rose gold */
-    --gold-light: #b3a583;
-    --gold-dim:   #6d5f42;
-    --gold-dim-rgb: 109, 95, 66;
-    --teal:       #a8435b; /* crimson rose (success) */
-    --coral:      #cfae93; /* champagne (pending) */
-    --radius:     0;
-    --radius-sm:  0;
+    --gold:       #a9685a; /* rose gold */
+    --gold-light: #c98f80;
+    --gold-dim:   #7d4b40;
+    --gold-dim-rgb: 125, 75, 64;
+    --teal:       #a8435b; /* crimson blush (success) */
+    --coral:      #c46a53; /* sunset coral (active) */
+    --radius:     20px;
+    --radius-sm:  14px;
     --shadow:     0 10px 28px -16px rgba(30,30,34,0.14);
     --shadow-lg:  0 22px 48px -20px rgba(30,30,34,0.16);
     --panel-bg:   #ffffff;
@@ -195,7 +195,7 @@ dialog:not([open]) {
      .side-nav, which stays dark navy in both themes, so a theme-flipping color
      would turn near-black (invisible) in light mode. */
   border: 1px solid rgba(245, 247, 249, 0.14);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   color: rgba(245, 247, 249, 0.7);
   cursor: pointer;
   display: flex;
@@ -368,7 +368,7 @@ dialog:not([open]) {
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   border: 1px solid transparent;
   background: var(--card);
   cursor: pointer;
@@ -551,7 +551,7 @@ dialog:not([open]) {
   gap: 7px;
   padding: 7px 16px 7px 13px;
   border: 1px solid rgba(var(--gold-dim-rgb), 0.35);
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   background: var(--card);
   box-shadow: var(--shadow);
   color: var(--gold-dim);
@@ -576,9 +576,11 @@ dialog:not([open]) {
 }
 
 .stat-tile {
-  background: var(--card);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-sm);
+  background: rgba(var(--card-rgb), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: var(--radius-2xl, 20px);
   padding: 22px 28px 20px;
   min-width: 160px;
   display: flex;
@@ -612,7 +614,7 @@ dialog:not([open]) {
 
 .stat-tile:hover {
   transform: translateY(-4px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 22px 44px -20px rgba(0,0,0,0.65), 0 0 0 1px rgba(191,177,148,0.14);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 22px 44px -20px rgba(0,0,0,0.65), 0 0 30px rgba(var(--rose-glow-rgb), 0.15);
   border-color: rgba(var(--gold-dim-rgb), 0.4);
 }
 
@@ -656,9 +658,11 @@ dialog:not([open]) {
 }
 
 .card {
-  background: var(--card);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  background: rgba(var(--card-rgb), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: var(--radius-2xl, 20px);
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow);
@@ -683,7 +687,7 @@ dialog:not([open]) {
 .card:hover {
   transform: translateY(-4px);
   border-color: rgba(var(--gold-dim-rgb), 0.5);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(var(--rose-glow-rgb), 0.15);
 }
 
 .card:hover::before { transform: scaleX(1); }
@@ -698,6 +702,17 @@ dialog:not([open]) {
   justify-content: center;
   position: relative;
   background: var(--panel-hi);
+}
+
+/* Subtle rose-gold wash over every card photo */
+.card-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.28), transparent 60%);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .card-image img {
@@ -716,6 +731,7 @@ dialog:not([open]) {
   content: attr(data-tagline);
   position: absolute;
   inset: 0;
+  z-index: 2;
   background: rgba(14, 36, 27, 0.52);
   color: var(--gold-light);
   display: flex;
@@ -800,7 +816,7 @@ dialog:not([open]) {
 .btn-action {
   align-self: flex-end;
   padding: 10px 24px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   background: var(--navy);
   color: #fff;
   border: 1px solid transparent;
@@ -1084,7 +1100,7 @@ dialog:not([open]) {
   text-transform: uppercase;
   background: transparent;
   border: 1px solid rgba(var(--ink-rgb), 0.18);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
@@ -1118,7 +1134,7 @@ dialog:not([open]) {
   padding: 0;
   background: transparent;
   border: 1px solid rgba(var(--ink-rgb), 0.18);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
@@ -1160,7 +1176,7 @@ dialog:not([open]) {
   text-transform: uppercase;
   background: transparent;
   border: 1px solid rgba(var(--ink-rgb), 0.18);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
@@ -1182,7 +1198,7 @@ dialog:not([open]) {
   text-transform: uppercase;
   background: transparent;
   border: 1px solid rgba(192, 57, 43, 0.24);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   color: #c96a5e;
   cursor: pointer;
   transition: all 0.2s;
@@ -1503,11 +1519,12 @@ dialog:not([open]) {
 .modal-dialog textarea {
   padding: 10px 12px;
   border: 1px solid rgba(var(--ink-rgb), 0.15);
+  border-radius: var(--radius-xl, 16px);
   font-family: var(--font-ui);
   font-size: 14px;
   color: var(--ink);
   background: rgba(var(--card-rgb), 0.7);
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
   outline: none;
 }
 
@@ -1516,7 +1533,7 @@ dialog:not([open]) {
 .modal-dialog textarea:focus {
   border-color: var(--gold);
   background: var(--panel-bg);
-  box-shadow: 0 0 0 2px rgba(var(--gold-dim-rgb), 0.08);
+  box-shadow: 0 0 0 3px rgba(var(--gold-dim-rgb), 0.14);
 }
 
 .modal-dialog textarea {
@@ -1528,6 +1545,7 @@ dialog:not([open]) {
 
 .guest-fieldset {
   border: 1px solid rgba(var(--ink-rgb), 0.1);
+  border-radius: var(--radius-xl, 16px);
   padding: 14px 16px;
   background: rgba(var(--card-rgb), 0.5);
   margin-bottom: 12px;
@@ -1577,7 +1595,7 @@ dialog:not([open]) {
 /* Primary — high-gloss platinum silver, sharp dark text, rose-gold glow on hover */
 .btn-primary {
   padding: 13px 30px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   background: linear-gradient(135deg, var(--platinum) 0%, var(--platinum-light) 100%);
   color: #14131a; /* sharp obsidian text — reads on platinum in both themes */
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -1606,7 +1624,7 @@ dialog:not([open]) {
 /* Secondary / ghost — transparent, ultra-thin platinum frame, text warms to rose gold */
 .btn-secondary {
   padding: 13px 30px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   background: transparent;
   color: var(--ink);
   border: 1px solid rgba(var(--platinum-rgb), 0.4);
@@ -1635,7 +1653,7 @@ dialog:not([open]) {
   background: transparent;
   color: var(--ink);
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   cursor: pointer;
   font-family: var(--font-ui);
   font-size: 12px;
@@ -1829,7 +1847,7 @@ dialog:not([open]) {
 .guest-confirm-card {
   background: rgba(var(--gold-dim-rgb), 0.06);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.18);
-  border-radius: 0;
+  border-radius: var(--radius-xl, 16px);
   padding: 16px;
   text-align: center;
 }
@@ -2012,7 +2030,7 @@ dialog:not([open]) {
   font-family: var(--font-ui);
   font-size: 9px;
   font-weight: 700;
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2027,8 +2045,11 @@ dialog:not([open]) {
   top: 60px;
   right: 52px;
   width: 370px;
-  background: var(--panel-bg);
+  background: rgba(var(--card-rgb), 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.2);
+  border-radius: var(--radius-2xl, 20px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   z-index: 100;
   animation: slideDown 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2255,13 +2276,15 @@ dialog:not([open]) {
   inset: 0;
   /* Neutral obsidian scrim — not the old racing-green (10,28,21) left
      over from the pre-rebrand "Court & Clubhouse" palette. */
-  background: linear-gradient(
-    108deg,
-    rgba(10, 10, 12, 0.93) 0%,
-    rgba(10, 10, 12, 0.78) 38%,
-    rgba(10, 10, 12, 0.28) 68%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(
+      108deg,
+      rgba(10, 10, 12, 0.93) 0%,
+      rgba(10, 10, 12, 0.78) 38%,
+      rgba(10, 10, 12, 0.28) 68%,
+      transparent 100%
+    ),
+    radial-gradient(60% 60% at 100% 100%, rgba(var(--rose-glow-rgb), 0.22), transparent 70%);
   display: flex;
   align-items: flex-end;
 }
@@ -2293,6 +2316,7 @@ dialog:not([open]) {
   color: var(--gold-light);
   background: rgba(var(--gold-dim-rgb), 0.14);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.38);
+  border-radius: var(--radius-pill, 999px);
   padding: 5px 13px 5px 10px;
 }
 
@@ -2304,7 +2328,7 @@ dialog:not([open]) {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   padding: 4px 10px;
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
 }
 
 .event-cat--gala     { background: rgba(var(--gold-dim-rgb), 0.22); color: #E8DFD0; border: 1px solid rgba(var(--gold-dim-rgb), 0.3); }
@@ -2383,7 +2407,7 @@ dialog:not([open]) {
   background: var(--gold);
   color: var(--navy-deep);
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 600;
@@ -2484,13 +2508,11 @@ dialog:not([open]) {
 .ticket-popup {
   background: var(--panel-bg);
   width: 100%;
-  max-width: 600px;
-  height: 90vh;
+  max-width: 460px;
   max-height: 90vh;
   overflow-y: auto;
-  border-radius: 0;
+  border-radius: var(--radius-2xl, 20px);
   flex-direction: column;
-  /* overflow: hidden; */
   box-shadow: 0 24px 64px rgba(10, 10, 12, 0.35);
 }
 
@@ -2578,13 +2600,22 @@ dialog:not([open]) {
 }
 .event-slide:hover .event-slide__bg { transform: scale(1.03); }
 
+.event-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.2), transparent 55%);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
 .carousel-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background: rgba(10, 10, 12, 0.55);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.3);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   color: var(--gold-light);
   font-size: 30px;
   width: 44px;
@@ -2722,7 +2753,7 @@ dialog:not([open]) {
   padding: 7px 16px;
   background: transparent;
   border: 1px solid rgba(var(--ink-rgb), 0.14);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   color: var(--muted);
   font-family: var(--font-ui);
   font-size: 10px;
@@ -2803,7 +2834,7 @@ dialog:not([open]) {
 .notice-cat-icon {
   width: 36px;
   height: 36px;
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2830,7 +2861,7 @@ dialog:not([open]) {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   padding: 3px 9px;
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
 }
 .notice-cat-badge--facility { background: rgba(var(--gold-dim-rgb), 0.12); color: var(--gold-dim); }
 .notice-cat-badge--events   { background: rgba(var(--ink-rgb), 0.09);   color: var(--ink); }
@@ -3187,7 +3218,7 @@ dialog:not([open]) {
   max-width: 75%;
   background: var(--panel-hi);
   padding: 8px 14px;
-  border-radius: 0;
+  border-radius: var(--radius-xl, 16px);
   border-top-left-radius: 2px;
 }
 
@@ -3248,7 +3279,7 @@ dialog:not([open]) {
   flex: 1;
   padding: 9px 14px;
   border: 1px solid rgba(var(--ink-rgb), 0.14);
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   font-family: var(--font-ui);
   font-size: 13px;
   color: var(--ink);
@@ -3281,7 +3312,7 @@ dialog:not([open]) {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   flex-shrink: 0;
   transition: background 0.2s, color 0.2s;
 }
@@ -3312,7 +3343,7 @@ dialog:not([open]) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   transition: color 0.2s, background 0.2s;
 }
 
@@ -3333,7 +3364,7 @@ dialog:not([open]) {
   font-family: var(--font-ui);
   font-size: 9px;
   font-weight: 700;
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3582,7 +3613,7 @@ dialog:not([open]) {
   font-size: 9px;
   font-weight: 700;
   padding: 2px 6px;
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   letter-spacing: 0;
   margin-left: auto;
 }
@@ -3641,17 +3672,20 @@ dialog:not([open]) {
 /* ── EXPERIENCE CARD: ultra-thin frame, no heavy shadow ── */
 
 .exp-card {
-  background: var(--card);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-sm);
+  background: rgba(var(--card-rgb), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: var(--radius-2xl, 20px);
   overflow: hidden;
   cursor: pointer;
-  transition: border-color 0.4s ease-out, transform 0.4s ease-out;
+  transition: border-color 0.4s ease-out, transform 0.4s ease-out, box-shadow 0.4s ease-out;
 }
 
 .exp-card:hover {
   border-color: rgba(var(--gold-dim-rgb), 0.55);
   transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(var(--rose-glow-rgb), 0.15);
 }
 
 .exp-card__img-wrap {
@@ -3661,6 +3695,17 @@ dialog:not([open]) {
   background:
     linear-gradient(135deg, rgba(var(--gold-dim-rgb), 0.35), rgba(var(--rose-glow-rgb), 0.25)),
     var(--panel-hi);
+}
+
+/* Subtle rose-gold wash over every experience photo */
+.exp-card__img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.24), transparent 60%);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .exp-card__img {
@@ -3679,6 +3724,7 @@ dialog:not([open]) {
   position: absolute;
   top: 14px;
   right: 14px;
+  z-index: 2;
   font-family: var(--font-ui);
   font-size: 10px;
   font-weight: 700;
@@ -3689,7 +3735,7 @@ dialog:not([open]) {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.4);
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   padding: 4px 12px;
   white-space: nowrap;
 }
@@ -3810,7 +3856,7 @@ dialog:not([open]) {
   gap: 0;
   width: fit-content;
   border: 1px solid rgba(var(--ink-rgb), 0.2);
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   overflow: hidden;
 }
 
@@ -3860,6 +3906,167 @@ dialog:not([open]) {
   cursor: pointer;
 }
 
+/* ── DUMMY CHECKOUT (event ticket payment flow) ──────────────────── */
+
+.pay-step {
+  padding: 24px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeUp 0.28s ease both;
+}
+
+.pay-step--center {
+  align-items: center;
+  text-align: center;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.pay-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.pay-summary-row--muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.pay-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pay-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pay-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+.pay-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: rgba(var(--card-rgb), 0.7);
+  border: 1px solid rgba(var(--ink-rgb), 0.15);
+  border-radius: var(--radius-xl, 16px);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.pay-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(var(--gold-dim-rgb), 0.14);
+}
+
+.pay-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.pay-error {
+  font-size: 12px;
+  color: #c96a5e;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.pay-secure-note {
+  font-size: 11.5px;
+  color: var(--muted);
+  opacity: 0.8;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.pay-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.pay-actions--center { justify-content: center; }
+
+.pay-actions .btn-primary,
+.pay-actions .btn-ghost { margin-top: 0; }
+
+.pay-spinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid rgba(var(--gold-dim-rgb), 0.2);
+  border-top-color: var(--gold);
+  animation: pay-spin 0.8s linear infinite;
+}
+@keyframes pay-spin { to { transform: rotate(360deg); } }
+
+.pay-processing-text {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 18px;
+}
+
+.pay-success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-pill, 999px);
+  background: rgba(var(--gold-dim-rgb), 0.14);
+  border: 1px solid rgba(var(--gold-dim-rgb), 0.4);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pay-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes pay-pop {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.pay-success-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 14px 0 0;
+}
+
+.pay-success-sub {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
 /* ── EVENT DETAIL MODAL ───────────────── */
 
 .event-modal {
@@ -3900,7 +4107,7 @@ dialog:not([open]) {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.4);
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   padding: 5px 14px;
 }
 
@@ -4204,7 +4411,7 @@ dialog:not([open]) {
 .btn-profile-icon {
   width: 34px;
   height: 34px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   background: var(--gold-light);
   border: 1px solid var(--gold-dim);
   cursor: pointer;
@@ -4311,7 +4518,7 @@ dialog:not([open]) {
   border: none;
   font-family: 'Quicksand', sans-serif;
   font-size: 13px;
-  color: #2c3e6b;
+  color: var(--ink);
   cursor: pointer;
   text-align: left;
   transition: background 0.15s, color 0.15s;
@@ -4435,7 +4642,7 @@ dialog:not([open]) {
   border: 1px solid rgba(var(--ink-rgb), 0.18);
   background: var(--panel-bg);
   color: var(--ink);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill, 999px);
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -4527,7 +4734,7 @@ dialog:not([open]) {
   letter-spacing: 0.4px;
   text-transform: uppercase;
   padding: 4px 10px;
-  border-radius: 0;
+  border-radius: var(--radius-pill, 999px);
   white-space: nowrap;
   font-weight: 500;
 }

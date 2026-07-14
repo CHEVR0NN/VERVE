@@ -25,13 +25,14 @@ body {
   filter: saturate(0.75) brightness(0.62);
 }
 
-/* Soft vignette — less suffocating than before */
+/* Soft vignette — less suffocating than before, subtle rose-gold wash */
 .bg-layer::after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.42) 100%);
+    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.42) 100%),
+    radial-gradient(60% 60% at 50% 0%, rgba(212,154,143,0.14), transparent 70%);
 }
 
 /* ── CENTER CONTAINER ─────────────────── */
@@ -83,7 +84,7 @@ body {
 .gw-brand__rule {
   width: 1px;
   height: 32px;
-  background: linear-gradient(to bottom, transparent, rgba(191,177,148,0.7), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(212,154,143,0.7), transparent);
 }
 
 /* ── HEADING ─────────────────────────── */
@@ -97,7 +98,7 @@ body {
   font-family: var(--font-display, 'Faculty Glyphic', serif);
   font-style: italic;
   font-size: 15px;
-  color: rgba(232,223,208, 0.95);
+  color: rgba(245,230,227, 0.95);
   letter-spacing: 0.14em;
   display: block;
   margin-bottom: 6px;
@@ -116,36 +117,39 @@ body {
 .portal-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
+  gap: 20px;
   width: 100%;
-  background: rgba(191,177,148,0.22); /* razor hairline seams between cards */
+  background: transparent;
   border: none;
-  border-top: 1px solid rgba(191,177,148,0.45);
   box-shadow: none;
   animation: fadeUp 0.75s ease both;
   animation-delay: 0.22s;
 }
 
-/* Raised obsidian cards on the deep ground */
+/* Raised glassmorphic cards on the deep ground */
 .pcard {
   position: relative;
-  background: linear-gradient(170deg, #18171b 0%, #121114 100%);
+  background: linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #18171b;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: var(--radius-3xl, 28px);
+  backdrop-filter: blur(12px);
   padding: 52px 44px 44px;
   display: flex;
   flex-direction: column;
   gap: 24px;
   text-decoration: none;
   overflow: hidden;
-  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1), border-color 0.35s ease;
   cursor: pointer;
   text-align: center;
   align-items: center;
 }
 
 .pcard:hover {
-  background: linear-gradient(170deg, #1c1b20 0%, #141317 100%);
+  background: linear-gradient(170deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%), #1c1b20;
+  border-color: rgba(212,154,143,0.28);
   transform: translateY(-4px);
-  box-shadow: 0 30px 60px -28px rgba(0,0,0,0.75);
+  box-shadow: 0 0 30px rgba(212,154,143,0.15), 0 30px 60px -28px rgba(0,0,0,0.75);
 }
 
 /* top accent line (gold, expands on hover) */
@@ -156,7 +160,7 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(to right, transparent, var(--gold, #BFB194), transparent);
+  background: linear-gradient(to right, transparent, var(--gold, #D49A8F), transparent);
   transform: scaleX(0);
   transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
 }
@@ -215,21 +219,23 @@ body {
   display: flex;
   align-items: center;
   padding: 14px 20px;
-  background: linear-gradient(135deg, #e8e8eb 0%, #ffffff 48%, #cfcfd4 100%);
+  background: linear-gradient(135deg, #D49A8F 0%, #F5E6E3 100%);
   color: #1a191f;
   border: none;
-  box-shadow: 0 0 0 1px rgba(191,177,148,0.3), 0 12px 30px -14px rgba(0,0,0,0.55);
+  border-radius: var(--radius-pill, 999px);
+  box-shadow: 0 0 0 1px rgba(212,154,143,0.35), 0 12px 30px -14px rgba(0,0,0,0.55);
   font-family: var(--font-display, 'Faculty Glyphic', serif);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  transition: box-shadow 0.3s ease, filter 0.3s ease;
+  transition: box-shadow 0.3s ease, filter 0.3s ease, transform 0.2s ease;
 }
 
 .pcard:hover .pcard__cta {
   filter: brightness(1.05);
-  box-shadow: 0 0 0 1px rgba(191,177,148,0.6), 0 8px 28px -8px rgba(191,177,148,0.5);
+  transform: scale(1.02);
+  box-shadow: 0 0 0 1px rgba(212,154,143,0.6), 0 0 30px rgba(212,154,143,0.3), 0 8px 28px -8px rgba(0,0,0,0.5);
 }
 
 /* line span no longer used — hidden */

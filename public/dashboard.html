@@ -666,6 +666,7 @@ const CURATED_EXPERIENCES = [
       'Convivial single chef’s table seating just 12 guests',
     ],
     img:    'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1600&auto=format&fit=crop',
+    price:  285,
   },
   {
     title: 'Twilight Clay Court Invitational',
@@ -680,6 +681,7 @@ const CURATED_EXPERIENCES = [
       'Courtside cocktail reception immediately follows play',
     ],
     img:    'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=1600&auto=format&fit=crop',
+    price:  95,
   },
   {
     title: 'Sunset Lounge: Live Jazz & Champagne',
@@ -694,6 +696,7 @@ const CURATED_EXPERIENCES = [
       'Unobstructed sunset views across the Obsidian Terrace',
     ],
     img:    'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1600&auto=format&fit=crop',
+    price:  75,
   },
   {
     title: 'Junior Elite Tennis Masterclass',
@@ -708,6 +711,7 @@ const CURATED_EXPERIENCES = [
       'Video stroke analysis included for every participant',
     ],
     img:    'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?q=80&w=1600&auto=format&fit=crop',
+    price:  120,
   },
   {
     title: 'Sunrise Zen: Soundbath & Alabaster Matcha',
@@ -722,6 +726,7 @@ const CURATED_EXPERIENCES = [
       'Mats, cushions, and blankets provided',
     ],
     img:    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600&auto=format&fit=crop',
+    price:  55,
   },
   {
     title: 'Vernissage: Private Art Exhibition & Aged Cognac',
@@ -736,6 +741,7 @@ const CURATED_EXPERIENCES = [
       'Estate cognac flight paired to each exhibited piece',
     ],
     img:    'https://images.unsplash.com/photo-1577720580479-7d839d829c73?q=80&w=1600&auto=format&fit=crop',
+    price:  195,
   },
 ];
 
@@ -960,6 +966,12 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
 
   notifBtn.addEventListener('click', e => {
     e.stopPropagation();
+    if (notifDropdown.hidden) {
+      const r = notifBtn.getBoundingClientRect();
+      notifDropdown.style.top = 'auto';
+      notifDropdown.style.left = Math.round(r.right + 12) + 'px';
+      notifDropdown.style.bottom = Math.round(window.innerHeight - r.bottom) + 'px';
+    }
     notifDropdown.hidden = !notifDropdown.hidden;
   });
 
@@ -1151,13 +1163,7 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
     else        { pdfBtn.hidden = true; }
 
     const ticketBtn = document.getElementById('eventModalTicketBtn');
-    if (ev.ticket_form_id) {
-      ticketBtn.dataset.formId = ev.ticket_form_id;
-      ticketBtn.dataset.formTitle = ev.title || 'Buy Tickets';
-      ticketBtn.hidden = false;
-    } else {
-      ticketBtn.hidden = true;
-    }
+    ticketBtn.hidden = !ev.price;
 
     eventModal.showModal();
     modalOverlay.hidden = false;
@@ -1170,42 +1176,183 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
     document.getElementById('eventModalPdfEmbed').hidden = true;
   }
 
-  // ── Ticket Popup ──────────────────────────────────────────────────
+  // ── Ticket Popup — dummy Stripe-style checkout (fully client-side, no
+  //    real payment processor; hardcoded for portfolio demo purposes) ──
   var ticketPopupOverlay = document.getElementById('ticketPopupOverlay');
+  var checkoutState = null;
 
-  function openTicketPopup(formId, title) {
-    document.getElementById('ticketPopupTitle').textContent = title;
-    var body = document.getElementById('ticketPopupBody');
-    body.innerHTML =
-      '<iframe ' +
-        'src="https://api.wibiz.ai/widget/form/' + formId + '" ' +
-        'style="width:100%; height:100%; overflow-y:auto;" ' +
-        'id="inline-' + formId + '" ' +
-        "data-layout=\"{'id':'INLINE'}\" " +
-        'data-trigger-type="alwaysShow" ' +
-        'data-trigger-value="" ' +
-        'data-activation-type="alwaysActivated" ' +
-        'data-activation-value="" ' +
-        'data-deactivation-type="neverDeactivate" ' +
-        'data-deactivation-value="" ' +
-        'data-form-name="' + title + '" ' +
-        'data-height="879" ' +
-        'data-layout-iframe-id="inline-' + formId + '" ' +
-        'data-form-id="' + formId + '" ' +
-        'title="' + title + '">' +
-      '</iframe>';
+  function money(n) { return '$' + n.toFixed(2); }
+
+  function openTicketPopup(ev) {
+    document.getElementById('ticketPopupTitle').textContent = ev.title;
+    checkoutState = { ev: ev, qty: 1 };
+    renderCheckoutStep('tickets');
     ticketPopupOverlay.hidden = false;
   }
 
   function closeTicketPopup() {
     ticketPopupOverlay.hidden = true;
     document.getElementById('ticketPopupBody').innerHTML = '';
+    checkoutState = null;
+  }
+
+  function renderCheckoutStep(step) {
+    var body = document.getElementById('ticketPopupBody');
+    var s    = checkoutState;
+    if (!s) return;
+
+    if (step === 'tickets') {
+      var max = 6;
+      body.innerHTML =
+        '<div class="pay-step">' +
+          '<div class="event-register-body">' +
+            '<div class="event-register-tickets">' +
+              '<span class="event-register-label">Number of Tickets</span>' +
+              '<div class="ticket-stepper">' +
+                '<button type="button" class="ticket-step-btn" id="payQtyMinus">&minus;</button>' +
+                '<span class="ticket-step-val" id="payQtyVal">' + s.qty + '</span>' +
+                '<button type="button" class="ticket-step-btn" id="payQtyPlus">+</button>' +
+              '</div>' +
+              '<p class="event-register-max">Max ' + max + ' tickets per booking &middot; ' + money(s.ev.price) + ' each</p>' +
+            '</div>' +
+            '<div class="pay-summary-row"><span>' + escHtml(s.ev.title) + '</span><span id="paySubtotal">' + money(s.ev.price * s.qty) + '</span></div>' +
+            '<div class="pay-summary-row pay-summary-row--muted"><span>Club service fee</span><span id="payFee">' + money(s.ev.price * s.qty * 0.05) + '</span></div>' +
+            '<div class="pay-total-row"><span>Total</span><span id="payTotal">' + money(s.ev.price * s.qty * 1.05) + '</span></div>' +
+            '<label class="event-register-terms">' +
+              '<input type="checkbox" id="payTerms" />' +
+              '<span>I agree to the club’s cancellation policy and event terms.</span>' +
+            '</label>' +
+            '<p class="pay-error" id="payTermsError" hidden>Please accept the terms to continue.</p>' +
+          '</div>' +
+          '<div class="pay-actions">' +
+            '<button type="button" class="btn-ghost" id="payCancel">Cancel</button>' +
+            '<button type="button" class="btn-primary" id="payContinue">Continue to Payment</button>' +
+          '</div>' +
+        '</div>';
+
+      var qtyVal = document.getElementById('payQtyVal');
+      function refreshTotals() {
+        qtyVal.textContent = s.qty;
+        var subtotal = s.ev.price * s.qty;
+        var fee      = subtotal * 0.05;
+        document.getElementById('paySubtotal').textContent = money(subtotal);
+        document.getElementById('payFee').textContent       = money(fee);
+        document.getElementById('payTotal').textContent     = money(subtotal + fee);
+      }
+      document.getElementById('payQtyMinus').addEventListener('click', function () {
+        if (s.qty > 1) { s.qty--; refreshTotals(); }
+      });
+      document.getElementById('payQtyPlus').addEventListener('click', function () {
+        if (s.qty < max) { s.qty++; refreshTotals(); }
+      });
+      document.getElementById('payCancel').addEventListener('click', closeTicketPopup);
+      document.getElementById('payContinue').addEventListener('click', function () {
+        if (!document.getElementById('payTerms').checked) {
+          document.getElementById('payTermsError').hidden = false;
+          return;
+        }
+        renderCheckoutStep('payment');
+      });
+    }
+
+    else if (step === 'payment') {
+      var subtotal = s.ev.price * s.qty;
+      var total    = subtotal * 1.05;
+      body.innerHTML =
+        '<div class="pay-step">' +
+          '<div class="pay-summary-row"><span>' + s.qty + ' &times; ' + escHtml(s.ev.title) + '</span><span>' + money(total) + '</span></div>' +
+          '<div class="pay-field-group">' +
+            '<label class="pay-label" for="payCardName">Cardholder Name</label>' +
+            '<input class="pay-input" type="text" id="payCardName" placeholder="Jane Appleseed" autocomplete="cc-name" />' +
+          '</div>' +
+          '<div class="pay-field-group">' +
+            '<label class="pay-label" for="payCardNumber">Card Number</label>' +
+            '<input class="pay-input" type="text" id="payCardNumber" placeholder="4242 4242 4242 4242" inputmode="numeric" autocomplete="cc-number" maxlength="19" />' +
+          '</div>' +
+          '<div class="pay-input-row">' +
+            '<div class="pay-field-group">' +
+              '<label class="pay-label" for="payCardExpiry">Expiry</label>' +
+              '<input class="pay-input" type="text" id="payCardExpiry" placeholder="MM/YY" inputmode="numeric" autocomplete="cc-exp" maxlength="5" />' +
+            '</div>' +
+            '<div class="pay-field-group">' +
+              '<label class="pay-label" for="payCardCvc">CVC</label>' +
+              '<input class="pay-input" type="text" id="payCardCvc" placeholder="123" inputmode="numeric" autocomplete="cc-csc" maxlength="4" />' +
+            '</div>' +
+          '</div>' +
+          '<p class="pay-error" id="payCardError" hidden>Please enter a valid card name, number, expiry and CVC.</p>' +
+          '<p class="pay-secure-note">🔒 This is a simulated checkout for demo purposes — no real payment is processed.</p>' +
+          '<div class="pay-actions">' +
+            '<button type="button" class="btn-ghost" id="payBack">&larr; Back</button>' +
+            '<button type="button" class="btn-primary" id="paySubmit">Pay ' + money(total) + '</button>' +
+          '</div>' +
+        '</div>';
+
+      var numberEl = document.getElementById('payCardNumber');
+      numberEl.addEventListener('input', function () {
+        var digits = numberEl.value.replace(/\D/g, '').slice(0, 16);
+        numberEl.value = digits.replace(/(.{4})/g, '$1 ').trim();
+      });
+
+      var expiryEl = document.getElementById('payCardExpiry');
+      expiryEl.addEventListener('input', function () {
+        var digits = expiryEl.value.replace(/\D/g, '').slice(0, 4);
+        expiryEl.value = digits.length > 2 ? digits.slice(0, 2) + '/' + digits.slice(2) : digits;
+      });
+
+      var cvcEl = document.getElementById('payCardCvc');
+      cvcEl.addEventListener('input', function () {
+        cvcEl.value = cvcEl.value.replace(/\D/g, '').slice(0, 4);
+      });
+
+      document.getElementById('payBack').addEventListener('click', function () { renderCheckoutStep('tickets'); });
+      document.getElementById('paySubmit').addEventListener('click', function () {
+        var name   = document.getElementById('payCardName').value.trim();
+        var number = numberEl.value.replace(/\s/g, '');
+        var expiry = expiryEl.value;
+        var cvc    = cvcEl.value;
+        var valid  = name.length > 1 &&
+                     number.length === 16 &&
+                     /^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry) &&
+                     cvc.length >= 3;
+        if (!valid) {
+          document.getElementById('payCardError').hidden = false;
+          return;
+        }
+        renderCheckoutStep('processing');
+      });
+    }
+
+    else if (step === 'processing') {
+      body.innerHTML =
+        '<div class="pay-step pay-step--center">' +
+          '<div class="pay-spinner"></div>' +
+          '<p class="pay-processing-text">Processing your payment securely&hellip;</p>' +
+        '</div>';
+      setTimeout(function () { renderCheckoutStep('success'); }, 1600);
+    }
+
+    else if (step === 'success') {
+      var confirmCode = 'VRV-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+      var totalPaid   = s.ev.price * s.qty * 1.05;
+      body.innerHTML =
+        '<div class="pay-step pay-step--center">' +
+          '<div class="pay-success-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>' +
+          '<h4 class="pay-success-title">Payment Successful</h4>' +
+          '<p class="pay-success-sub">' + s.qty + ' ticket' + (s.qty > 1 ? 's' : '') + ' for ' + escHtml(s.ev.title) + '</p>' +
+          '<div class="pay-summary-row pay-summary-row--muted"><span>Confirmation</span><span>' + confirmCode + '</span></div>' +
+          '<div class="pay-total-row"><span>Total Paid</span><span>' + money(totalPaid) + '</span></div>' +
+          '<div class="pay-actions pay-actions--center">' +
+            '<button type="button" class="btn-primary" id="payDone">Done</button>' +
+          '</div>' +
+        '</div>';
+      document.getElementById('payDone').addEventListener('click', closeTicketPopup);
+    }
   }
 
   document.getElementById('eventModalTicketBtn').addEventListener('click', function () {
-    var btn = document.getElementById('eventModalTicketBtn');
+    if (!currentEventModalEv) return;
     closeEventModal();
-    openTicketPopup(btn.dataset.formId, btn.dataset.formTitle);
+    openTicketPopup(currentEventModalEv);
   });
 
   document.getElementById('ticketPopupClose').addEventListener('click', closeTicketPopup);
@@ -1353,6 +1500,12 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
     // Close notif dropdown if open
     const notifDropdown = document.getElementById('notifDropdown');
     if (notifDropdown) notifDropdown.hidden = true;
+    if (profileDropdown.hidden) {
+      const r = profileBtn.getBoundingClientRect();
+      profileDropdown.style.top = 'auto';
+      profileDropdown.style.left = Math.round(r.right + 12) + 'px';
+      profileDropdown.style.bottom = Math.round(window.innerHeight - r.bottom) + 'px';
+    }
     profileDropdown.hidden = !profileDropdown.hidden;
     profileBtn.classList.toggle('is-active', !profileDropdown.hidden);
   });

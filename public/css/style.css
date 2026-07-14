@@ -12,17 +12,20 @@
 }
 
 :root {
-  /* ── Verve luxury contract ─────────────────────────────
-     Obsidian ground #0a0a0c · structure #1e1e22 · raised card #151518
-     Rose gold #BFB194 / #E8DFD0 · crimson rose #c25972 (success)
-     champagne #e3cbb3 (pending) — razor-thin hairlines, no card-soup */
-  --gold:       #BFB194; /* rose gold highlight */
-  --gold-light: #E8DFD0; /* pale rose-gold glow */
-  --gold-dim:   #9a8e73; /* muted rose gold — metadata on obsidian */
+  /* ── Verve luxury contract — "Dusk Glow & Rose Gold" ───
+     Velvet obsidian ground #0D0D11 · charcoal slate card #16161D
+     Rose gold #D49A8F / champagne #F5E6E3 · sunset coral #E8A297 (active)
+     crimson blush #c25972 (approved) · champagne #e3cbb3 (pending) */
+  --gold:       #D49A8F; /* luminous rose gold — primary accent */
+  --gold-rgb:   212,154,143;
+  --gold-light: #F5E6E3; /* warm champagne — light source / glow */
+  --gold-dim:   #a97c72; /* muted rose gold — metadata on obsidian */
+  --coral:      #E8A297; /* warm sunset coral — active highlight */
+  --coral-rgb:  232,162,151;
   --navy:       #1e1e22; /* sleek structural charcoal */
   --navy-deep:  #111113; /* recessed structure (sidebars, chrome) */
-  --bg:         #0a0a0c; /* deep obsidian ground */
-  --card:       #151518; /* raised card surface */
+  --bg:         #0D0D11; /* velvet obsidian ground */
+  --card:       #16161D; /* charcoal slate card surface */
   --white:      #f3f3f5; /* platinum text */
   --ink:        #f3f3f5; /* primary text on obsidian */
   --muted:      #8e8e96; /* secondary steel-gray text */
@@ -31,6 +34,12 @@
   --platinum:   #e0e0e0;
   --platinum-light: #ffffff;
   --hairline:   rgba(243,243,245,0.09);
+
+  --radius-pill: 999px;
+  --radius-xl:   16px;
+  --radius-2xl:  20px;
+  --radius-3xl:  28px;
+  --glow-rose: 0 0 30px rgba(212,154,143,0.15);
 
   --font-display: 'Faculty Glyphic', Georgia, serif;
   --font-ui:      'Quicksand', 'Palatino Linotype', sans-serif;
@@ -186,16 +195,16 @@ body {
 
 .field__input {
   width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(243,243,245,0.16);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
   outline: none;
-  padding: 8px 0 10px;
+  padding: 12px 16px 13px;
   font-family: var(--font-ui);
   font-size: 15px;
   color: var(--ink);
   letter-spacing: 0.02em;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   caret-color: var(--gold);
   /* font-style: italic; */
 }
@@ -208,22 +217,25 @@ body {
 }
 
 .field__input:focus {
-  border-bottom-color: transparent;
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.045);
+  box-shadow: 0 0 0 3px rgba(212,154,143,0.14), 0 6px 22px -8px rgba(212,154,143,0.35);
 }
 
 /* Animated gold underline on focus */
 .field__line {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  bottom: 4px;
+  left: 16px;
   width: 0%;
   height: 1.5px;
   background: var(--gold);
+  border-radius: var(--radius-pill);
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .field__input:focus ~ .field__line {
-  width: 100%;
+  width: calc(100% - 32px);
 }
 
 .field__error {
@@ -253,14 +265,15 @@ body {
   margin-top: 8px;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: center;
   text-align: center;
   width: 100%;
   padding: 15px 24px;
-  background: linear-gradient(135deg, #e8e8eb 0%, #ffffff 48%, #cfcfd4 100%);
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
   color: #1a191f;
   border: none;
-  box-shadow: 0 0 0 1px rgba(191,177,148,0.3), 0 12px 30px -14px rgba(0,0,0,0.55);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 0 1px rgba(212,154,143,0.35), 0 12px 30px -14px rgba(0,0,0,0.55);
   cursor: pointer;
   font-family: var(--font-display);
   font-size: 13px;
@@ -274,8 +287,8 @@ body {
 
 .btn-access:hover {
   filter: brightness(1.05);
-  box-shadow: 0 0 0 1px rgba(191,177,148,0.6), 0 8px 28px -8px rgba(191,177,148,0.5);
-  transform: translateY(-1px);
+  transform: scale(1.02) translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(212,154,143,0.6), 0 0 34px rgba(212,154,143,0.35), 0 8px 28px -8px rgba(0,0,0,0.5);
 }
 
 .btn-access:hover .btn-access__arrow {
@@ -334,13 +347,14 @@ body {
   transform: scale(1.03);
 }
 
-/* Gradient overlay — navy fade on left, dark at bottom */
+/* Gradient overlay — navy fade on left, dark at bottom, subtle rose-gold wash */
 .visual__overlay {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(to right, rgba(10,10,12,0.72) 0%, rgba(10,10,12,0.08) 40%, transparent 100%),
-    linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%);
+    linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%),
+    radial-gradient(55% 55% at 100% 0%, rgba(212,154,143,0.16), transparent 70%);
   pointer-events: none;
 }
 
