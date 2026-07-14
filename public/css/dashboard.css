@@ -4881,8 +4881,8 @@ dialog:not([open]) {
   text-overflow: ellipsis;
 }
 
-/* Core Actions (col-span 8) */
-.home-actions { grid-column: 1 / span 8; min-width: 0; }
+/* Core Actions (full width, above the feed) */
+.home-actions { grid-column: 1 / -1; min-width: 0; }
 .section-eyebrow {
   font-family: var(--font-ui);
   font-size: 10px;
@@ -4988,11 +4988,12 @@ dialog:not([open]) {
 }
 .action-card:hover .action-card__cta { gap: 11px; }
 
-/* Activity & Concierge feed (col-span 4) */
+/* Activity & Concierge feed (full width, below the actions) */
 .home-feed {
-  grid-column: 9 / span 4;
+  grid-column: 1 / -1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 22px;
   min-width: 0;
 }
@@ -5002,7 +5003,7 @@ dialog:not([open]) {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 24px 24px 26px;
-  flex: initial;
+  flex: 1 1 320px;
   border-right: none;
   min-height: 0;
 }
@@ -5061,12 +5062,6 @@ dialog:not([open]) {
   }
 }
 
-/* Member 12-col grid collapses; feed wraps below actions */
-@media (max-width: 1023px) {
-  .home-actions { grid-column: 1 / -1; }
-  .home-feed { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
-  .home-feed .feed-panel { flex: 1 1 300px; }
-}
 @media (max-width: 720px) {
   .home-grid { gap: 22px; padding: 20px 16px 40px; }
   .action-cards { grid-template-columns: 1fr; }
