@@ -20,9 +20,10 @@
   --ink:        #020001;
   --muted:      #3a3630;
 
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-ui:      'Tenor Sans', 'Palatino Linotype', serif;
-  --font-secondary: 'Poppins';
+  --font-display: 'Faculty Glyphic', Georgia, serif;
+  --font-ui:      'Quicksand', 'Palatino Linotype', sans-serif;
+  --font-secondary: 'Quicksand', sans-serif;
+  --font-body:    'Quicksand', sans-serif;
   --font-cursive: 'Tangerine';
 }
 

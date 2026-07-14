@@ -416,7 +416,7 @@
     const TYPE_LABELS  = { 'Facility': 'Facility', 'Dining': 'Dining', 'Walkin': 'Walk-in', 'Guest': 'Guest' };
 
     // Shared Chart.js defaults
-    const chartFont = { family: "'Tenor Sans', 'Palatino Linotype', serif", size: 12 };
+    const chartFont = { family: "'Quicksand', 'Palatino Linotype', sans-serif", size: 12 };
     if (typeof Chart !== 'undefined') {
       Chart.defaults.font.family = chartFont.family;
       Chart.defaults.font.size   = 12;
@@ -516,7 +516,7 @@
                 borderColor: 'rgba(173,151,79,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
-                titleFont: { family: "'Cormorant Garamond', Georgia, serif", size: 14, weight: '600' },
+                titleFont: { family: "'Faculty Glyphic', Georgia, serif", size: 14, weight: '600' },
                 bodyFont: chartFont,
               },
             },

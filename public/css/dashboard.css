@@ -4146,7 +4146,7 @@ dialog:not([open]) {
   border-color: var(--gold);
 }
 .profile-icon-initial {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Faculty Glyphic', serif;
   font-size: 15px;
   font-weight: 700;
   color: var(--white);
@@ -4181,7 +4181,7 @@ dialog:not([open]) {
   background: var(--navy);
   border: 1.5px solid rgba(173,151,79,0.4);
   color: var(--gold);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Faculty Glyphic', serif;
   font-size: 17px;
   font-weight: 600;
   display: flex;
@@ -4196,7 +4196,7 @@ dialog:not([open]) {
   min-width: 0;
 }
 .profile-dropdown__name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: var(--navy);
@@ -4205,7 +4205,7 @@ dialog:not([open]) {
   text-overflow: ellipsis;
 }
 .profile-dropdown__id {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 10.5px;
   color: rgba(0,35,102,0.7);
   letter-spacing: 0.04em;
@@ -4223,7 +4223,7 @@ dialog:not([open]) {
   padding: 11px 18px;
   background: transparent;
   border: none;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 13px;
   color: #2c3e6b;
   cursor: pointer;
