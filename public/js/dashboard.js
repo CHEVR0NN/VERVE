@@ -627,6 +627,20 @@
     });
   });
 
+  // ── Deep-link a modal open via #open=facility|dining|guest (used by dashboard-home.html) ──
+  // Hash-based rather than a query string: static hosts (incl. this project's
+  // own `serve public` dev server) redirect /dashboard.html -> /dashboard and
+  // drop query strings on the way, but a URL fragment never reaches the
+  // server at all, so it survives that redirect intact.
+  (function openModalFromHash() {
+    const match  = /^#open=(facility|dining|guest)$/.exec(location.hash);
+    const target = match && { facility: 'facilityModal', dining: 'diningModal', guest: 'guestModal' }[match[1]];
+    if (!target) return;
+    showModal(target);
+    if (target === 'guestModal') loadGuestQuota();
+    history.replaceState(null, '', location.pathname + location.search);
+  })();
+
   document.querySelectorAll('[data-close]').forEach(btn => {
     btn.addEventListener('click', () => closeModal(btn));
   });

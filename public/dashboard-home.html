@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Home</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/home-concept.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="home-concept" id="homeConcept" hidden>
+  <div class="hc-backdrop" aria-hidden="true"></div>
+
+  <div class="hc-shell">
+    <div class="hc-topbar">
+      <span class="hc-wordmark">VERVE</span>
+      <a href="dashboard.html" class="hc-classic-link">Classic view</a>
+    </div>
+
+    <section class="hc-hero">
+      <div class="hc-eyebrow"><span class="hc-dot"></span>Live at the club</div>
+      <h1 class="hc-greeting" id="hcGreeting">Good evening.</h1>
+      <p class="hc-greeting-sub" id="hcDate">—</p>
+
+      <div class="hc-ring-wrap">
+        <div class="hc-ring">
+          <div class="hc-ring__halo"></div>
+          <div class="hc-ring__track"></div>
+          <div class="hc-ring__core">
+            <span id="hcDay">—</span>
+            <strong id="hcClock">--:--</strong>
+          </div>
+          <a href="dashboard.html#open=facility" class="hc-node hc-node--book">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+            <span>Book</span>
+          </a>
+          <a href="dashboard.html#open=dining" class="hc-node hc-node--dine">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2v20M6 2a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3M18 2v20M18 2c-2 0-3 2-3 5v3c0 2 1 3 3 3"/></svg>
+            <span>Dine</span>
+          </a>
+          <a href="dashboard.html#open=guest" class="hc-node hc-node--guest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/><path d="M17 8.5a3 3 0 1 0 0-6M21.5 20c0-3-2-5.2-5-5.8"/></svg>
+            <span>Invite</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="hc-deck">
+      <article class="hc-card hc-card--facility">
+        <div class="hc-card__head">
+          <span class="hc-card__title"><span class="hc-swatch"></span>Your Upcoming Sessions</span>
+          <a href="dashboard.html#open=facility" class="hc-cta">Reserve</a>
+        </div>
+        <div class="hc-slots" id="hcFacilitySlots"></div>
+      </article>
+
+      <article class="hc-card hc-card--dine">
+        <div class="hc-card__head">
+          <span class="hc-card__title"><span class="hc-swatch"></span>Dining</span>
+          <a href="dashboard.html#open=dining" class="hc-cta">Reserve</a>
+        </div>
+        <div id="hcDineBody"></div>
+      </article>
+
+      <article class="hc-card hc-card--guest">
+        <div class="hc-card__head">
+          <span class="hc-card__title"><span class="hc-swatch"></span>Guests</span>
+          <a href="dashboard.html#open=guest" class="hc-cta">Invite</a>
+        </div>
+        <div class="hc-guest-row" id="hcGuestBody"></div>
+      </article>
+    </section>
+  </div>
+
+  <nav class="hc-tabbar" aria-label="Primary">
+    <span class="hc-tab hc-tab--active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Home
+    </span>
+    <a href="dashboard.html#open=facility" class="hc-tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 10h18"/></svg>
+      Book
+    </a>
+    <a href="dashboard.html#open=dining" class="hc-tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2v20M6 2a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3"/></svg>
+      Dine
+    </a>
+    <a href="dashboard.html" class="hc-tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+      Profile
+    </a>
+  </nav>
+</div>
+
+<script src="./js/demo-mode.js"></script>
+<script>
+(function () {
+  const API_BASE = 'https://backend-production-41dc3.up.railway.app';
+  const PAST_STATUSES = ['cancelled', 'late-cancellation', 'checked-in', 'no-show', 'completed', 'done', 'late-fee-paid'];
+
+  const token  = localStorage.getItem('vrv_token');
+  const member = JSON.parse(localStorage.getItem('src_member') || 'null');
+  if (!token || !member) { window.location.href = 'index.html'; return; }
+
+  function authFetch(url, options = {}) {
+    return fetch(url, {
+      ...options,
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, ...(options.headers || {}) },
+    });
+  }
+
+  document.getElementById('hcGreeting').textContent = `Good evening, ${(member.name || 'Member').split(' ')[0]}.`;
+  document.getElementById('hcDate').textContent = new Date().toLocaleDateString('en-SG', {
+    weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Asia/Singapore',
+  });
+
+  function tickClock() {
+    const now = new Date();
+    document.getElementById('hcDay').textContent = now.toLocaleDateString('en-SG', { weekday: 'long', timeZone: 'Asia/Singapore' });
+    document.getElementById('hcClock').textContent = now.toLocaleTimeString('en-SG', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Singapore' });
+  }
+  tickClock();
+  setInterval(tickClock, 30000);
+
+  function isUpcoming(b) {
+    const todaySG   = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Singapore' });
+    const statusKey = (b.booking_status || 'confirmed').toLowerCase().replace(/[\s_]+/g, '-');
+    if (PAST_STATUSES.includes(statusKey)) return false;
+    return (b.slot_date || '') >= todaySG;
+  }
+  function fmtTime(t) {
+    if (!t) return '—';
+    const [h, m] = t.split(':').map(Number);
+    if (isNaN(h)) return t;
+    const period = h < 12 ? 'AM' : 'PM';
+    const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+    return `${h12}:${String(m).padStart(2, '0')} ${period}`;
+  }
+  function fmtDateShort(d) {
+    if (!d) return '';
+    return new Date(d + 'T00:00:00+08:00').toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Singapore' });
+  }
+  function initials(name) {
+    return (name || '?').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+  }
+  const AVATAR_COLORS = ['#e7b65c', '#ff6e5a', '#2fe8c8'];
+
+  async function load() {
+    try {
+      const res  = await authFetch(`${API_BASE}/api/member/bookings`);
+      const data = await res.json();
+      const bookings = (data.bookings || []).filter(b => b.booking_type !== 'block');
+
+      const isGuestType = (t) => t === 'guest' || t === 'guest_pass';
+      const guestBookings = bookings.filter(b => isGuestType(b.booking_type));
+      const diningBookings = bookings.filter(b => !isGuestType(b.booking_type) && b.booking_type === 'dining');
+      const facilityBookings = bookings.filter(b => !isGuestType(b.booking_type) && b.booking_type !== 'dining');
+
+      // ── facility slots ──
+      const upcomingFacility = facilityBookings.filter(isUpcoming)
+        .sort((a, b) => (a.slot_date + a.slot_start_time).localeCompare(b.slot_date + b.slot_start_time))
+        .slice(0, 3);
+      const slotsEl = document.getElementById('hcFacilitySlots');
+      if (upcomingFacility.length) {
+        slotsEl.innerHTML = upcomingFacility.map(b => `
+          <div class="hc-slot hc-slot--${(b.booking_status || '').toLowerCase() === 'confirmed' ? 'confirmed' : 'other'}">
+            <span class="hc-slot__facility">${b.facility_or_venue || '—'}</span>
+            <span class="hc-slot__time">${fmtDateShort(b.slot_date)} · ${fmtTime(b.slot_start_time)}</span>
+            <span class="hc-slot__state">${(b.booking_status || '').toUpperCase()}</span>
+          </div>`).join('');
+      } else {
+        slotsEl.innerHTML = `<p class="hc-empty">No upcoming sessions booked yet.</p>`;
+      }
+
+      // ── dining ──
+      const upcomingDining = diningBookings.filter(isUpcoming)
+        .sort((a, b) => (a.slot_date + a.slot_start_time).localeCompare(b.slot_date + b.slot_start_time))[0];
+      const dineEl = document.getElementById('hcDineBody');
+      if (upcomingDining) {
+        dineEl.innerHTML = `
+          <div class="hc-dine-row">
+            <div class="hc-dine-preview" aria-hidden="true"></div>
+            <div class="hc-dine-copy">
+              <span class="hc-dine-name">${upcomingDining.facility_or_venue || '—'}${upcomingDining.booking_shift ? ' · ' + upcomingDining.booking_shift : ''}</span>
+              <span class="hc-dine-detail">${fmtDateShort(upcomingDining.slot_date)} · ${fmtTime(upcomingDining.slot_start_time)}–${fmtTime(upcomingDining.slot_end_time)} · ${upcomingDining.outlet_pax || 1} pax</span>
+            </div>
+          </div>`;
+      } else {
+        dineEl.innerHTML = `<p class="hc-empty">No dining reservations yet.</p>`;
+      }
+
+      // ── guests ──
+      const guestEl = document.getElementById('hcGuestBody');
+      let quotaText = '';
+      try {
+        const qRes  = await authFetch(`${API_BASE}/api/member/guest-quota`);
+        const qData = await qRes.json();
+        if (qData.success) quotaText = `${qData.used} OF ${qData.max || (qData.used + qData.remaining)} USED THIS MONTH`;
+      } catch {}
+
+      if (guestBookings.length) {
+        const avatars = guestBookings.slice(0, 3).map((g, i) => `<span class="hc-avatar" style="background:${AVATAR_COLORS[i % AVATAR_COLORS.length]}">${initials(g.name)}</span>`).join('');
+        guestEl.innerHTML = `
+          <div class="hc-avatars">${avatars}</div>
+          <div class="hc-guest-meta">
+            <span class="hc-guest-count">${guestBookings.length} guest${guestBookings.length === 1 ? '' : 's'} this month</span>
+            <span class="hc-guest-quota">${quotaText}</span>
+          </div>`;
+      } else {
+        guestEl.innerHTML = `<p class="hc-empty">No guests registered yet.${quotaText ? ' ' + quotaText : ''}</p>`;
+      }
+    } catch (err) {
+      document.getElementById('hcFacilitySlots').innerHTML = `<p class="hc-empty">Couldn't load your bookings.</p>`;
+    } finally {
+      document.getElementById('homeConcept').hidden = false;
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>
