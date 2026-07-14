@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Live Occupancy</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="management.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Management</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="management.html" class="nav-item">
+          <span class="nav-item__icon">≡</span>
+          <span>Shift Overview</span>
+        </a>
+        <a href="management-occupancy.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">◈</span>
+          <span>Live Occupancy</span>
+        </a>
+        <a href="management-analytics.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Booking Analytics</span>
+        </a>
+        <a href="management-noshow.html" class="nav-item">
+          <span class="nav-item__icon">△</span>
+          <span>No-Show Tracker</span>
+        </a>
+        <a href="management-guests.html" class="nav-item">
+          <span class="nav-item__icon">⊕</span>
+          <span>Guest Record Audit</span>
+        </a>
+        <a href="management-fees.html" class="nav-item">
+          <span class="nav-item__icon">◻</span>
+          <span>Late Cancellation Fees</span>
+        </a>
+        <a href="management-blocks.html" class="nav-item">
+          <span class="nav-item__icon">▣</span>
+          <span>Facility Blocks</span>
+        </a>
+        <a href="management-events.html" class="nav-item">
+          <span class="nav-item__icon">&#9733;</span>
+          <span>Add Event</span>
+        </a>
+        <a href="management-inbox.html" class="nav-item">
+          <span class="nav-item__icon">&#9993;</span>
+          <span>Inbox</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Admin</span>
+          <span class="staff-badge__role" id="staffRole">Management</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">Live Occupancy</h1>
+          <p class="view__sub">Real-time occupancy insights across all venues. Updates every 2 minutes.</p>
+        </div>
+        <div class="view__actions">
+          <button class="btn-secondary" id="refreshOccupancyBtn">↻ Refresh</button>
+        </div>
+      </div>
+
+      <!-- [GHL] Each gauge count from GET /contacts/ filtered by facility_or_venue + slot_date=today + booking_status confirmed/checked_in -->
+      <!-- JS adds .gauge-card--green / --amber / --red based on fill thresholds -->
+      <div class="occupancy-grid">
+
+        <div class="occupancy-section">
+          <h3 class="occupancy-section__title">Tennis &amp; Squash</h3>
+          <!-- Green = 0 booked, Orange = partially booked, Red = full -->
+          <div class="gauge-row">
+            <div class="gauge-card" id="gauge-tennis">
+              <p class="gauge-card__name">Tennis Court</p>
+              <div class="gauge-bar"><div class="gauge-bar__fill" style="width:0%"></div></div>
+              <p class="gauge-card__count"><span id="cnt-tennis">—</span> / 4</p>
+              <span class="gauge-badge" id="badge-tennis">—</span>
+            </div>
+            <div class="gauge-card" id="gauge-squash">
+              <p class="gauge-card__name">Squash Court</p>
+              <div class="gauge-bar"><div class="gauge-bar__fill" style="width:0%"></div></div>
+              <p class="gauge-card__count"><span id="cnt-squash">—</span> / 4</p>
+              <span class="gauge-badge" id="badge-squash">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="occupancy-section">
+          <h3 class="occupancy-section__title">Gym</h3>
+          <div class="gauge-row">
+            <div class="gauge-card gauge-card--wide" id="gauge-gym">
+              <p class="gauge-card__name">Gym</p>
+              <div class="gauge-bar"><div class="gauge-bar__fill" style="width:0%"></div></div>
+              <p class="gauge-card__count"><span id="cnt-gym">—</span> / 20</p>
+              <span class="gauge-badge" id="badge-gym">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="occupancy-section">
+          <h3 class="occupancy-section__title">F&amp;B Outlets</h3>
+          <!-- Le Mansion: Green <10, Amber 10–14, Red =15 (cap 15 + 3 buffer) -->
+          <!-- Barker's: Green <7, Amber 7–9, Red =10 (cap 10 + 2 buffer) -->
+          <!-- Oasis: Green <9, Amber 9–11, Red =12 (cap 12 + 2 buffer) -->
+          <div class="gauge-row">
+            <div class="gauge-card gauge-card--fnb" id="gauge-lemansion-lunch">
+              <p class="gauge-card__name">Le Mansion — Lunch</p>
+              <div class="gauge-bar"><div class="gauge-bar__fill" style="width:0%"></div></div>
+              <p class="gauge-card__count"><span id="cnt-lemansion-lunch">—</span> / 15 <span class="gauge-buffer">+3 buffer</span></p>
+              <span class="gauge-badge" id="badge-lemansion-lunch">—</span>
+            </div>
+            <div class="gauge-card gauge-card--fnb" id="gauge-lemansion-dinner">
+              <p class="gauge-card__name">Le Mansion — Dinner</p>
+              <div class="gauge-bar"><div class="gauge-bar__fill" style="width:0%"></div></div>
+              <p class="gauge-card__count"><span id="cnt-lemansion-dinner">—</span> / 15 <span class="gauge-buffer">+3 buffer</span></p>
+              <span class="gauge-badge" id="badge-lemansion-dinner">—</span>
+            </div>
+            <div class="gauge-card gauge-card--fnb" id="gauge-barkers">
+              <p class="gauge-card__name">Barker's Lounge</p>
+              <div class="gauge-bar"><div class="gauge-bar__fill" style="width:0%"></div></div>
+              <p class="gauge-card__count"><span id="cnt-barkers">—</span> / 10 <span class="gauge-buffer">+2 buffer</span></p>
+              <span class="gauge-badge" id="badge-barkers">—</span>
+            </div>
+            <div class="gauge-card gauge-card--fnb" id="gauge-oasis">
+              <p class="gauge-card__name">Oasis</p>
+              <div class="gauge-bar"><div class="gauge-bar__fill" style="width:0%"></div></div>
+              <p class="gauge-card__count"><span id="cnt-oasis">—</span> / 12 <span class="gauge-buffer">+2 buffer</span></p>
+              <span class="gauge-badge" id="badge-oasis">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/mgmt-auth-guard.js"></script>
+  <script src="./js/management-portal.js"></script>
+</body>
+</html>

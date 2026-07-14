@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Late Cancellation Fees</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="management.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Management</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="management.html" class="nav-item">
+          <span class="nav-item__icon">≡</span>
+          <span>Shift Overview</span>
+        </a>
+        <a href="management-occupancy.html" class="nav-item">
+          <span class="nav-item__icon">◈</span>
+          <span>Live Occupancy</span>
+        </a>
+        <a href="management-analytics.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Booking Analytics</span>
+        </a>
+        <a href="management-noshow.html" class="nav-item">
+          <span class="nav-item__icon">△</span>
+          <span>No-Show Tracker</span>
+        </a>
+        <a href="management-guests.html" class="nav-item">
+          <span class="nav-item__icon">⊕</span>
+          <span>Guest Record Audit</span>
+        </a>
+        <a href="management-fees.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">◻</span>
+          <span>Late Cancellation Fees</span>
+        </a>
+        <a href="management-blocks.html" class="nav-item">
+          <span class="nav-item__icon">▣</span>
+          <span>Facility Blocks</span>
+        </a>
+        <a href="management-events.html" class="nav-item">
+          <span class="nav-item__icon">&#9733;</span>
+          <span>Add Event</span>
+        </a>
+        <a href="management-inbox.html" class="nav-item">
+          <span class="nav-item__icon">&#9993;</span>
+          <span>Inbox</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Admin</span>
+          <span class="staff-badge__role" id="staffRole">Management</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">Late Cancellation Fees</h1>
+          <p class="view__sub">Manual billing reference for finance. Sorted by cancellation date descending.</p>
+        </div>
+      </div>
+
+      <!-- [GHL] GET /contacts/ filtered by late_cancellation=true → sort by cancelled_at desc -->
+      <!-- Actions: [Mark Paid] → booking_status:late_fee_paid | [Waive] → waiveFeeModal | [View Full Record] → GHL contact -->
+      <!-- Fee amount defined in WF-08 (pending Verve Committee confirmation) — no payment integration in Phase 1 -->
+      <div class="table-wrap">
+        <table class="data-table" id="lateFeesTable">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Facility</th>
+              <th>Slot Date &amp; Time</th>
+              <th>Cancelled At</th>
+              <th>Fee Status</th>
+              <th>Waiver Reason</th>
+              <th>Actioned By</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="lateFeesBody">
+            <tr class="table-empty"><td colspan="8">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="modalOverlay" hidden></div>
+
+  <dialog id="waiveFeeModal" class="modal-dialog">
+    <button class="modal-close" data-close>&times;</button>
+    <h3>Waive Late Cancellation Fee</h3>
+    <p class="modal-step">Reason is required. Action logged for audit.</p>
+    <form id="waiveFeeForm">
+      <div class="field">
+        <label class="field__label" for="waiverReason">Reason</label>
+        <div class="field__wrap">
+          <!-- [GHL] PUT /contacts/{id} → fee_waived:true, waiver_reason, waiver_by -->
+          <input class="field__input" type="text" id="waiverReason" placeholder="e.g. Medical emergency" required />
+          <span class="field__line"></span>
+        </div>
+      </div>
+      <input type="hidden" id="waiverContactId" />
+      <button class="btn-primary" type="submit">Confirm Waiver</button>
+    </form>
+  </dialog>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/mgmt-auth-guard.js"></script>
+  <script src="./js/management-portal.js"></script>
+</body>
+</html>

@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Dashboard</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/dashboard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="dashboard-wrap">
+
+  <!-- ══════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════ -->
+  <header class="dashboard-header">
+    <div class="dashboard-brand">
+      <a href="dashboard.html" class="dashboard-logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve Logo" class="dashboard-logo" /></a>
+      <span>Verve</span>
+    </div>
+
+
+      <!-- ── TAB NAVIGATION ── -->
+  <nav class="dash-tabs" role="tablist">
+    <button class="dash-tab dash-tab--active" data-tab="home" role="tab">Dashboard</button>
+    <button class="dash-tab" data-tab="events" role="tab">
+      Club Events
+      <!-- <span class="tab-badge">6</span> alisin n for good-->
+    </button>
+    <button class="dash-tab" data-tab="notices" role="tab">
+      Notices
+      <span class="tab-badge tab-badge--alert" id="noticesTabBadge" hidden>0</span>
+    </button>
+  </nav>
+
+      <div class="header-right">
+      <button class="btn-notif" id="notifBtn" aria-label="Notices">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="notif-badge" id="notifBadge" hidden>0</span>
+      </button>
+      <button class="btn-profile-icon" id="profileBtn" aria-label="Profile menu">
+        <span class="profile-icon-initial" id="profileIconInitial">M</span>
+      </button>
+    </div>
+
+  </header>
+
+  <!-- ── NOTIFICATION QUICK-PEEK DROPDOWN ── -->
+  <div class="notif-dropdown" id="notifDropdown" hidden>
+    <div class="notif-dropdown__head">
+      <span class="notif-dropdown__title">Notices</span>
+      <button class="notif-mark-read" id="markAllRead">Mark all read</button>
+    </div>
+    <ul class="notif-list" id="notifList"></ul>
+    <div class="notif-dropdown__footer">
+      <button class="notif-view-all" id="goToNotices">View all notices &amp; reply →</button>
+    </div>
+  </div>
+
+  <!-- ── PROFILE DROPDOWN ── -->
+  <div class="profile-dropdown" id="profileDropdown" hidden>
+    <div class="profile-dropdown__head">
+      <div class="profile-dropdown__avatar" id="profileDropAvatar">M</div>
+      <div class="profile-dropdown__info">
+        <span class="profile-dropdown__name" id="profileDropName">Member</span>
+        <span class="profile-dropdown__id" id="profileDropId">—</span>
+      </div>
+    </div>
+    <div class="profile-dropdown__divider"></div>
+    <button class="profile-dropdown__item" id="profileEditBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+      Edit Profile
+    </button>
+    <button class="profile-dropdown__item profile-dropdown__item--danger" id="profileLogoutBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Logout
+    </button>
+  </div>
+
+
+
+  <!-- ── ANNOUNCE BANNER ── -->
+  <div class="announce-banner" id="announceBanner" hidden>
+    <svg class="announce-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+    <span id="announceBannerText"></span>
+    <button class="announce-see-notice" id="announceSeeNotice">See Notice</button>
+    <button class="announce-dismiss" id="announceDismiss" aria-label="Dismiss">&#x2715;</button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB: HOME
+  ══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-home">
+
+    <section class="greeting-card">
+      <div class="greeting-card__deco" aria-hidden="true"></div>
+      <div class="greeting-card__top">
+        <div class="greeting-card__text">
+          <h2 id="memberGreeting">Hello, Member!</h2>
+          <div class="greeting-meta">
+            <p id="memberId">ID: —</p>
+            <span class="greeting-divider" aria-hidden="true"></span>
+            <span class="greeting-date" id="greetingDate"></span>
+          </div>
+        </div>
+        <span class="member-tier-badge" id="memberTierBadge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Member
+        </span>
+      </div>
+      <div class="greeting-rule" aria-hidden="true"></div>
+      <div class="stats-bar">
+        <div class="stat-tile">
+          <div class="stat-tile__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <span class="stat-tile__num" id="statFacility">—</span>
+          <span class="stat-tile__label">Facility Bookings</span>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <span class="stat-tile__num" id="statDining">—</span>
+          <span class="stat-tile__label">Dining Reservations</span>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="stat-tile__num" id="statGuests">—</span>
+          <span class="stat-tile__label">Guests Registered</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards-grid">
+      <article class="card">
+        <div class="card-image" data-tagline="Reserve your court today">
+          <img src="./asset/booking-facility.jpg" alt="Facility Booking" />
+          <span class="card-number" aria-hidden="true"></span>
+        </div>
+        <div class="card-content">
+          <div class="card-content__header">
+            <p class="card-title">Book Facility</p>
+            <svg class="card-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <p class="card-desc">Reserve your space with ease.</p>
+          <button class="btn-action" data-modal="facilityModal">Book Now</button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-image" data-tagline="Dine with us at your preferred time">
+          <img src="./asset/dining-reservation.jpg" alt="Dining Reservation" />
+          <span class="card-number" aria-hidden="true"></span>
+        </div>
+        <div class="card-content">
+          <div class="card-content__header">
+            <h3 class="card-title">Dining Reservation</h3>
+            <svg class="card-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <p class="card-desc">Reserve your table with us.</p>
+          <button class="btn-action" data-modal="diningModal">Reserve Now</button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-image" data-tagline="Add visiting guests per request">
+          <img src="./asset/register-guests.jpg" alt="Register Guests" />
+          <span class="card-number" aria-hidden="true"></span>
+        </div>
+        <div class="card-content">
+          <div class="card-content__header">
+            <h3 class="card-title">Register Guests</h3>
+            <svg class="card-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <p class="card-desc">Extend the invitation to your guests.</p>
+          <button class="btn-action" data-modal="guestModal">Register Now</button>
+        </div>
+      </article>
+    </section>
+
+    <div class="bottom-panels">
+      <section class="panel-bookings">
+        <div class="panel-header">
+          <div class="panel-header__left">
+            <span class="panel-label">UPCOMING BOOKINGS</span>
+            <span class="panel-count" id="totalBookings">0 bookings</span>
+          </div>
+          <button class="panel-header__action" id="viewAllBtn">View All</button>
+        </div>
+        <div id="upcomingList" class="upcoming-list">
+          <div class="empty-state">
+            <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="20" width="80" height="65" rx="4" stroke="#ad974f" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <rect x="35" y="10" width="12" height="20" rx="2" fill="#002366"/>
+              <rect x="73" y="10" width="12" height="20" rx="2" fill="#002366"/>
+              <rect x="35" y="10" width="12" height="20" rx="2" stroke="#ad974f" stroke-width="1.5"/>
+              <rect x="73" y="10" width="12" height="20" rx="2" stroke="#ad974f" stroke-width="1.5"/>
+              <line x1="20" y1="38" x2="100" y2="38" stroke="#ad974f" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="60" cy="65" r="14" stroke="#ad974f" stroke-width="1.5" opacity="0.5"/>
+              <line x1="60" y1="58" x2="60" y2="65" stroke="#ad974f" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="60" y1="65" x2="65" y2="70" stroke="#ad974f" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <p>No bookings yet. Create one above.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-guests">
+        <div class="panel-header">
+          <div class="panel-header__left">
+            <span class="panel-label">Registered Guests</span>
+            <span class="panel-count" id="totalGuestsCount">0 guests</span>
+          </div>
+        </div>
+        <div id="guestList" class="guest-list">
+          <div class="empty-state">
+            <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="60" cy="36" r="16" stroke="#ad974f" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <path d="M28 84 Q28 62 60 62 Q92 62 92 84" stroke="#ad974f" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+            </svg>
+            <p>No guests registered yet.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div><!-- /panel-home -->
+
+
+  <!-- ══════════════════════════════════════
+       TAB: CLUB EVENTS
+  ══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-events" hidden>
+    <div class="events-page">
+
+      <!-- EVENTS CAROUSEL -->
+      <div class="event-carousel" id="eventCarousel">
+        <div class="event-carousel__track" id="eventCarouselTrack">
+          <!-- populated by JS from .event-card elements in the grid below -->
+
+          <!-- Slide 1: Annual Dinner & Dance -->
+          <!-- <article class="event-slide"
+            data-title="Annual Dinner &amp; Dance"
+            data-date="Saturday, 26 April 2026"
+            data-time="7:00 PM – 11:00 PM"
+            data-venue="Grand Ballroom, Verve"
+            data-cat="GALA"
+            data-price="$188 per pax · $1,600 table of 10"
+            data-desc="Join us for an elegant evening of fine dining, live entertainment, and dancing at Verve's most anticipated annual event. A sumptuous five-course dinner will be served, followed by live band performances and lucky draw prizes worth over $10,000. Dress code: Black Tie."
+            data-seats="Limited seats — only 40 tables remaining"
+            data-img="./asset/dining-reservation.jpg"
+            data-pay="#"
+            data-pdf="">
+            <div class="event-slide__bg" style="background-image: url('./asset/dining-reservation.jpg')"></div>
+            <div class="event-hero__overlay">
+              <div class="event-hero__inner">
+                <div class="event-hero__top-labels">
+                  <span class="event-spotlight-badge">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Featured Event
+                  </span>
+                  <span class="event-cat-pill event-cat--gala">Gala</span>
+                </div>
+                <p class="event-hero__date-line">Saturday, 26 April 2026 &nbsp;·&nbsp; Grand Ballroom, Verve</p>
+                <h2 class="event-hero__title">Annual Dinner<br/>&amp; Dance</h2>
+                <p class="event-hero__tagline">An elegant black-tie evening of fine dining, live entertainment, and dancing at our most anticipated annual event.</p>
+                <div class="event-hero__footer">
+                  <div class="event-hero__price-block">
+                    <span class="event-hero__price-from">From</span>
+                    <span class="event-hero__price-num">$188</span>
+                    <span class="event-hero__price-unit">per pax</span>
+                  </div>
+                  <button class="btn-hero-cta">View Details &amp; Register</button>
+                </div>
+              </div>
+            </div>
+          </article> -->
+
+
+
+        </div><!-- /event-carousel__track -->
+
+        <button class="carousel-btn carousel-btn--prev" id="carouselPrev" aria-label="Previous event">&#8249;</button>
+        <button class="carousel-btn carousel-btn--next" id="carouselNext" aria-label="Next event">&#8250;</button>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div><!-- /event-carousel -->
+
+      <!-- SUPPORTING EVENTS GRID -->
+      <div class="events-sub-section">
+        <div class="events-sub-header">
+          <span class="events-sub-label">More Upcoming Events</span>
+          <span class="events-sub-count">6 events</span>
+        </div>
+
+        <div class="events-grid" id="eventsGrid">
+          <!-- rendered by JS from EVENTS array -->
+        </div><!-- /events-grid -->
+      </div><!-- /events-sub-section -->
+    </div><!-- /events-page -->
+  </div><!-- /panel-events -->
+
+
+  <!-- ══════════════════════════════════════
+       TAB: NOTICES & ANNOUNCEMENTS (hardcoded muna hehe)
+  ══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-notices" hidden>
+    <div class="notices-page">
+
+      <div class="notices-header">
+        <div class="notices-header__left">
+          <span class="panel-label">NOTICES &amp; ANNOUNCEMENTS</span>
+          <p class="notices-sub">Official communications from Verve Management. You may reply or submit enquiries below each notice.</p>
+        </div>
+        <div class="notices-filters">
+          <button class="notice-filter notice-filter--active" data-filter="all">All</button>
+          <button class="notice-filter" data-filter="facility">Facility</button>
+          <button class="notice-filter" data-filter="events">Events</button>
+          <button class="notice-filter" data-filter="general">General</button>
+        </div>
+      </div>
+
+      <div class="notices-list" id="noticesList">
+        <!-- populated dynamically -->
+      </div><!-- /notices-list -->
+    </div><!-- /notices-page -->
+  </div><!-- /panel-notices -->
+
+
+</div><!-- /dashboard-wrap -->
+
+
+<!-- ══════════════════════════════════════
+     MODALS
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" hidden></div>
+
+<!-- Facility Modal -->
+<dialog id="facilityModal" class="modal-dialog">
+  <button class="modal-close" data-close>&times;</button>
+  <h3>Book Facility</h3>
+  <p class="modal-step">Step 1-4: select facility → date/time → pax/notes → confirm</p>
+  <form id="facilityForm">
+    <label>Facility
+      <select id="facilityName" required><option value="">Loading facilities…</option></select>
+    </label>
+    <label>Date to Visit
+      <input type="date" id="facilityDate" required />
+      <span class="time-error-msg" id="facilityDateError" hidden>You cannot book on a past date. Please select today or a future date.</span>
+    </label>
+    <label>Start Time
+      <select id="facilityTime" required></select>
+      <span class="time-error-msg" id="facilityTimeError" hidden>This time has already passed. Please select a future time.</span>
+    </label>
+    <label>Pax Size
+      <input type="number" id="facilityGuests" min="1" max="20" value="1" required />
+    </label>
+    <span class="time-error-msg" id="facilityCapacityError" hidden></span>
+    <button class="btn-primary" type="submit">Confirm Booking</button>
+  </form>
+</dialog>
+
+<!-- Dining Modal -->
+<dialog id="diningModal" class="modal-dialog">
+  <button class="modal-close" data-close>&times;</button>
+  <h3>Dining Reservation</h3>
+  <p class="modal-step">Step 1-4: venue → date/time → pax/special requests → summary</p>
+  <form id="diningForm">
+    <label>Venue
+      <select id="diningVenue" required><option value="">Loading venues…</option></select>
+    </label>
+    <label id="diningShiftLabel" style="display:none">Booking Shift
+      <select id="diningShift">
+        <option value="">Select a shift</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+      </select>
+    </label>
+    <label>Date
+      <input type="date" id="diningDate" required />
+      <span class="time-error-msg" id="diningDateError" hidden>You cannot reserve on a past date. Please select today or a future date.</span>
+    </label>
+    <label>Time
+      <select id="diningTime" required></select>
+      <span class="time-error-msg" id="diningTimeError" hidden>This time has already passed. Please select a future time.</span>
+    </label>
+    <label>Pax Size (mandatory)
+      <input type="number" id="diningPax" min="1" max="20" value="1" required />
+    </label>
+    <label>Special Requests (optional)
+      <textarea id="diningNotes" rows="3" placeholder="e.g. any special requests or notes" maxlength="500"></textarea>
+    </label>
+    <span class="time-error-msg" id="diningCapacityError" hidden></span>
+    <button class="btn-primary" type="submit">Confirm Reservation</button>
+  </form>
+</dialog>
+
+<!-- Edit Booking Modal -->
+<dialog id="editBookingModal" class="modal-dialog edit-booking-modal">
+  <button class="modal-close" data-close>&times;</button>
+  <h3>Edit Booking</h3>
+  <p class="modal-step">Update the details below and save your changes.</p>
+  <form id="editBookingForm">
+    <input type="hidden" id="editBookingRef" />
+    <div class="edit-booking-venue">
+      <span class="booking-detail-label">Venue</span>
+      <span class="booking-detail-value" id="editBookingVenue"></span>
+    </div>
+    <label>Date
+      <input type="date" id="editBookingDate" required />
+    </label>
+    <label>Start Time
+      <select id="editBookingStartTime" required></select>
+    </label>
+    <label>End Time
+      <select id="editBookingEndTime" required></select>
+    </label>
+    <label>Pax Size
+      <input type="number" id="editBookingPax" min="1" max="20" required />
+    </label>
+    <label>Notes / Special Requests
+      <textarea id="editBookingNotes" rows="3" placeholder="e.g. any special requests or notes" maxlength="500"></textarea>
+    </label>
+    <button class="btn-primary" type="submit">Save Changes</button>
+  </form>
+</dialog>
+
+<!-- Guest Modal -->
+<dialog id="guestModal" class="modal-dialog">
+  <button class="modal-close" data-close>&times;</button>
+  <h3>Register Guests</h3>
+  <p class="modal-step">Add up to 4 guests per month, including optional phone number.</p>
+  <p class="modal-step modal-step--info" id="guestQuotaInfo" style="display:none;"></p>
+  <form id="guestForm">
+    <div id="guestContainer"></div>
+    <button type="button" class="btn-ghost" id="addGuestBtn">+ Add Guest</button>
+    <label id="guestShiftLabel" style="display:none">Booking Shift
+      <select id="guestShift">
+        <option value="">Select a shift</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+      </select>
+    </label>
+    <label>Visit Date
+      <input type="date" id="guestVisitDate" required />
+      <span class="time-error-msg" id="guestDateError" hidden>You cannot register guests for a past date. Please select today or a future date.</span>
+    </label>
+    <span class="time-error-msg" id="guestCapacityError" hidden></span>
+    <button class="btn-primary" type="submit">Submit Guests</button>
+  </form>
+</dialog>
+
+<!-- All Bookings Modal -->
+<dialog id="allBookingsModal" class="modal-dialog all-bookings-modal">
+  <button class="modal-close" data-close>&times;</button>
+  <header class="all-bookings__header">
+    <h3>All My Bookings</h3>
+    <p class="all-bookings__sub" id="allBookingsCount">Loading…</p>
+  </header>
+  <div class="all-bookings__filter">
+    <button type="button" class="all-bookings__chip is-active" data-filter="all">All</button>
+    <button type="button" class="all-bookings__chip" data-filter="upcoming">Upcoming</button>
+    <button type="button" class="all-bookings__chip" data-filter="past">Past</button>
+  </div>
+  <div class="all-bookings__list" id="allBookingsList">
+    <p class="all-bookings__empty">Loading your bookings…</p>
+  </div>
+</dialog>
+
+<!-- Booking Confirmation Modal -->
+<dialog id="confirmationModal" class="modal-dialog confirmation-modal">
+  <button class="modal-close" data-close>&times;</button>
+  <div class="confirm-body">
+    <div class="confirm-badge">
+      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="25" stroke="#ad974f" stroke-width="2"/>
+        <path d="M15 27l7 7 15-15" stroke="#ad974f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3>Booking Confirmed</h3>
+    <p class="confirm-greeting" id="confirmGreeting"></p>
+    <div class="confirm-details">
+      <div class="confirm-row"><span class="confirm-icon">&#128205;</span><div><span class="confirm-label">Venue</span><span class="confirm-value" id="confirmVenue"></span></div></div>
+      <div class="confirm-row"><span class="confirm-icon">&#128197;</span><div><span class="confirm-label">Date</span><span class="confirm-value" id="confirmDate"></span></div></div>
+      <div class="confirm-row"><span class="confirm-icon">&#128336;</span><div><span class="confirm-label">Time</span><span class="confirm-value" id="confirmTime"></span></div></div>
+      <div class="confirm-row"><span class="confirm-icon">&#128101;</span><div><span class="confirm-label">Pax</span><span class="confirm-value" id="confirmPax"></span></div></div>
+      <div class="confirm-row"><span class="confirm-icon">&#128278;</span><div><span class="confirm-label">Reference</span><span class="confirm-value confirm-ref" id="confirmRef"></span></div></div>
+    </div>
+    <div class="confirm-qr">
+      <p class="confirm-qr-label">Your Check-in QR Code</p>
+      <img id="confirmQr" alt="QR Code" />
+      <button type="button" class="btn-qr-download" id="confirmQrDownload">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download QR
+      </button>
+    </div>
+    <p class="confirm-note">Please present this QR code to security upon arrival.</p>
+    <p class="confirm-brand">Verve</p>
+    <button class="btn-primary confirm-done" id="confirmDoneBtn">Done</button>
+  </div>
+</dialog>
+
+<!-- QR Code View Modal -->
+<dialog id="qrViewModal" class="modal-dialog qr-view-modal">
+  <button class="modal-close" data-close>&times;</button>
+  <div class="confirm-body">
+    <h3>Check-in QR Code</h3>
+    <p class="qr-view-ref" id="qrViewRef"></p>
+    <div class="confirm-qr">
+      <img id="qrViewImg" alt="QR Code" />
+      <button type="button" class="btn-qr-download" id="qrViewDownload">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download QR
+      </button>
+    </div>
+    <p class="confirm-note">Please present this QR code to security upon arrival.</p>
+    <p class="confirm-brand">Verve</p>
+    <button class="btn-primary confirm-done" id="qrViewDoneBtn">Close</button>
+  </div>
+</dialog>
+
+<!-- Guest Registration Confirmation Modal -->
+<dialog id="guestConfirmationModal" class="modal-dialog confirmation-modal">
+  <button class="modal-close" data-close>&times;</button>
+  <div class="confirm-body">
+    <div class="confirm-badge">
+      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="25" stroke="#ad974f" stroke-width="2"/>
+        <path d="M15 27l7 7 15-15" stroke="#ad974f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3>Guests Registered</h3>
+    <p class="confirm-greeting" id="guestConfirmGreeting"></p>
+    <div id="guestConfirmList" class="guest-confirm-list"></div>
+    <p class="confirm-note">Please ensure each guest presents their QR code to security upon arrival.</p>
+    <p class="confirm-brand">Verve</p>
+    <button class="btn-primary confirm-done" id="guestConfirmDoneBtn">Done</button>
+  </div>
+</dialog>
+
+<!-- Booking Summary Modal -->
+<dialog id="summaryModal" class="modal-dialog summary-modal">
+  <button class="modal-close" id="summaryCloseBtn">&times;</button>
+  <h3>Review Booking</h3>
+  <p class="modal-step">Confirm the details below before submitting.</p>
+  <div class="summary-details" id="summaryDetails"></div>
+  <div class="summary-actions">
+    <button class="btn-ghost" id="summaryEditBtn">Edit</button>
+    <button class="btn-primary" id="summaryConfirmBtn">Confirm</button>
+  </div>
+</dialog>
+
+<!-- Profile Edit Modal -->
+<dialog id="profileModal" class="modal-dialog">
+  <button class="modal-close" data-close>&times;</button>
+  <h3>Edit Profile</h3>
+  <p class="modal-step">Update your contact information below.</p>
+  <form id="profileForm" novalidate>
+    <label>Membership ID
+      <input type="text" id="profileMemberId" disabled />
+    </label>
+    <label>Full Name
+      <input type="text" id="profileName" placeholder="Your full name" autocomplete="name" required />
+    </label>
+    <label>Email Address
+      <input type="email" id="profileEmail" placeholder="your@email.com" autocomplete="email" required />
+    </label>
+    <label>Contact Number
+      <input type="tel" id="profilePhone" placeholder="+XX XXXX XXXX" autocomplete="tel" />
+    </label>
+    <div style="display:flex;align-items:center;gap:14px;margin-top:4px;">
+      <button class="btn-primary" type="submit">Save Changes</button>
+      <span id="profileSaveMsg" style="font-family:'Poppins',sans-serif;font-size:12px;color:#6fcf97;" hidden></span>
+    </div>
+  </form>
+</dialog>
+
+
+<!-- Cancel Booking Confirm Modal -->
+<dialog id="cancelConfirmModal" class="modal-dialog">
+  <button class="modal-close" data-close>&times;</button>
+  <h3>Cancel Booking</h3>
+  <p style="margin:0.5rem 0 1.25rem;">Are you sure you want to cancel booking <strong id="cancelConfirmRef"></strong>? This cannot be undone.</p>
+  <span class="time-error-msg" id="cancelConfirmError" hidden></span>
+  <div style="display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1rem;">
+    <button class="btn-secondary" id="cancelConfirmNo">Keep Booking</button>
+    <button class="btn-primary" id="cancelConfirmYes">Yes, Cancel</button>
+  </div>
+</dialog>
+
+<!-- Event Detail Modal -->
+<dialog id="eventModal" class="modal-dialog event-modal">
+  <button class="modal-close" id="eventModalClose">&times;</button>
+  <div class="event-modal__img-wrap">
+    <img id="eventModalImg" src="" alt="" />
+  </div>
+  <div class="event-modal__body">
+    <h3 class="event-modal__title" id="eventModalTitle"></h3>
+    <ul class="event-modal__meta">
+      <li>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span id="eventModalDate"></span>
+      </li>
+      <li>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="eventModalVenue"></span>
+      </li>
+    </ul>
+    <p class="event-modal__desc" id="eventModalDesc"></p>
+    <div class="event-modal__btn-row">
+      <button class="event-modal__pdf-btn" id="eventModalPdfBtn" hidden>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        View Event Flyer (PDF)
+      </button>
+      <button class="event-modal__ticket-btn" id="eventModalTicketBtn" hidden>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+        Buy Tickets
+      </button>
+    </div>
+    <div class="event-modal__pdf-embed" id="eventModalPdfEmbed" hidden>
+      <iframe id="eventModalPdfFrame" src="" title="Event Flyer" allowfullscreen></iframe>
+    </div>
+  </div>
+</dialog>
+
+<!-- ── Ticket Purchase Popup ─────────────────────────── -->
+<div class="ticket-popup-overlay" id="ticketPopupOverlay" hidden>
+  <div class="ticket-popup">
+    <div class="ticket-popup__header">
+      <h3 class="ticket-popup__title" id="ticketPopupTitle">Buy Tickets</h3>
+      <button class="ticket-popup__close" id="ticketPopupClose">&times;</button>
+    </div>
+    <div class="ticket-popup__body" id="ticketPopupBody"></div>
+  </div>
+</div>
+
+
+<script src="./js/demo-mode.js"></script>
+<script src="./js/dashboard.js"></script>
+
+<script>
+// ── Static club events (always shown) ─────────────────────────────────
+const STATIC_EVENTS = [
+  {
+    title: 'Verve & Kickstart Training Sessions',
+    date:  'Thursday, 31 December 2026 | 12:00am - 11:30pm',
+    venue: 'Meridian Green & Verve @ Eastgate',
+    desc:  'Calling All Parents: Start Your Child\'s Football Journey at Verve!\nAre you looking for a premier football environment for your young athlete? We are proud to partner with Kickstart FC to offer the latest youth training sessions right in the heart of the city.\nWe are excited to invite players from U6, U8, U10, and U12 categories to join us at our brand-new venue at Meridian Green. We also continue to host sessions at Verve @ Eastgate, ensuring your child has the best facilities to develop their skills.',
+    pdf:   './asset/events/1.pdf',
+    img:   './asset/events/1.jpg',
+    ticket_form_id: '5lLXjx162DNpZkTkjh5z',
+  },
+  {
+    title: 'DanceSport Section: Dondang Sayang',
+    date:  'Tuesday, 28 April 2026 | 7:00pm - 11:00pm',
+    venue: 'GRAND BALLROOM',
+    desc:  'This enchanting evening features a timeless blend of song, poetry, and dance, setting the stage for a journey filled with rhythm and club community joy. We invite you to come adorned in your most charming Peranakan-inspired attire, from vibrant batiks to elegant kebayas, and let your outfit tell a story as enchanting as the night itself.',
+    pdf:   '',
+    img:   './asset/events/2.jpg',
+    ticket_form_id: 'can82O8AOvRRoNIj5OrY',
+  },
+  {
+    title: 'DanceSport Section: Fun Dance 2026',
+    date:  'Tuesday, 21 April 2026 | 7:00pm - 10:00pm',
+    venue: 'Lounge 1962',
+    desc:  'This exhilarating evening is designed for dancers of all levels to come together and celebrate the pure joy of rhythm in a vibrant social setting. Come and be part of a community that moves as one, where every beat is an invitation to celebrate the spirit of dance.',
+    pdf:   './asset/events/3.pdf',
+    img:   './asset/events/3.jpg',
+    ticket_form_id: 'du6kSfGFJe4830BIrcUV',
+  },
+  {
+    title: 'Line Dance Section: Peranakan Fiesta',
+    date:  'Monday, 20 April 2026 | 7:00pm - 11:00pm',
+    venue: 'Lounge 1962',
+    desc:  'Step into a world of timeless tradition at our Peranakan Fiesta. This enchanting afternoon blends the heritage of song and poetry with the high-energy joy of line dancing. We invite you to come adorned in your most charming Peranakan-inspired attire, vibrant batiks and elegant kebayas, as your outfit tells a story as captivating as the music itself.',
+    pdf:   './asset/events/4.pdf',
+    img:   './asset/events/4.jpg',
+    ticket_form_id: 'QLelG9YcFMzPj4XaSR3o',
+  },
+  {
+    title: 'The Big Bunny Bash: Shake, Hunt, Create, & Celebrate!',
+    date:  'Sunday, 19 April 2026 | 2:00pm - 6:00pm',
+    venue: 'Lounge 1962',
+    desc:  'Hop into a whimsical wonderland for The Big Bunny Bash, a vibrant Easter celebration designed to captivate every young explorer. This festive afternoon blends high-energy rhythm with creative magic, starting with a heart-racing Zumba Blast followed by a thrilling Egg-sploration to uncover hidden treasures. Children can then retreat to the Creative Clubhouse to master festive egg painting and cupcake decoration before departing with a handpicked Goodie Bag.',
+    pdf:   './asset/events/5.pdf',
+    img:   './asset/events/5.jpg',
+    ticket_form_id: 'Jdz8nNvG6kWhsBzfVm3U',
+  }
+];
+
+// ── Merge static + dynamic events from backend ────────────────────────
+let EVENTS = [...STATIC_EVENTS];
+const EVENTS_API = 'https://backend-production-41dc3.up.railway.app/api/events/active';
+
+function formatEventDate(dateStr, duration) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00+08:00');
+  const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Singapore' };
+  const formatted = d.toLocaleDateString('en-SG', options);
+  return duration ? formatted + ' | ' + duration : formatted;
+}
+
+(async function loadEventsFromBackend() {
+  try {
+    const token = localStorage.getItem('vrv_token');
+    const res = await fetch(EVENTS_API, {
+      headers: token ? { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' } : {},
+    });
+    const data = await res.json();
+    if (data.success && data.events && data.events.length) {
+      const backendEvents = data.events.map(function(ev) {
+        return {
+          title: ev.title || '',
+          date:  formatEventDate(ev.date, ev.duration),
+          venue: ev.venue || 'Verve',
+          desc:  ev.desc || '',
+          pdf:   ev.pdf || '',
+          img:   ev.img || '',
+          duration: ev.duration || '',
+          _id:   ev._id || '',
+        };
+      });
+      // Prepend backend-created events before the static ones
+      EVENTS = [...backendEvents, ...STATIC_EVENTS];
+    }
+  } catch (e) {
+    console.warn('Failed to load events from backend:', e);
+  }
+  // Update event count badge
+  var evtBadge = document.querySelector('.dash-tab[data-tab="events"] .tab-badge');
+  if (evtBadge) evtBadge.textContent = EVENTS.length;
+  // Dispatch custom event so the render functions below can fire
+  document.dispatchEvent(new CustomEvent('events-loaded'));
+})();
+</script>
+
+<!-- ══════════════════════════════════════
+     FEATURE SCRIPT: Tabs · Bell · Events · Notices
+══════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── Tab Switching ─────────────────────────────────────────────────
+  const tabs   = document.querySelectorAll('.dash-tab');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  const VALID_TABS = ['home', 'events', 'notices'];
+
+  function switchTab(targetId) {
+    tabs.forEach(t => {
+      t.classList.toggle('dash-tab--active', t.dataset.tab === targetId);
+      t.setAttribute('aria-selected', t.dataset.tab === targetId);
+    });
+    panels.forEach(p => { p.hidden = p.id !== `panel-${targetId}`; });
+    if (history.replaceState) {
+      history.replaceState(null, '', '#' + targetId);
+    } else {
+      location.hash = targetId;
+    }
+  }
+
+  tabs.forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.tab)));
+
+  // Restore active tab from URL hash on page load / refresh
+  const hashTab = location.hash.replace('#', '');
+  if (VALID_TABS.includes(hashTab)) switchTab(hashTab);
+
+
+  // ── Notification Bell & Dropdown ──────────────────────────────────
+  const NOTIF_API = 'https://backend-production-41dc3.up.railway.app/api/events';
+  const notifBtn      = document.getElementById('notifBtn');
+  const notifDropdown = document.getElementById('notifDropdown');
+  const notifBadge    = document.getElementById('notifBadge');
+  const notifList     = document.getElementById('notifList');
+  const noticesTabBadge = document.getElementById('noticesTabBadge');
+  let   unreadCount   = 0;
+  let   allNotifications = [];
+
+  function authHeaders() {
+    const token = localStorage.getItem('vrv_token');
+    return token ? { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' } : {};
+  }
+
+  async function loadNotifications() {
+    try {
+      const res = await fetch(NOTIF_API + '/notifications', { headers: authHeaders() });
+      const data = await res.json();
+      if (data.success) {
+        allNotifications = data.notifications || [];
+        renderNotifDropdown();
+        renderNoticesList();
+        recalcUnread();
+        showAnnounceBanner();
+      }
+    } catch (e) { console.warn('Failed to load notifications:', e); }
+  }
+
+  function renderNotifDropdown() {
+    notifList.innerHTML = '';
+    if (!allNotifications.length) {
+      notifList.innerHTML = '<li class="notif-item" style="text-align:center;opacity:.6">No notifications yet</li>';
+      return;
+    }
+    allNotifications.slice(0, 10).forEach(n => {
+      const li = document.createElement('li');
+      li.className = 'notif-item' + (n.is_read ? '' : ' notif-item--unread');
+      li.dataset.noticeId = n._id;
+      li.innerHTML = '<span class="notif-dot"></span>' +
+        '<div class="notif-content">' +
+          '<strong>' + escHtml(n.title) + '</strong>' +
+          '<p>' + escHtml(n.message.length > 60 ? n.message.slice(0, 60) + '...' : n.message) + '</p>' +
+          '<time>' + new Date(n.createdAt).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric' }) + '</time>' +
+        '</div>';
+      li.addEventListener('click', () => {
+        notifDropdown.hidden = true;
+        switchTab('notices');
+        setTimeout(() => openNotice(n._id), 80);
+      });
+      notifList.appendChild(li);
+    });
+  }
+
+  function renderNoticesList() {
+    const noticesList = document.getElementById('noticesList');
+    if (!noticesList) return;
+    noticesList.innerHTML = '';
+    if (!allNotifications.length) {
+      noticesList.innerHTML = '<p style="text-align:center;color:var(--muted);font-style:italic;padding:48px;font-family:var(--font-display);font-size:17px;opacity:.7">No notices yet.</p>';
+      return;
+    }
+
+    const catIcons = {
+      events:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      facility: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+      general:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+    };
+
+    allNotifications.forEach(n => {
+      const isUnread = !n.is_read;
+      const cat = n.category || 'events';
+      const dateStr = new Date(n.createdAt).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      const preview = n.message.length > 80 ? n.message.slice(0, 80) + '...' : n.message;
+
+      const thread = document.createElement('div');
+      thread.className = 'notice-thread' + (isUnread ? ' notice-thread--unread' : '');
+      thread.dataset.cat = cat;
+      const canReply = cat === 'facility' || cat === 'general';
+      const replyFormHtml = canReply
+        ? '<div class="notice-reply-section" id="notice-reply-section-' + n._id + '">' +
+            '<div class="notice-reply-list" id="notice-reply-list-' + n._id + '"></div>' +
+            '<form class="notice-reply-form" id="notice-reply-form-' + n._id + '">' +
+              '<input class="notice-reply-input" type="text" placeholder="Type your message..." required />' +
+              '<button class="notice-reply-btn" type="submit">Send</button>' +
+            '</form>' +
+          '</div>'
+        : '';
+
+      thread.innerHTML =
+        '<div class="notice-thread__head" id="notice-head-' + n._id + '" role="button" tabindex="0" aria-expanded="false">' +
+          '<div class="notice-thread__left">' +
+            (isUnread ? '<span class="notice-unread-dot" id="notice-dot-' + n._id + '"></span>' : '') +
+            '<span class="notice-cat-icon notice-cat-icon--' + cat + '">' + (catIcons[cat] || catIcons.general) + '</span>' +
+            '<div class="notice-thread__info">' +
+              '<div class="notice-thread__meta-row">' +
+                '<span class="notice-cat-badge notice-cat-badge--' + cat + '">' + escHtml(cat) + '</span>' +
+                '<span class="notice-time">' + dateStr + '</span>' +
+              '</div>' +
+              '<span class="notice-thread__title">' + escHtml(n.title) + '</span>' +
+              '<span class="notice-thread__preview">' + escHtml(preview) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="notice-thread__right">' +
+            '<span class="notice-chevron">&#9662;</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="notice-thread__body" id="notice-body-' + n._id + '" hidden>' +
+          '<div class="notice-posts" id="notice-replies-' + n._id + '">' +
+            '<div class="notice-post notice-post--official">' +
+              '<div class="notice-post__avatar notice-post__avatar--official">M</div>' +
+              '<div class="notice-post__bubble notice-post__bubble--official">' +
+                '<div class="notice-post__meta">' +
+                  '<span class="notice-post__author">' + escHtml(n.created_by || 'Management') + '</span>' +
+                  '<time class="notice-post__time">' + dateStr + '</time>' +
+                '</div>' +
+                '<p>' + escHtml(n.message) + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          replyFormHtml +
+        '</div>';
+
+      // Wire up expand/collapse
+      const head = thread.querySelector('.notice-thread__head');
+      let repliesLoaded = false;
+      head.addEventListener('click', () => {
+        const body = thread.querySelector('.notice-thread__body');
+        const isOpen = !body.hidden;
+        body.hidden = isOpen;
+        head.setAttribute('aria-expanded', !isOpen);
+        head.classList.toggle('is-open', !isOpen);
+        if (!isOpen && isUnread) {
+          thread.classList.remove('notice-thread--unread');
+          const dot = thread.querySelector('.notice-unread-dot');
+          if (dot) dot.style.opacity = '0';
+          n.is_read = true;
+          fetch(NOTIF_API + '/notifications/' + n._id + '/read', {
+            method: 'PUT', headers: authHeaders(),
+          }).catch(() => {});
+          recalcUnread();
+          renderNotifDropdown();
+        }
+        // Load replies when opening a facility/general notice
+        if (!isOpen && canReply && !repliesLoaded) {
+          repliesLoaded = true;
+          loadRepliesForNotice(n._id);
+        }
+      });
+
+      // Wire up reply form
+      if (canReply) {
+        const replyForm = thread.querySelector('#notice-reply-form-' + n._id);
+        if (replyForm) {
+          replyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = replyForm.querySelector('.notice-reply-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+            try {
+              const res = await fetch(NOTIF_API + '/notifications/' + n._id + '/replies', {
+                method: 'POST',
+                headers: authHeaders(),
+                body: JSON.stringify({ message: msg }),
+              });
+              const data = await res.json();
+              if (data.success) {
+                input.value = '';
+                loadRepliesForNotice(n._id);
+              } else {
+                alert(data.message || 'Failed to send reply.');
+              }
+            } catch (_) { alert('Failed to send reply.'); }
+          });
+        }
+      }
+
+      noticesList.appendChild(thread);
+    });
+  }
+
+  notifBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    notifDropdown.hidden = !notifDropdown.hidden;
+  });
+
+  document.addEventListener('click', e => {
+    if (!notifDropdown.hidden && !notifDropdown.contains(e.target) && e.target !== notifBtn)
+      notifDropdown.hidden = true;
+  });
+
+  document.getElementById('markAllRead').addEventListener('click', async () => {
+    // Mark all read on backend
+    try {
+      await fetch(NOTIF_API + '/notifications/read-all', {
+        method: 'PUT', headers: authHeaders(),
+      });
+    } catch (_) {}
+    allNotifications.forEach(n => { n.is_read = true; });
+    document.querySelectorAll('.notif-item--unread').forEach(el => el.classList.remove('notif-item--unread'));
+    document.querySelectorAll('.notice-thread--unread').forEach(t => t.classList.remove('notice-thread--unread'));
+    document.querySelectorAll('[id^="notice-dot-"]').forEach(d => { d.style.opacity = '0'; });
+    unreadCount = 0;
+    notifBadge.hidden = true;
+    noticesTabBadge.hidden = true;
+    notifDropdown.hidden = true;
+    // Hide the announce banner since everything is read
+    var ab = document.getElementById('announceBanner');
+    if (ab) { ab.hidden = true; ab.style.display = 'none'; }
+  });
+
+  document.getElementById('goToNotices').addEventListener('click', () => {
+    notifDropdown.hidden = true;
+    switchTab('notices');
+  });
+
+  // Load notifications on page load
+  loadNotifications();
+
+
+  // ── Announcement Banner ───────────────────────────────────────────
+  let bannerNoticeId = null;
+
+  function showAnnounceBanner() {
+    const banner = document.getElementById('announceBanner');
+    if (!banner) return;
+    const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000; // only surface announcements from the last 7 days
+    const latestUnread = allNotifications.find(n => !n.is_read && new Date(n.createdAt).getTime() >= cutoff);
+    if (latestUnread) {
+      bannerNoticeId = latestUnread._id;
+      const dismissed = JSON.parse(sessionStorage.getItem('src_dismissed_banners') || '[]');
+      if (dismissed.includes(latestUnread._id)) { banner.hidden = true; return; }
+      document.getElementById('announceBannerText').textContent = latestUnread.title + ' — ' + (latestUnread.message.length > 80 ? latestUnread.message.slice(0, 80) + '...' : latestUnread.message);
+      banner.hidden = false;
+      banner.style.display = '';
+    } else {
+      banner.hidden = true;
+      banner.style.display = 'none';
+    }
+  }
+
+  var announceDismissBtn = document.getElementById('announceDismiss');
+  if (announceDismissBtn) {
+    announceDismissBtn.addEventListener('click', () => {
+      document.getElementById('announceBanner').hidden = true;
+      document.getElementById('announceBanner').style.display = 'none';
+      if (bannerNoticeId) {
+        const dismissed = JSON.parse(sessionStorage.getItem('src_dismissed_banners') || '[]');
+        dismissed.push(bannerNoticeId);
+        sessionStorage.setItem('src_dismissed_banners', JSON.stringify(dismissed));
+      }
+    });
+  }
+
+  var announceSeeNoticeBtn = document.getElementById('announceSeeNotice');
+  if (announceSeeNoticeBtn) {
+    announceSeeNoticeBtn.addEventListener('click', () => {
+      document.getElementById('announceBanner').hidden = true;
+      document.getElementById('announceBanner').style.display = 'none';
+      switchTab('notices');
+      if (bannerNoticeId) setTimeout(() => openNotice(bannerNoticeId), 120);
+    });
+  }
+
+
+  // ── Notices: Expand / Collapse (dynamic) ─────────────────────────
+  function openNotice(id) {
+    const head = document.getElementById('notice-head-' + id);
+    if (head) {
+      const body = document.getElementById('notice-body-' + id);
+      if (body && body.hidden) head.click();
+      setTimeout(() => head.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+    }
+  }
+
+  function recalcUnread() {
+    unreadCount = allNotifications.filter(n => !n.is_read).length;
+    notifBadge.hidden    = unreadCount === 0;
+    notifBadge.textContent = unreadCount;
+    noticesTabBadge.hidden = unreadCount === 0;
+    noticesTabBadge.textContent = unreadCount;
+  }
+
+
+  // ── Notices: Category Filter ──────────────────────────────────────
+  document.querySelectorAll('.notice-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.notice-filter').forEach(b => b.classList.remove('notice-filter--active'));
+      btn.classList.add('notice-filter--active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.notice-thread').forEach(thread => {
+        thread.style.display = (filter === 'all' || thread.dataset.cat === filter) ? '' : 'none';
+      });
+    });
+  });
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  async function loadRepliesForNotice(noticeId) {
+    const listEl = document.getElementById('notice-reply-list-' + noticeId);
+    if (!listEl) return;
+    try {
+      const res = await fetch(NOTIF_API + '/notifications/' + noticeId + '/replies', { headers: authHeaders() });
+      const data = await res.json();
+      if (!data.success || !data.replies.length) { listEl.innerHTML = ''; return; }
+      const memberInfo = JSON.parse(localStorage.getItem('src_member') || '{}');
+      listEl.innerHTML = data.replies.map(function(r) {
+        const isMgmt = r.sender_type === 'management';
+        const isMe = r.membership_number === memberInfo.membership_number;
+        const avatarLetter = (r.sender_name || 'M').charAt(0).toUpperCase();
+        const timeStr = new Date(r.createdAt).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+        return '<div class="notice-reply-bubble ' + (isMgmt ? 'notice-reply-bubble--mgmt' : (isMe ? 'notice-reply-bubble--mine' : 'notice-reply-bubble--other')) + '">' +
+          '<div class="notice-reply-bubble__avatar">' + escHtml(avatarLetter) + '</div>' +
+          '<div class="notice-reply-bubble__body">' +
+            '<div class="notice-reply-bubble__meta">' +
+              '<span class="notice-reply-bubble__name">' + escHtml(r.sender_name) + (isMgmt ? ' <em>(Management)</em>' : '') + '</span>' +
+              '<time class="notice-reply-bubble__time">' + timeStr + '</time>' +
+            '</div>' +
+            '<p class="notice-reply-bubble__text">' + escHtml(r.message) + '</p>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    } catch (_) { listEl.innerHTML = ''; }
+  }
+
+
+  // ── Event Modal ───────────────────────────────────────────────────
+  const eventModal   = document.getElementById('eventModal');
+  const modalOverlay = document.getElementById('modalOverlay');
+  var currentEventModalEv = null;
+
+  function openEventModal(ev) {
+    currentEventModalEv = ev;
+    document.getElementById('eventModalImg').src            = ev.img   || '';
+    document.getElementById('eventModalImg').alt            = ev.title || '';
+    document.getElementById('eventModalTitle').textContent  = ev.title || '';
+    document.getElementById('eventModalDate').textContent   = ev.date  || '';
+    document.getElementById('eventModalVenue').textContent  = ev.venue || '';
+    document.getElementById('eventModalDesc').textContent   = ev.desc  || '';
+    const pdfBtn   = document.getElementById('eventModalPdfBtn');
+    const pdfEmbed = document.getElementById('eventModalPdfEmbed');
+    const pdfFrame = document.getElementById('eventModalPdfFrame');
+    pdfEmbed.hidden = true;
+    pdfFrame.src    = '';
+    pdfBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> View Event Flyer (PDF)';
+    if (ev.pdf) { pdfBtn.dataset.pdf = ev.pdf; pdfBtn.hidden = false; }
+    else        { pdfBtn.hidden = true; }
+
+    const ticketBtn = document.getElementById('eventModalTicketBtn');
+    if (ev.ticket_form_id) {
+      ticketBtn.dataset.formId = ev.ticket_form_id;
+      ticketBtn.dataset.formTitle = ev.title || 'Buy Tickets';
+      ticketBtn.hidden = false;
+    } else {
+      ticketBtn.hidden = true;
+    }
+
+    eventModal.showModal();
+    modalOverlay.hidden = false;
+  }
+
+  function closeEventModal() {
+    eventModal.close();
+    modalOverlay.hidden = true;
+    document.getElementById('eventModalPdfFrame').src = '';
+    document.getElementById('eventModalPdfEmbed').hidden = true;
+  }
+
+  // ── Ticket Popup ──────────────────────────────────────────────────
+  var ticketPopupOverlay = document.getElementById('ticketPopupOverlay');
+
+  function openTicketPopup(formId, title) {
+    document.getElementById('ticketPopupTitle').textContent = title;
+    var body = document.getElementById('ticketPopupBody');
+    body.innerHTML =
+      '<iframe ' +
+        'src="https://api.wibiz.ai/widget/form/' + formId + '" ' +
+        'style="width:100%; height:100%; overflow-y:auto;" ' +
+        'id="inline-' + formId + '" ' +
+        "data-layout=\"{'id':'INLINE'}\" " +
+        'data-trigger-type="alwaysShow" ' +
+        'data-trigger-value="" ' +
+        'data-activation-type="alwaysActivated" ' +
+        'data-activation-value="" ' +
+        'data-deactivation-type="neverDeactivate" ' +
+        'data-deactivation-value="" ' +
+        'data-form-name="' + title + '" ' +
+        'data-height="879" ' +
+        'data-layout-iframe-id="inline-' + formId + '" ' +
+        'data-form-id="' + formId + '" ' +
+        'title="' + title + '">' +
+      '</iframe>';
+    ticketPopupOverlay.hidden = false;
+  }
+
+  function closeTicketPopup() {
+    ticketPopupOverlay.hidden = true;
+    document.getElementById('ticketPopupBody').innerHTML = '';
+  }
+
+  document.getElementById('eventModalTicketBtn').addEventListener('click', function () {
+    var btn = document.getElementById('eventModalTicketBtn');
+    closeEventModal();
+    openTicketPopup(btn.dataset.formId, btn.dataset.formTitle);
+  });
+
+  document.getElementById('ticketPopupClose').addEventListener('click', closeTicketPopup);
+  ticketPopupOverlay.addEventListener('click', function (e) {
+    if (e.target === ticketPopupOverlay) closeTicketPopup();
+  });
+
+  document.getElementById('eventModalPdfBtn').addEventListener('click', () => {
+    const btn   = document.getElementById('eventModalPdfBtn');
+    const embed = document.getElementById('eventModalPdfEmbed');
+    const frame = document.getElementById('eventModalPdfFrame');
+    if (embed.hidden) {
+      frame.src    = btn.dataset.pdf || '';
+      embed.hidden = false;
+      btn.textContent = 'Hide PDF ✕';
+    } else {
+      embed.hidden = true;
+      frame.src    = '';
+      btn.textContent = 'View Event Flyer (PDF)';
+    }
+  });
+
+  document.getElementById('eventModalClose').addEventListener('click', closeEventModal);
+  modalOverlay.addEventListener('click', () => { if (eventModal.open) closeEventModal(); });
+
+  // ── Events: render grid + carousel from EVENTS array ─────────────
+  function dateChip(dateStr) {
+    const m = dateStr.match(/(\d{1,2})\s+([A-Za-z]+)/);
+    return m ? m[1] + ' ' + m[2].slice(0, 3).toUpperCase() : '';
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('eventsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    EVENTS.forEach(function(ev) {
+      const chip    = dateChip(ev.date);
+      const excerpt = ev.desc.length > 100 ? ev.desc.slice(0, 100) + '…' : ev.desc;
+      const card    = document.createElement('article');
+      card.className = 'event-card';
+      card.innerHTML =
+        '<div class="event-card__img-wrap">' +
+          '<div class="event-card__img" style="background-image:url(\'' + escHtml(ev.img || '') + '\')">' +
+            (chip ? '<span class="event-card__date-chip">' + escHtml(chip) + '</span>' : '') +
+          '</div>' +
+        '</div>' +
+        '<div class="event-card__body">' +
+          '<h3 class="event-card__title">' + escHtml(ev.title) + '</h3>' +
+          '<p class="event-card__meta">' + escHtml(ev.venue) + '</p>' +
+          '<p class="event-card__excerpt">' + escHtml(excerpt) + '</p>' +
+          '<div class="event-card__footer">' +
+            '<span class="event-card__meta" style="font-size:11px;opacity:.7">' + escHtml(ev.date) + '</span>' +
+            '<div class="event-card__btns">' +
+              '<button class="btn-event-view">Details</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      card.addEventListener('click', function() { openEventModal(ev); });
+      grid.appendChild(card);
+    });
+  }
+
+  function buildSlide(ev) {
+    const slide = document.createElement('article');
+    slide.className = 'event-slide';
+    const excerpt = ev.desc.length > 130 ? ev.desc.slice(0, 130) + '…' : ev.desc;
+    slide.innerHTML =
+      '<div class="event-slide__bg" style="background-image:url(\'' + escHtml(ev.img || '') + '\')"></div>' +
+      '<div class="event-hero__overlay"><div class="event-hero__inner">' +
+        '<p class="event-hero__date-line">' + escHtml(ev.date) + ' &nbsp;·&nbsp; ' + escHtml(ev.venue) + '</p>' +
+        '<h2 class="event-hero__title">' + escHtml(ev.title) + '</h2>' +
+        '<p class="event-hero__tagline">' + escHtml(excerpt) + '</p>' +
+        '<div class="event-hero__footer">' +
+          '<button class="btn-hero-cta">View Details</button>' +
+        '</div>' +
+      '</div></div>';
+    slide.addEventListener('click', function(e) {
+      if (!e.target.closest('.carousel-btn')) openEventModal(ev);
+    });
+    return slide;
+  }
+
+  const carouselTrack = document.getElementById('eventCarouselTrack');
+  const carouselDots  = document.getElementById('carouselDots');
+  let   currentSlide  = 0;
+  let   carouselTimer;
+  let   slides        = [];
+
+  function goToSlide(n) {
+    currentSlide = (n + slides.length) % slides.length;
+    carouselTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    document.querySelectorAll('.carousel-dot').forEach(function(d, i) {
+      d.classList.toggle('carousel-dot--active', i === currentSlide);
+    });
+  }
+
+  function resetTimer() {
+    clearInterval(carouselTimer);
+    carouselTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
+  }
+
+  function renderCarousel() {
+    if (!carouselTrack) return;
+    carouselTrack.innerHTML = '';
+    carouselDots.innerHTML  = '';
+    EVENTS.forEach(function(ev) { carouselTrack.appendChild(buildSlide(ev)); });
+    slides = Array.from(carouselTrack.querySelectorAll('.event-slide'));
+    slides.forEach(function(_, i) {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' carousel-dot--active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.addEventListener('click', function(e) { e.stopPropagation(); goToSlide(i); resetTimer(); });
+      carouselDots.appendChild(dot);
+    });
+    if (slides.length) {
+      resetTimer();
+      document.getElementById('carouselPrev').addEventListener('click', function(e) {
+        e.stopPropagation(); goToSlide(currentSlide - 1); resetTimer();
+      });
+      document.getElementById('carouselNext').addEventListener('click', function(e) {
+        e.stopPropagation(); goToSlide(currentSlide + 1); resetTimer();
+      });
+      const carousel = document.getElementById('eventCarousel');
+      carousel.addEventListener('mouseenter', function() { clearInterval(carouselTimer); });
+      carousel.addEventListener('mouseleave', resetTimer);
+    }
+  }
+
+  // Initial render (for hardcoded fallback or if events already loaded)
+  renderGrid();
+  renderCarousel();
+
+  // Re-render when events are loaded from backend
+  document.addEventListener('events-loaded', function() {
+    renderGrid();
+    renderCarousel();
+    // Update the sub-count
+    var subCount = document.querySelector('.events-sub-count');
+    if (subCount) subCount.textContent = EVENTS.length + ' events';
+  });
+
+})();
+</script>
+
+
+<!-- Profile Script -->
+<script>
+(function () {
+  const member = JSON.parse(localStorage.getItem('src_member') || 'null');
+  if (!member) return;
+
+  // ── Seed header icon and dropdown header ────────────────────────────
+  function initial(name) { return (name || 'M').charAt(0).toUpperCase(); }
+
+  document.getElementById('profileIconInitial').textContent  = initial(member.name);
+  document.getElementById('profileDropAvatar').textContent   = initial(member.name);
+  document.getElementById('profileDropName').textContent     = member.name  || 'Member';
+  document.getElementById('profileDropId').textContent       = member.membership_number ? 'ID: ' + member.membership_number : '—';
+
+  // ── Dropdown toggle ──────────────────────────────────────────────────
+  const profileBtn      = document.getElementById('profileBtn');
+  const profileDropdown = document.getElementById('profileDropdown');
+
+  profileBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    // Close notif dropdown if open
+    const notifDropdown = document.getElementById('notifDropdown');
+    if (notifDropdown) notifDropdown.hidden = true;
+    profileDropdown.hidden = !profileDropdown.hidden;
+    profileBtn.classList.toggle('is-active', !profileDropdown.hidden);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!profileDropdown.hidden && !profileDropdown.contains(e.target) && e.target !== profileBtn) {
+      profileDropdown.hidden = true;
+      profileBtn.classList.remove('is-active');
+    }
+  });
+
+  // ── Edit Profile ─────────────────────────────────────────────────────
+  const profileModal = document.getElementById('profileModal');
+  const modalOverlay = document.getElementById('modalOverlay');
+
+  document.getElementById('profileEditBtn').addEventListener('click', function () {
+    profileDropdown.hidden = true;
+    profileBtn.classList.remove('is-active');
+    // Populate modal fields
+    document.getElementById('profileMemberId').value = member.membership_number || '';
+    document.getElementById('profileName').value     = member.name  || '';
+    document.getElementById('profileEmail').value    = member.email || '';
+    document.getElementById('profilePhone').value    = member.phone || '';
+    document.getElementById('profileSaveMsg').hidden = true;
+    profileModal.showModal();
+    modalOverlay.hidden = false;
+  });
+
+  profileModal.querySelector('[data-close]').addEventListener('click', function () {
+    profileModal.close();
+    modalOverlay.hidden = true;
+  });
+
+  document.getElementById('profileForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const name  = document.getElementById('profileName').value.trim();
+    const email = document.getElementById('profileEmail').value.trim();
+    const phone = document.getElementById('profilePhone').value.trim();
+    const msg   = document.getElementById('profileSaveMsg');
+
+    if (!name || !email) {
+      msg.textContent = 'Name and email are required.';
+      msg.style.color = '#eb5757';
+      msg.hidden = false;
+      return;
+    }
+
+    // Save to backend (GHL) so changes persist across login sessions
+    const token = localStorage.getItem('vrv_token');
+    msg.textContent = 'Saving…';
+    msg.style.color = '#f2c94c';
+    msg.hidden = false;
+
+    try {
+      const resp = await fetch('https://backend-production-41dc3.up.railway.app/api/member/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+        body: JSON.stringify({ name, email, phone }),
+      });
+      const data = await resp.json();
+
+      if (!resp.ok || !data.success) {
+        msg.textContent = data.message || 'Failed to save profile.';
+        msg.style.color = '#eb5757';
+        return;
+      }
+
+      // Update localStorage with the confirmed data
+      member.name  = data.member.name;
+      member.email = data.member.email;
+      member.phone = data.member.phone || '';
+      localStorage.setItem('src_member', JSON.stringify(member));
+
+      // Reflect live
+      const greeting = document.getElementById('memberGreeting');
+      if (greeting) greeting.textContent = `Hello, ${name} !`;
+      document.getElementById('profileIconInitial').textContent = initial(name);
+      document.getElementById('profileDropAvatar').textContent  = initial(name);
+      document.getElementById('profileDropName').textContent    = name;
+
+      msg.textContent = 'Changes saved.';
+      msg.style.color = '#6fcf97';
+      setTimeout(function () {
+        profileModal.close();
+        modalOverlay.hidden = true;
+      }, 1200);
+    } catch (err) {
+      msg.textContent = 'Network error. Please try again.';
+      msg.style.color = '#eb5757';
+    }
+  });
+
+  // ── Logout (moved from logoutBtn) ────────────────────────────────────
+  document.getElementById('profileLogoutBtn').addEventListener('click', function () {
+    localStorage.removeItem('vrv_token');
+    localStorage.removeItem('src_member');
+    window.location.href = 'index.html';
+  });
+})();
+</script>
+
+<!-- GHL Chat Widget -->
+<!-- <script
+  src="https://widgets.leadconnectorhq.com/loader.js"
+  data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+  data-widget-id="69896965e64c7357b550a8a4">
+</script> -->
+<script src="https://api.wibiz.ai/js/form_embed.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Inbox</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+  <style>
+    .inbox-thread { background: rgba(255,255,255,0.92); border: 1px solid rgba(0,35,102,0.08); border-top: 3px solid var(--gold); margin-bottom: 18px; }
+    .inbox-thread__head { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; cursor: pointer; transition: background 0.15s; }
+    .inbox-thread__head:hover { background: rgba(173,151,79,0.04); }
+    .inbox-thread__title { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--navy); }
+    .inbox-thread__meta { font-family: var(--font-ui); font-size: 12px; color: var(--muted); }
+    .inbox-thread__badge { background: var(--gold); color: #fff; font-family: var(--font-display); font-size: 14px; font-weight: 600; padding: 2px 10px; border-radius: 10px; letter-spacing: 0.06em; }
+    .inbox-thread__chevron { font-size: 14px; color: var(--muted); transition: transform 0.2s; }
+    .inbox-thread__head.is-open .inbox-thread__chevron { transform: rotate(180deg); }
+    .inbox-thread__body { display: none; border-top: 1px solid rgba(0,35,102,0.06); padding: 18px 24px; }
+    .inbox-thread__body.is-open { display: block; }
+    .inbox-notice { font-family: var(--font-ui); font-size: 13px; color: var(--muted); padding: 10px 14px; background: rgba(0,35,102,0.03); margin-bottom: 14px; border-left: 3px solid var(--gold); }
+    .inbox-notice strong { color: var(--navy); }
+    .inbox-messages { display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto; margin-bottom: 14px; }
+    .inbox-msg { display: flex; gap: 10px; align-items: flex-start; }
+    .inbox-msg--mgmt { flex-direction: row-reverse; }
+    .inbox-msg__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--navy); color: var(--gold-light); font-family: var(--font-display); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .inbox-msg--mgmt .inbox-msg__avatar { background: var(--gold); color: #fff; }
+    .inbox-msg__bubble { max-width: 70%; padding: 8px 14px; border-radius: 10px; background: #f4f5f7; border-top-left-radius: 2px; }
+    .inbox-msg--mgmt .inbox-msg__bubble { background: rgba(173,151,79,0.12); border-top-left-radius: 10px; border-top-right-radius: 2px; }
+    .inbox-msg__name { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--navy); }
+    .inbox-msg__name em { font-weight: 500; color: var(--gold); font-size: 13px; }
+    .inbox-msg__time { font-family: var(--font-ui); font-size: 10px; color: #aaa; margin-left: 8px; }
+    .inbox-msg__text { font-family: var(--font-ui); font-size: 13px; color: var(--ink); line-height: 1.55; margin: 2px 0 0; }
+    .inbox-reply-form { display: flex; gap: 10px; }
+    .inbox-reply-input { flex: 1; padding: 10px 14px; border: 1px solid rgba(0,35,102,0.14); font-family: var(--font-ui); font-size: 13px; color: var(--ink); outline: none; transition: border-color 0.2s; }
+    .inbox-reply-input:focus { border-color: var(--gold); }
+    .inbox-reply-input::placeholder { color: #bbb; font-style: italic; }
+    .inbox-reply-btn { padding: 10px 20px; background: var(--navy); color: var(--gold-light); border: 1px solid rgba(173,151,79,0.3); font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; flex-shrink: 0; transition: background 0.2s, color 0.2s; }
+    .inbox-reply-btn:hover { background: var(--gold); color: var(--navy); }
+    .inbox-empty { text-align: center; padding: 48px; font-family: var(--font-display); font-size: 16px; color: var(--muted); font-style: italic; opacity: .7; }
+  </style>
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="management.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Management</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="management.html" class="nav-item">
+          <span class="nav-item__icon">≡</span>
+          <span>Shift Overview</span>
+        </a>
+        <a href="management-occupancy.html" class="nav-item">
+          <span class="nav-item__icon">◈</span>
+          <span>Live Occupancy</span>
+        </a>
+        <a href="management-analytics.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Booking Analytics</span>
+        </a>
+        <a href="management-noshow.html" class="nav-item">
+          <span class="nav-item__icon">△</span>
+          <span>No-Show Tracker</span>
+        </a>
+        <a href="management-guests.html" class="nav-item">
+          <span class="nav-item__icon">⊕</span>
+          <span>Guest Record Audit</span>
+        </a>
+        <a href="management-fees.html" class="nav-item">
+          <span class="nav-item__icon">◻</span>
+          <span>Late Cancellation Fees</span>
+        </a>
+        <a href="management-blocks.html" class="nav-item">
+          <span class="nav-item__icon">▣</span>
+          <span>Facility Blocks</span>
+        </a>
+        <a href="management-events.html" class="nav-item">
+          <span class="nav-item__icon">&#9733;</span>
+          <span>Add Event</span>
+        </a>
+        <a href="management-inbox.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">&#9993;</span>
+          <span>Inbox</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Admin</span>
+          <span class="staff-badge__role" id="staffRole">Management</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">Inbox</h1>
+          <p class="view__sub">Member replies and enquiries on facility &amp; venue block notices.</p>
+        </div>
+      </div>
+
+      <div id="inboxContainer">
+        <p class="inbox-empty">Loading...</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/mgmt-auth-guard.js"></script>
+  <script src="./js/management-portal.js"></script>
+</body>
+</html>

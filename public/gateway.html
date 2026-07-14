@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Portal Access</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/gateway.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Full bleed background image -->
+  <div class="bg-layer">
+    <img src="./asset/gateway-bg.jpg" alt="Verve at Meridian Green" class="visual__img" />
+    <img src="src-hero.jpg" alt="" class="bg-layer__img" aria-hidden="true" />
+  </div>
+
+  <!-- Center gateway UI -->
+  <main class="gateway">
+
+    <div class="gw-brand">
+      <!-- <div class="gw-brand__logo-wrap">
+        <img src="src-logo.png" alt="Verve" class="gw-brand__logo" />
+      </div> -->
+      <div class="gw-brand__name">Verve</div>
+      <div class="gw-brand__rule"></div>
+    </div>
+
+    <div class="gw-heading">
+      <span class="gw-heading__eyebrow">Select your access point</span>
+      <h1 class="gw-heading__title">Portal Gateway</h1>
+    </div>
+
+    <div class="portal-cards">
+
+      <!-- STAFF PORTAL -->
+      <a class="pcard" href="staff-login.html">
+        <div class="pcard__icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="13" r="6" stroke="#ad974f" stroke-width="1.5"/>
+            <path d="M6 34c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#ad974f" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="pcard__eyebrow">Operations</span>
+          <h2 class="pcard__title">Staff<br/>Portal</h2>
+        </div>
+        <p class="pcard__desc">
+          For Verve staff members. Access daily operations, member records, facility scheduling, and internal communications.
+        </p>
+        <div class="pcard__cta">
+          <span class="pcard__cta-line"></span>
+          <p>Enter</p>
+          <!-- <span>→</span> -->
+        </div>
+      </a>
+
+      <!-- MANAGEMENT DASHBOARD -->
+      <a class="pcard" href="management-login.html">
+        <div class="pcard__icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="22" width="8" height="13" stroke="#ad974f" stroke-width="1.5"/>
+            <rect x="16" y="14" width="8" height="21" stroke="#ad974f" stroke-width="1.5"/>
+            <rect x="27" y="6" width="8" height="29" stroke="#ad974f" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div>
+          <span class="pcard__eyebrow">Administration</span>
+          <h2 class="pcard__title">Management<br/>Dashboard</h2>
+        </div>
+        <p class="pcard__desc">
+          For Verve leadership and administrators. Access reports, analytics, membership oversight, and governance tools.
+        </p>
+        <div class="pcard__cta">
+          <span class="pcard__cta-line"></span>
+          Enter
+          <!-- <span>→</span> -->
+        </div>
+      </a>
+
+    </div>
+
+    <p class="gw-footer">Verve · Est. 1962 · Meridian Green</p>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Log Walk-In</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="staff.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Staff Console</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="staff.html" class="nav-item">
+          <span class="nav-item__icon">≡</span>
+          <span>Today's Schedule</span>
+        </a>
+        <a href="staff-booking.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Staff Booking</span>
+        </a>
+        <a href="staff-walkin.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">→</span>
+          <span>Log Walk-In</span>
+        </a>
+        <a href="staff-qr.html" class="nav-item">
+          <span class="nav-item__icon">▣</span>
+          <span>QR Verify</span>
+        </a>
+        <a href="staff-fnb.html" class="nav-item">
+          <span class="nav-item__icon">◈</span>
+          <span>F&amp;B Bookings</span>
+        </a>
+        <a href="staff-cancel.html" class="nav-item">
+          <span class="nav-item__icon">△</span>
+          <span>Late Cancellations</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Staff</span>
+          <span class="staff-badge__role" id="staffRole">—</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">Log Walk-In</h1>
+          <p class="view__sub">Record walk-in entries for occupancy tracking.</p>
+        </div>
+      </div>
+
+      <!-- [GHL] On submit: POST /contacts/ with booking_mode:walkin, booking_status:checked_in, checked_in_by:[staff] -->
+      <form class="form-panel" id="walkinForm">
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="walkinName">Visitor Name</label>
+            <div class="field__wrap">
+              <input class="field__input" type="text" id="walkinName" placeholder="e.g. Jane Smith" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="walkinPhone">Phone (optional)</label>
+            <div class="field__wrap">
+              <input class="field__input" type="tel" id="walkinPhone" placeholder="e.g. +6598765432" />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="walkinType">Booking Type</label>
+            <select class="field__input field__select" id="walkinType" required>
+              <option value="">Select type</option>
+              <option value="dining">Dining</option>
+              <option value="facility">Facility</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="walkinVenue">Outlet / Venue</label>
+            <select class="field__input field__select" id="walkinVenue" required>
+              <option value="">Select type first</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="walkinPax">Pax Count</label>
+            <div class="field__wrap">
+              <input class="field__input" type="number" id="walkinPax" min="1" max="50" value="1" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <!-- Shown for Le Mansion + Oasis only — JS toggles visibility -->
+          <div class="field" id="walkinShiftField">
+            <label class="field__label" for="walkinShift">Shift</label>
+            <select class="field__input field__select" id="walkinShift">
+              <option value="lunch">Lunch</option>
+              <option value="dinner">Dinner</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-primary" type="submit">Log Walk-In</button>
+      </form>
+
+    </main>
+  </div>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/staff-portal.js"></script>
+</body>
+</html>

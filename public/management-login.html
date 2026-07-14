@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Management Sign In</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/gateway.css" />
+  <link rel="stylesheet" href="./css/login.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Full bleed background -->
+  <div class="bg-layer">
+    <img src="./asset/gateway-bg.jpg" alt="" class="visual__img" aria-hidden="true" />
+  </div>
+
+  <main class="login-wrap">
+    <div class="login-card">
+
+      <!-- Brand -->
+      <div class="login-brand">
+        <div class="login-brand__logo-wrap">
+          <img src="./asset/src logo.png" alt="Verve" class="login-brand__logo" />
+        </div>
+        <div class="login-brand__rule"></div>
+        <span class="login-brand__name">Verve</span>
+      </div>
+
+      <!-- Heading -->
+      <div class="login-heading">
+        <span class="login-heading__eyebrow">Administration</span>
+        <h1 class="login-heading__title">Sign In</h1>
+      </div>
+
+      <!-- Form -->
+      <!-- [GHL] On submit: authenticate admin account, route to management.html -->
+      <!-- Account: admin -->
+      <form class="login-form" id="mgmtLoginForm" novalidate>
+
+        <div class="field" id="fieldMgmtUsername">
+          <label class="field__label" for="mgmtUsername">Username</label>
+          <div class="field__wrap">
+            <input
+              class="field__input"
+              type="text"
+              id="mgmtUsername"
+              name="mgmtUsername"
+              placeholder="e.g. admin"
+              autocomplete="username"
+              required
+            />
+            <span class="field__line"></span>
+          </div>
+          <span class="field__error">Please enter your username.</span>
+        </div>
+
+        <div class="field" id="fieldMgmtPassword">
+          <label class="field__label" for="mgmtPassword">Password</label>
+          <div class="field__wrap">
+            <input
+              class="field__input"
+              type="password"
+              id="mgmtPassword"
+              name="mgmtPassword"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            />
+            <span class="field__line"></span>
+          </div>
+          <span class="field__error">Please enter your password.</span>
+        </div>
+
+        <p id="loginError" style="color:#c0392b;font-size:0.85rem;margin:0;display:none;"></p>
+
+        <button class="btn-login" type="button" id="mgmtSignInBtn">
+          <span>Sign In</span>
+          <span>→</span>
+        </button>
+
+      </form>
+
+      <!-- Back -->
+      <a href="gateway.html" class="login-back">← Back to Gateway</a>
+
+    </div>
+
+    <p class="login-footer">Verve · Est. 1962 · Meridian Green</p>
+  </main>
+
+  <script src="./js/demo-mode.js"></script>
+  <script>
+    const API_BASE = 'https://backend-production-41dc3.up.railway.app';
+
+    document.getElementById('mgmtUsername').addEventListener('input', function () {
+      document.getElementById('fieldMgmtUsername').classList.remove('field--error');
+    });
+    document.getElementById('mgmtPassword').addEventListener('input', function () {
+      document.getElementById('fieldMgmtPassword').classList.remove('field--error');
+    });
+
+    document.getElementById('mgmtSignInBtn').addEventListener('click', async () => {
+      const username = document.getElementById('mgmtUsername').value.trim();
+      const password = document.getElementById('mgmtPassword').value;
+      const errorEl  = document.getElementById('loginError');
+
+      errorEl.style.display = 'none';
+
+      let hasError = false;
+      if (!username) {
+        document.getElementById('fieldMgmtUsername').classList.add('field--error');
+        hasError = true;
+      }
+      if (!password) {
+        document.getElementById('fieldMgmtPassword').classList.add('field--error');
+        hasError = true;
+      }
+      if (hasError) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/management/login`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ username, password }),
+        });
+        const data = await res.json();
+
+        if (!data.success) {
+          errorEl.textContent = data.message || 'Invalid username or password.';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        sessionStorage.setItem('mgmtToken', data.token);
+        sessionStorage.setItem('mgmtUser',  JSON.stringify(data.user));
+
+        window.location.href = 'management.html';
+      } catch (err) {
+        errorEl.textContent = 'Connection error. Please try again.';
+        errorEl.style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>

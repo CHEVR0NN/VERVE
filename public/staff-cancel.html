@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Late Cancellations</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="staff.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Staff Console</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="staff.html" class="nav-item">
+          <span class="nav-item__icon">≡</span>
+          <span>Today's Schedule</span>
+        </a>
+        <a href="staff-booking.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Staff Booking</span>
+        </a>
+        <a href="staff-walkin.html" class="nav-item">
+          <span class="nav-item__icon">→</span>
+          <span>Log Walk-In</span>
+        </a>
+        <a href="staff-qr.html" class="nav-item">
+          <span class="nav-item__icon">▣</span>
+          <span>QR Verify</span>
+        </a>
+        <a href="staff-fnb.html" class="nav-item">
+          <span class="nav-item__icon">◈</span>
+          <span>F&amp;B Bookings</span>
+        </a>
+        <a href="staff-cancel.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">△</span>
+          <span>Late Cancellations</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Staff</span>
+          <span class="staff-badge__role" id="staffRole">—</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">Late Cancellations</h1>
+          <p class="view__sub">Review and action late cancellation fee waivers.</p>
+        </div>
+      </div>
+
+      <!-- [GHL] GET /contacts/ filtered by late_cancellation=true -->
+      <!-- Waiver action: PUT /contacts/{id} → fee_waived:true, waiver_reason, waiver_by:[staff] -->
+      <div class="table-wrap">
+        <table class="data-table" id="lateCancelTable">
+          <thead>
+            <tr>
+              <th>Member Name</th>
+              <th>Membership No.</th>
+              <th>Facility</th>
+              <th>Slot Date &amp; Time</th>
+              <th>Cancelled At</th>
+              <th>Fee Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="lateCancelBody">
+            <tr class="table-empty"><td colspan="7">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Waive Fee Modal -->
+  <div class="modal-overlay" id="modalOverlay" hidden></div>
+
+  <dialog id="waiveFeeModal" class="modal-dialog">
+    <button class="modal-close" data-close>&times;</button>
+    <h3>Waive Late Cancellation Fee</h3>
+    <p class="modal-step">This waiver will be permanently logged for audit. Ensure the reason is accurate before confirming.</p>
+
+    <!-- Booking summary (populated by JS) -->
+    <div class="waiver-summary" id="waiverSummary">
+      <div class="waiver-summary__row">
+        <span class="waiver-summary__label">Member</span>
+        <span class="waiver-summary__value" id="waiverMemberName">—</span>
+      </div>
+      <div class="waiver-summary__row">
+        <span class="waiver-summary__label">Membership No.</span>
+        <span class="waiver-summary__value" id="waiverMembershipNo">—</span>
+      </div>
+      <div class="waiver-summary__row">
+        <span class="waiver-summary__label">Facility / Venue</span>
+        <span class="waiver-summary__value" id="waiverFacility">—</span>
+      </div>
+      <div class="waiver-summary__row">
+        <span class="waiver-summary__label">Slot</span>
+        <span class="waiver-summary__value" id="waiverSlot">—</span>
+      </div>
+      <div class="waiver-summary__row">
+        <span class="waiver-summary__label">Booking Ref.</span>
+        <span class="waiver-summary__value" id="waiverRef">—</span>
+      </div>
+    </div>
+
+    <form id="waiveFeeForm">
+      <!-- Reason category -->
+      <div class="field">
+        <label class="field__label" for="waiverReasonCategory">Reason Category <span style="color:#c0392b">*</span></label>
+        <select class="field__input field__select" id="waiverReasonCategory" required>
+          <option value="">Select a reason…</option>
+          <option value="Medical emergency">Medical emergency</option>
+          <option value="Bereavement">Bereavement</option>
+          <option value="Compassionate grounds">Compassionate grounds</option>
+          <option value="System / admin error">System / admin error</option>
+          <option value="Management discretion">Management discretion</option>
+          <option value="Other">Other (specify below)</option>
+        </select>
+      </div>
+
+      <!-- Additional notes -->
+      <div class="field">
+        <label class="field__label" for="waiverNotes">Additional Notes <span id="waiverNotesRequired" style="color:#c0392b;display:none">*</span></label>
+        <textarea class="field__input field__textarea" id="waiverNotes" rows="3" placeholder="Provide any supporting details…"></textarea>
+      </div>
+
+      <!-- Audit acknowledgement -->
+      <div class="field field--checkbox">
+        <label class="field__checkbox-label">
+          <input type="checkbox" id="waiverAuditAck" required />
+          I confirm this waiver is justified and understand it will be logged under my staff account for audit purposes.
+        </label>
+      </div>
+
+      <!-- Hidden fields populated by JS -->
+      <input type="hidden" id="waiverContactId" />
+
+      <button class="btn-primary" type="submit">Confirm Waiver</button>
+    </form>
+  </dialog>
+
+  <style>
+    .waiver-summary {
+      background: var(--console-row-alt, #f7f7fb);
+      border: 1px solid rgba(0,35,102,0.1);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      display: grid;
+      gap: 8px;
+    }
+    .waiver-summary__row {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      font-size: 13px;
+    }
+    .waiver-summary__label {
+      font-family: var(--font-ui, 'Tenor Sans', sans-serif);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: rgba(0,35,102,0.45);
+      min-width: 110px;
+      flex-shrink: 0;
+    }
+    .waiver-summary__value {
+      font-family: var(--font-ui, 'Tenor Sans', sans-serif);
+      color: #1a1a2e;
+      font-weight: 500;
+    }
+    .field__textarea {
+      resize: vertical;
+      min-height: 76px;
+    }
+    .field--checkbox {
+      margin-top: 4px;
+    }
+    .field__checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: var(--font-ui, 'Tenor Sans', sans-serif);
+      font-size: 12.5px;
+      color: #2c3e6b;
+      cursor: pointer;
+      line-height: 1.5;
+    }
+    .field__checkbox-label input[type="checkbox"] {
+      margin-top: 2px;
+      flex-shrink: 0;
+      accent-color: var(--navy, #002366);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+  </style>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/staff-portal.js"></script>
+</body>
+</html>

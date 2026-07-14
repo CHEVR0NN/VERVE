@@ -1,0 +1,13 @@
+{
+  "name": "verve-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "serve public -p $PORT"
+  },
+  "dependencies": {
+    "serve": "^14.2.3"
+  },
+  "devDependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

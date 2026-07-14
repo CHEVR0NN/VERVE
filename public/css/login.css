@@ -1,0 +1,190 @@
+/* ─────────────────────────────────────────
+   Verve — Staff & Management Login Pages
+   Extends gateway.css background layer.
+   Palette: Gold #ad974f · Navy #002366 · Cream #f0ede6
+───────────────────────────────────────── */
+
+/* Reuse gateway bg-layer — override body flex to center */
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── LOGIN WRAPPER ───────────────────── */
+.login-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  padding: 32px 24px;
+  animation: fadeUp 0.75s ease both;
+  animation-delay: 0.1s;
+}
+
+/* ── LOGIN CARD ──────────────────────── */
+.login-card {
+  width: 100%;
+  background: linear-gradient(160deg, #ffffff 0%, #f0ede6 100%);
+  border: 1px solid rgba(173, 151, 79, 0.28);
+  box-shadow: 0 28px 72px rgba(0, 21, 64, 0.28);
+  padding: 52px 52px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* ── BRAND ───────────────────────────── */
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.login-brand__logo-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(173, 151, 79, 0.55);
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(173, 151, 79, 0.18);
+}
+
+.login-brand__logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.login-brand__name {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-dim, #7a6a38);
+}
+
+.login-brand__rule {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold, #ad974f), transparent);
+}
+
+/* ── HEADING ─────────────────────────── */
+.login-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.login-heading__eyebrow {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-dim, #7a6a38);
+}
+
+.login-heading__title {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 46px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--navy, #002366);
+  letter-spacing: -0.01em;
+}
+
+/* ── FORM ────────────────────────────── */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Reuses .field, .field__label, .field__input, .field__line from style.css */
+
+/* ── SUBMIT BUTTON ───────────────────── */
+.btn-login {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--navy, #002366);
+  color: var(--gold-light, #c9b06a);
+  border: 1px solid rgba(173, 151, 79, 0.4);
+  cursor: pointer;
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+              box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.btn-login:hover {
+  background: var(--gold, #ad974f);
+  color: var(--navy, #002366);
+  border-color: var(--gold, #ad974f);
+  box-shadow: 0 8px 24px rgba(173, 151, 79, 0.32);
+  transform: translateY(-2px);
+}
+
+/* ── BACK LINK ───────────────────────── */
+.login-back {
+  margin-top: -12px;
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: #6b6763;
+  text-decoration: none;
+  text-align: center;
+  transition: color 0.2s;
+}
+
+.login-back:hover {
+  opacity: 1;
+  color: var(--gold-dim, #7a6a38);
+}
+
+/* ── FOOTER ──────────────────────────── */
+.login-footer {
+  margin-top: 24px;
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(248, 249, 250, 0.45);
+  text-align: center;
+}
+
+/* ── ANIMATIONS ──────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ──────────────────────── */
+@media (max-width: 540px) {
+  .login-card {
+    padding: 40px 32px 36px;
+  }
+
+  .login-heading__title {
+    font-size: 36px;
+  }
+}

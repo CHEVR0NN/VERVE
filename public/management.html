@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Shift Overview</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="management.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Management</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="management.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">≡</span>
+          <span>Shift Overview</span>
+        </a>
+        <a href="management-occupancy.html" class="nav-item">
+          <span class="nav-item__icon">◈</span>
+          <span>Live Occupancy</span>
+        </a>
+        <a href="management-analytics.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Booking Analytics</span>
+        </a>
+        <a href="management-noshow.html" class="nav-item">
+          <span class="nav-item__icon">△</span>
+          <span>No-Show Tracker</span>
+        </a>
+        <a href="management-guests.html" class="nav-item">
+          <span class="nav-item__icon">⊕</span>
+          <span>Guest Record Audit</span>
+        </a>
+        <a href="management-fees.html" class="nav-item">
+          <span class="nav-item__icon">◻</span>
+          <span>Late Cancellation Fees</span>
+        </a>
+        <a href="management-blocks.html" class="nav-item">
+          <span class="nav-item__icon">▣</span>
+          <span>Facility Blocks</span>
+        </a>
+        <a href="management-events.html" class="nav-item">
+          <span class="nav-item__icon">&#9733;</span>
+          <span>Add Event</span>
+        </a>
+        <a href="management-inbox.html" class="nav-item">
+          <span class="nav-item__icon">&#9993;</span>
+          <span>Inbox</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Admin</span>
+          <span class="staff-badge__role" id="staffRole">Management</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">Shift Overview</h1>
+          <!-- [GHL] Populated by JS: today's date SGT -->
+          <p class="view__sub" id="overviewDate">—</p>
+        </div>
+        <div class="view__actions">
+          <!-- [GHL] Auto-refreshes every 2 min via JS -->
+          <span class="refresh-badge" id="overviewRefreshed">Last updated: —</span>
+        </div>
+      </div>
+
+      <!-- KPI tiles -->
+      <!-- [GHL] All counts from GET /contacts/?locationId=...&customField[slot_date]=TODAY_SGT -->
+      <div class="kpi-grid">
+        <div class="kpi-tile">
+          <span class="kpi-tile__num" id="kpiTotal">—</span>
+          <span class="kpi-tile__label">Total Bookings Today</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-tile__num kpi-tile__num--green" id="kpiCheckin">—</span>
+          <span class="kpi-tile__label">Check-Ins Today</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-tile__num kpi-tile__num--red" id="kpiNoshow">—</span>
+          <span class="kpi-tile__label">No-Shows Today</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-tile__num" id="kpiCancelled">—</span>
+          <span class="kpi-tile__label">Active Cancellations</span>
+        </div>
+        <div class="kpi-tile kpi-tile--alert">
+          <span class="kpi-tile__num kpi-tile__num--amber" id="kpiLateCancel">—</span>
+          <span class="kpi-tile__label">Late Cancellations Pending</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-tile__num" id="kpiGuests">—</span>
+          <span class="kpi-tile__label">Guest Passes Issued Today</span>
+        </div>
+        <div class="kpi-tile kpi-tile--wide">
+          <span class="kpi-tile__num" id="kpiUtilisation">—%</span>
+          <span class="kpi-tile__label">Facility Utilisation</span>
+          <span class="kpi-tile__sub">All bookable facilities today</span>
+        </div>
+      </div>
+
+      <!-- Today's full schedule — compact overview -->
+      <div class="section-divider"><span>Today's Full Schedule</span></div>
+
+      <!-- [GHL] Same dataset as Staff Console schedule — all types, all venues -->
+      <!-- Row actions: [View Full Record] → fullRecordModal | [Override Status] → overrideStatusModal | [Add Note] → addNoteModal -->
+      <div class="table-wrap">
+        <table class="data-table" id="overviewTable">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Member</th>
+              <th>Membership No.</th>
+              <th>Venue</th>
+              <th>Pax</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="overviewBody">
+            <tr class="table-empty"><td colspan="8">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="modalOverlay" hidden></div>
+
+  <dialog id="overrideStatusModal" class="modal-dialog">
+    <button class="modal-close" data-close>&times;</button>
+    <h3>Override Booking Status</h3>
+    <p class="modal-step">Admin action</p>
+    <form id="overrideStatusForm">
+      <div class="field">
+        <label class="field__label" for="overrideStatus">New Status</label>
+        <select class="field__input field__select" id="overrideStatus" required>
+          <option value="">Select status</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Checked In">Checked In</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="No Show">No Show</option>
+          <option value="Late Cancellation">Late Cancellation</option>
+          <option value="late_fee_paid">Late Fee Paid</option>
+        </select>
+      </div>
+      <input type="hidden" id="overrideContactId" />
+      <!-- [GHL] PUT /contacts/{id} → booking_status:[value] -->
+      <button class="btn-primary" type="submit">Apply Override</button>
+    </form>
+  </dialog>
+
+  <dialog id="addNoteModal" class="modal-dialog">
+    <button class="modal-close" data-close>&times;</button>
+    <h3>Add Contact Note</h3>
+    <form id="addNoteForm">
+      <div class="field">
+        <label class="field__label" for="noteText">Note</label>
+        <textarea class="field__input field__textarea" id="noteText" rows="4" placeholder="Enter note…" required></textarea>
+      </div>
+      <input type="hidden" id="noteContactId" />
+      <!-- [GHL] POST /contacts/{id}/notes -->
+      <button class="btn-primary" type="submit">Save Note</button>
+    </form>
+  </dialog>
+
+  <dialog id="fullRecordModal" class="modal-dialog modal-dialog--wide">
+    <button class="modal-close" data-close>&times;</button>
+    <h3>Full Booking Record</h3>
+    <!-- [GHL] GET /contacts/{id} → render all customFields as key/value pairs -->
+    <div id="fullRecordContent"></div>
+  </dialog>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/mgmt-auth-guard.js"></script>
+  <script src="./js/management-portal.js"></script>
+</body>
+</html>

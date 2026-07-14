@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — No-Show Tracker</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="management.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Management</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="management.html" class="nav-item">
+          <span class="nav-item__icon">≡</span>
+          <span>Shift Overview</span>
+        </a>
+        <a href="management-occupancy.html" class="nav-item">
+          <span class="nav-item__icon">◈</span>
+          <span>Live Occupancy</span>
+        </a>
+        <a href="management-analytics.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Booking Analytics</span>
+        </a>
+        <a href="management-noshow.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">△</span>
+          <span>No-Show Tracker</span>
+        </a>
+        <a href="management-guests.html" class="nav-item">
+          <span class="nav-item__icon">⊕</span>
+          <span>Guest Record Audit</span>
+        </a>
+        <a href="management-fees.html" class="nav-item">
+          <span class="nav-item__icon">◻</span>
+          <span>Late Cancellation Fees</span>
+        </a>
+        <a href="management-blocks.html" class="nav-item">
+          <span class="nav-item__icon">▣</span>
+          <span>Facility Blocks</span>
+        </a>
+        <a href="management-events.html" class="nav-item">
+          <span class="nav-item__icon">&#9733;</span>
+          <span>Add Event</span>
+        </a>
+        <a href="management-inbox.html" class="nav-item">
+          <span class="nav-item__icon">&#9993;</span>
+          <span>Inbox</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Admin</span>
+          <span class="staff-badge__role" id="staffRole">Management</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">No-Show Tracker</h1>
+          <!-- <p class="view__sub">Sorted by count descending. Amber ≥ 3, Red ≥ 5.</p> -->
+        </div>
+      </div>
+
+      <!-- [GHL] GET /contacts/?customField[booking_status]=no_show → group by membership_number, sum no_show_count, sort desc -->
+      <!-- Row classes added by JS: row--amber (no_show_count ≥ 3), row--red (≥ 5) -->
+      <!-- Actions: [View Member Record] → GHL contact | [Flag Member] → adds management_flag tag | [Contact Member] → GHL WhatsApp -->
+      <!-- [Restrict Access] action visible only when no_show_count ≥ 5 AND role = admin -->
+      <div class="table-wrap">
+        <table class="data-table" id="noshowTable">
+          <thead>
+            <tr>
+              <th>Member Name</th>
+              <th>Membership No.</th>
+              <th>Total No-Shows</th>
+              <th>Most Recent</th>
+              <th>Facility</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="noshowBody">
+            <tr class="table-empty"><td colspan="6">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/mgmt-auth-guard.js"></script>
+  <script src="./js/management-portal.js"></script>
+</body>
+</html>

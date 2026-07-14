@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — Facility Blocks</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="management.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Management</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="management.html" class="nav-item">
+          <span class="nav-item__icon">≡</span>
+          <span>Shift Overview</span>
+        </a>
+        <a href="management-occupancy.html" class="nav-item">
+          <span class="nav-item__icon">◈</span>
+          <span>Live Occupancy</span>
+        </a>
+        <a href="management-analytics.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Booking Analytics</span>
+        </a>
+        <a href="management-noshow.html" class="nav-item">
+          <span class="nav-item__icon">△</span>
+          <span>No-Show Tracker</span>
+        </a>
+        <a href="management-guests.html" class="nav-item">
+          <span class="nav-item__icon">⊕</span>
+          <span>Guest Record Audit</span>
+        </a>
+        <a href="management-fees.html" class="nav-item">
+          <span class="nav-item__icon">◻</span>
+          <span>Late Cancellation Fees</span>
+        </a>
+        <a href="management-blocks.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">▣</span>
+          <span>Facility Blocks</span>
+        </a>
+        <a href="management-events.html" class="nav-item">
+          <span class="nav-item__icon">&#9733;</span>
+          <span>Add Event</span>
+        </a>
+        <a href="management-inbox.html" class="nav-item">
+          <span class="nav-item__icon">&#9993;</span>
+          <span>Inbox</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Admin</span>
+          <span class="staff-badge__role" id="staffRole">Management</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">Facility Blocks</h1>
+          <p class="view__sub">Creation of blocks up to 30 days ahead is allowed.</p>
+        </div>
+      </div>
+
+      <!-- [GHL] On submit: POST /contacts/ with booking_type:block, booking_status:confirmed -->
+      <!-- Admin date range: up to 30 days ahead — JS sets max attribute on mgmtBlockDate -->
+      <form class="form-panel" id="mgmtBlockForm">
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="mgmtBlockFacility">Facility</label>
+            <select class="field__input field__select" id="mgmtBlockFacility" required>
+              <option value="">Select facility</option>
+              <option value="Tennis">Tennis</option>
+              <option value="Squash">Squash</option>
+              <option value="Gym">Gym</option>
+              <option value="Le Mansion">Le Mansion</option>
+              <option value="Barkerslounge">Barker's Lounge</option>
+              <option value="Oasis">Oasis</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="mgmtBlockDateFrom">Date From</label>
+            <div class="field__wrap">
+              <input class="field__input" type="date" id="mgmtBlockDateFrom" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="mgmtBlockDateTo">Date To</label>
+            <div class="field__wrap">
+              <input class="field__input" type="date" id="mgmtBlockDateTo" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="mgmtBlockStart">Start Time</label>
+            <div class="field__wrap">
+              <input class="field__input" type="time" id="mgmtBlockStart" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="mgmtBlockEnd">End Time</label>
+            <div class="field__wrap">
+              <input class="field__input" type="time" id="mgmtBlockEnd" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field field--full">
+            <label class="field__label" for="mgmtBlockReason">Reason</label>
+            <div class="field__wrap">
+              <input class="field__input" type="text" id="mgmtBlockReason" placeholder="e.g. Private event, Maintenance" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" type="submit">Create Block</button>
+      </form>
+
+      <div class="section-divider"><span>Active &amp; Upcoming Blocks</span></div>
+
+      <!-- [GHL] GET /contacts/ filtered by booking_type:block + booking_status:confirmed → current + future only -->
+      <!-- [Remove Block] action: PUT /contacts/{id} → booking_status:cancelled → slot immediately available -->
+      <div class="table-wrap">
+        <table class="data-table" id="mgmtBlocksTable">
+          <thead>
+            <tr>
+              <th>Facility</th>
+              <th>Date From</th>
+              <th>Date To</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Duration</th>
+              <th>Reason</th>
+              <th>Created By</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="mgmtBlocksBody">
+            <tr class="table-empty"><td colspan="9">No active blocks.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Remove Block Confirm Modal -->
+  <div class="modal-overlay" id="removeBlockOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;align-items:center;justify-content:center;">
+    <div class="form-panel" style="max-width:420px;width:90%;">
+      <h2 style="margin:0 0 0.75rem;font-family:var(--font-display,serif);font-size:1.25rem;">Remove Block</h2>
+      <p style="margin:0 0 1.25rem;color:var(--muted,#666);">Are you sure you want to remove this block? The slot will become available immediately.</p>
+      <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+        <button class="btn-secondary" id="removeBlockCancelBtn">Keep Block</button>
+        <button class="btn-primary" id="removeBlockConfirmBtn">Yes, Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Block Modal -->
+  <div class="modal-overlay" id="editBlockOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;align-items:center;justify-content:center;">
+    <div class="form-panel" style="max-width:540px;width:90%;margin:auto;position:relative;top:50%;transform:translateY(-50%);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h2 style="margin:0;font-family:var(--font-display,serif);font-size:1.25rem;">Edit Block</h2>
+        <button type="button" id="editBlockCloseBtn" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted,#888);">&times;</button>
+      </div>
+      <form id="editBlockForm">
+        <input type="hidden" id="editBlockRef" />
+        <p style="margin:-4px 0 14px;font-size:0.82rem;color:var(--muted,#666);display:flex;align-items:center;gap:6px;">
+          <span aria-hidden="true" style="display:inline-flex;width:16px;height:16px;border-radius:50%;background:#b58900;color:#fff;font-size:0.7rem;font-weight:700;align-items:center;justify-content:center;">!</span>
+          Past dates and times are not allowed. End date &amp; time must be in the future.
+        </p>
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="editBlockFacility">Facility</label>
+            <select class="field__input field__select" id="editBlockFacility" required>
+              <option value="">Select facility</option>
+              <option value="Tennis">Tennis</option>
+              <option value="Squash">Squash</option>
+              <option value="Gym">Gym</option>
+              <option value="Le Mansion">Le Mansion</option>
+              <option value="Barkerslounge">Barker's Lounge</option>
+              <option value="Oasis">Oasis</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="editBlockDateFrom">Date From</label>
+            <div class="field__wrap">
+              <input class="field__input" type="date" id="editBlockDateFrom" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="editBlockDateTo">Date To</label>
+            <div class="field__wrap">
+              <input class="field__input" type="date" id="editBlockDateTo" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="editBlockStart">Start Time</label>
+            <div class="field__wrap">
+              <input class="field__input" type="time" id="editBlockStart" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="editBlockEnd">End Time</label>
+            <div class="field__wrap">
+              <input class="field__input" type="time" id="editBlockEnd" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <div class="field field--full">
+            <label class="field__label" for="editBlockReason">Reason</label>
+            <div class="field__wrap">
+              <input class="field__input" type="text" id="editBlockReason" placeholder="e.g. Private event, Maintenance" required />
+              <span class="field__line"></span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/mgmt-auth-guard.js"></script>
+  <script src="./js/management-portal.js"></script>
+</body>
+</html>

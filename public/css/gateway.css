@@ -1,0 +1,276 @@
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  background: var(--navy-deep, #001540);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── BACKGROUND HERO (full bleed) ────── */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.bg-layer__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.75) brightness(0.62);
+}
+
+/* Soft vignette — less suffocating than before */
+.bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,21,64,0.35) 0%, rgba(0,21,64,0.1) 40%, rgba(0,0,0,0.42) 100%);
+}
+
+/* ── CENTER CONTAINER ─────────────────── */
+.gateway {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 900px;
+  padding: 40px 24px;
+}
+
+/* ── TOP BRAND ───────────────────────── */
+.gw-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: fadeDown 0.7s ease both;
+}
+
+.gw-brand__logo-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(173,151,79,0.65);
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(173,151,79,0.22);
+}
+
+.gw-brand__logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.gw-brand__name {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(248,249,250,0.82);
+}
+
+/* thin gold rule */
+.gw-brand__rule {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, transparent, rgba(173,151,79,0.7), transparent);
+}
+
+/* ── HEADING ─────────────────────────── */
+.gw-heading {
+  text-align: center;
+  animation: fadeDown 0.7s ease both;
+  animation-delay: 0.1s;
+}
+
+.gw-heading__eyebrow {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(201, 176, 106, 0.95);
+  letter-spacing: 0.14em;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.gw-heading__title {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 48px;
+  font-weight: 300;
+  color: #f8f9fa;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+/* ── DUAL CARDS ──────────────────────── */
+.portal-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  width: 100%;
+  background: rgba(173,151,79,0.28);
+  border: 1px solid rgba(173,151,79,0.28);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+  animation: fadeUp 0.75s ease both;
+  animation-delay: 0.22s;
+}
+
+/* Cards now use the same light cream as the login panel */
+.pcard {
+  position: relative;
+  background: linear-gradient(160deg, #ffffff 0%, #f0ede6 100%);
+  padding: 52px 44px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-decoration: none;
+  overflow: hidden;
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+}
+
+.pcard:hover {
+  background: linear-gradient(160deg, #fdfaf4 0%, #ede8dc 100%);
+  box-shadow: inset 0 0 0 1px rgba(173,151,79,0.18);
+}
+
+/* top accent line (gold, expands on hover) */
+.pcard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold, #ad974f), transparent);
+  transform: scaleX(0);
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+
+.pcard:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── CARD ICON ────────────────────────── */
+.pcard__icon {
+  width: 40px;
+  height: 40px;
+  opacity: 0.85;
+}
+
+.pcard__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── CARD TEXT ───────────────────────── */
+.pcard__eyebrow {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-dim, #7a6a38);
+  display: block;
+}
+
+.pcard__title {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--navy, #002366);
+  line-height: 1.1;
+  margin-top: 4px;
+}
+
+.pcard__desc {
+  font-family: var(--font-ui, 'Tenor Sans', serif);
+  font-size: 13px;
+  color: var(--muted, #3a3630);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+}
+
+/* ── CARD CTA ────────────────────────── */
+.pcard__cta {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  padding: 13px 20px;
+  background: var(--navy, #002366);
+  color: var(--gold-light, #c9b06a);
+  border: 1px solid rgba(173, 151, 79, 0.35);
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.pcard:hover .pcard__cta {
+  background: var(--gold, #ad974f);
+  color: var(--navy, #002366);
+  border-color: var(--gold, #ad974f);
+}
+
+/* line span no longer used — hidden */
+.pcard__cta-line { display: none; }
+
+/* ── FOOTER ──────────────────────────── */
+.gw-footer {
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(248,249,250,0.5);
+  animation: fadeUp 0.7s ease both;
+  animation-delay: 0.38s;
+}
+
+/* ── ANIMATIONS ──────────────────────── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ──────────────────────── */
+@media (max-width: 620px) {
+  .portal-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .gw-heading__title {
+    font-size: 34px;
+  }
+
+  .pcard {
+    padding: 40px 32px 36px;
+  }
+}

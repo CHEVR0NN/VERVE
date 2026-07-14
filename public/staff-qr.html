@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verve — QR Verify</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/console.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="console-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <a href="staff.html" class="sidebar__logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve" class="sidebar__logo" /></a>
+        <span class="sidebar__title">Staff Console</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a href="staff.html" class="nav-item">
+          <span class="nav-item__icon">≡</span>
+          <span>Today's Schedule</span>
+        </a>
+        <a href="staff-booking.html" class="nav-item">
+          <span class="nav-item__icon">◇</span>
+          <span>Staff Booking</span>
+        </a>
+        <a href="staff-walkin.html" class="nav-item">
+          <span class="nav-item__icon">→</span>
+          <span>Log Walk-In</span>
+        </a>
+        <a href="staff-qr.html" class="nav-item nav-item--active">
+          <span class="nav-item__icon">▣</span>
+          <span>QR Verify</span>
+        </a>
+        <a href="staff-fnb.html" class="nav-item">
+          <span class="nav-item__icon">◈</span>
+          <span>F&amp;B Bookings</span>
+        </a>
+        <a href="staff-cancel.html" class="nav-item">
+          <span class="nav-item__icon">△</span>
+          <span>Late Cancellations</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="staff-badge">
+          <span class="staff-badge__name" id="staffName">Staff</span>
+          <span class="staff-badge__role" id="staffRole">—</span>
+        </div>
+        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+      </div>
+    </aside>
+
+    <main class="console-main">
+
+      <div class="view__header">
+        <div>
+          <h1 class="view__title">QR Verify</h1>
+          <p class="view__sub">Scan or enter a member QR code to verify booking.</p>
+        </div>
+      </div>
+
+      <div class="qr-panel">
+
+        <!-- Camera scanner -->
+        <div class="qr-scanner-wrap">
+          <div id="qrReader" style="width:100%;max-width:400px;margin:0 auto;"></div>
+          <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+            <button class="btn-primary" id="startScanBtn">Start Camera</button>
+            <button class="btn-secondary" id="stopScanBtn" disabled>Stop Camera</button>
+          </div>
+        </div>
+
+        <!-- Manual fallback -->
+        <div style="margin-top:1.5rem;">
+          <div class="field qr-field">
+            <label class="field__label" for="qrInput">Or enter booking reference manually</label>
+            <div class="field__wrap">
+              <input class="field__input qr-input" type="text" id="qrInput"
+                placeholder="e.g. BK-20260326-412" autocomplete="off" />
+              <span class="field__line"></span>
+            </div>
+          </div>
+          <button class="btn-secondary" id="qrManualBtn" style="margin-top:0.5rem;">Verify</button>
+        </div>
+
+        <!-- Result -->
+        <div class="qr-result" id="qrResult" hidden>
+          <div class="qr-result__badge" id="qrBadge"></div>
+          <div class="qr-result__info">
+            <p class="qr-result__name" id="qrName">—</p>
+            <p class="qr-result__meta" id="qrMeta">—</p>
+            <p class="qr-result__status" id="qrStatus">—</p>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+    </main>
+  </div>
+
+  <script src="./js/demo-mode.js"></script>
+  <script src="./js/staff-portal.js"></script>
+</body>
+</html>
