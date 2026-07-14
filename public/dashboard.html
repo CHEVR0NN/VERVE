@@ -1248,6 +1248,7 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
           '<h3 class="exp-card__title">' + escHtml(ev.title) + '</h3>' +
           '<p class="exp-card__venue">' + escHtml(ev.venue) + '</p>' +
           '<p class="exp-card__desc">' + escHtml(ev.desc) + '</p>' +
+          '<span class="exp-card__cta">View Details <span aria-hidden="true">→</span></span>' +
         '</div>';
       card.addEventListener('click', function() { openEventModal(ev); });
       grid.appendChild(card);

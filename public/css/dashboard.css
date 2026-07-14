@@ -2807,8 +2807,7 @@ dialog:not([open]) {
 }
 .notice-cat-icon--facility { background: rgba(var(--gold-dim-rgb), 0.12); color: var(--gold-dim); }
 .notice-cat-icon--events   { background: rgba(var(--ink-rgb), 0.09);   color: var(--ink); }
-.notice-cat-icon--general  { background: rgba(80, 80, 80, 0.09);   color: #555; }
-.notice-cat-icon--wellness { background: rgba(30, 140, 30, 0.1);   color: #1a7a1a; }
+.notice-cat-icon--general  { background: rgba(var(--ink-rgb), 0.06);   color: var(--muted); }
 
 .notice-thread__info { flex: 1; min-width: 0; }
 
@@ -2831,13 +2830,12 @@ dialog:not([open]) {
 }
 .notice-cat-badge--facility { background: rgba(var(--gold-dim-rgb), 0.12); color: var(--gold-dim); }
 .notice-cat-badge--events   { background: rgba(var(--ink-rgb), 0.09);   color: var(--ink); }
-.notice-cat-badge--general  { background: rgba(80,80,80,0.09);   color: #666; }
-.notice-cat-badge--wellness { background: rgba(30,140,30,0.1);   color: #1a7a1a; }
+.notice-cat-badge--general  { background: rgba(var(--ink-rgb), 0.06);   color: var(--muted); }
 
 .notice-time {
   font-family: var(--font-ui);
   font-size: 10.5px;
-  color: #aaa;
+  color: var(--muted);
   letter-spacing: 0.04em;
 }
 
@@ -2878,12 +2876,12 @@ dialog:not([open]) {
   gap: 4px;
   font-family: var(--font-ui);
   font-size: 11px;
-  color: #bbb;
+  color: var(--muted);
   letter-spacing: 0.04em;
 }
 
 .notice-chevron {
-  color: #bbb;
+  color: var(--muted);
   flex-shrink: 0;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s;
 }
@@ -2896,7 +2894,7 @@ dialog:not([open]) {
 
 .notice-thread__body {
   border-top: 1px solid rgba(var(--ink-rgb), 0.07);
-  background: rgba(248, 246, 242, 0.6);
+  background: var(--panel-hi);
   animation: noticeReveal 0.2s ease;
 }
 
@@ -3002,13 +3000,17 @@ dialog:not([open]) {
 }
 
 .notice-post__bubble--official .notice-post__author {
-  color: var(--navy-deep);
+  /* var(--gold-dim), not var(--navy-deep) — navy-deep is a fixed-dark
+     brand chrome color (buttons/nav), and this bubble's own background
+     (var(--panel-bg)) goes dark in dark mode, so navy-deep text on it was
+     near-black-on-near-black. gold-dim is themed AA-safe on both. */
+  color: var(--gold-dim);
 }
 
 .notice-post__time {
   font-family: var(--font-ui);
   font-size: 10.5px;
-  color: #bbb;
+  color: var(--muted);
   letter-spacing: 0.04em;
 }
 
@@ -3026,7 +3028,7 @@ dialog:not([open]) {
   display: block;
   font-family: var(--font-ui);
   font-size: 10px;
-  color: #bbb;
+  color: var(--muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 8px;
@@ -3076,7 +3078,8 @@ dialog:not([open]) {
   box-shadow: 0 0 0 2px rgba(var(--gold-dim-rgb), 0.1);
 }
 .notice-reply-textarea::placeholder {
-  color: #ccc;
+  color: var(--muted);
+  opacity: 0.7;
   font-style: italic;
   font-family: var(--font-display);
   font-size: 14px;
@@ -3104,7 +3107,8 @@ dialog:not([open]) {
 .notice-reply-hint {
   font-family: var(--font-ui);
   font-size: 10.5px;
-  color: #ccc;
+  color: var(--muted);
+  opacity: 0.75;
   letter-spacing: 0.04em;
   font-style: italic;
 }
@@ -3177,7 +3181,7 @@ dialog:not([open]) {
 
 .notice-reply-bubble__body {
   max-width: 75%;
-  background: #f4f5f7;
+  background: var(--panel-hi);
   padding: 8px 14px;
   border-radius: 10px;
   border-top-left-radius: 2px;
@@ -3205,7 +3209,9 @@ dialog:not([open]) {
   font-family: var(--font-display);
   font-size: 11px;
   font-weight: 600;
-  color: var(--navy, #002366);
+  /* var(--ink), not var(--navy) — navy is a fixed-dark chrome color and
+     this label sits on the theme-flipping bubble backgrounds above. */
+  color: var(--ink);
 }
 
 .notice-reply-bubble__name em {
@@ -3217,7 +3223,7 @@ dialog:not([open]) {
 .notice-reply-bubble__time {
   font-family: var(--font-ui);
   font-size: 10px;
-  color: #aaa;
+  color: var(--muted);
 }
 
 .notice-reply-bubble__text {
@@ -3241,7 +3247,11 @@ dialog:not([open]) {
   border-radius: 6px;
   font-family: var(--font-ui);
   font-size: 13px;
-  color: var(--ink, #222);
+  color: var(--ink);
+  /* No explicit background previously — fell back to the browser's
+     default white input, so var(--ink) text (near-white in dark mode)
+     was invisible white-on-white. */
+  background: var(--panel-bg);
   outline: none;
   transition: border-color 0.2s;
 }
@@ -3251,7 +3261,8 @@ dialog:not([open]) {
 }
 
 .notice-reply-input::placeholder {
-  color: #bbb;
+  color: var(--muted);
+  opacity: 0.7;
   font-style: italic;
 }
 
@@ -3724,6 +3735,21 @@ dialog:not([open]) {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Explicit "clickable, has details" affordance */
+.exp-card__cta {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 2px;
+  transition: gap 0.3s ease-out;
+}
+.exp-card:hover .exp-card__cta { gap: 11px; }
 
 .btn-hero-register {
   padding: 14px 30px;
