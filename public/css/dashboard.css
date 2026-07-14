@@ -1037,8 +1037,8 @@ dialog:not([open]) {
   border-radius: 2px;
   white-space: nowrap;
 }
-.timing-chip--soon { background: rgba(201, 147, 10, 0.14); color: #9a6e06; }
-.timing-chip--live { background: rgba( 39, 174, 96, 0.16); color: #1a7a3c; }
+.timing-chip--soon { background: color-mix(in srgb, var(--coral) 42%, transparent); color: var(--ink); }
+.timing-chip--live { background: color-mix(in srgb, var(--teal) 18%, transparent); color: var(--teal); }
 
 .booking-section-header {
   font-family: var(--font-ui);
@@ -2154,7 +2154,10 @@ dialog:not([open]) {
   align-items: center;
   gap: 10px;
   padding: 9px 52px;
-  background: linear-gradient(to right, #140d00, #1c1200 40%, #140d00);
+  background: linear-gradient(to right,
+    color-mix(in srgb, var(--gold-dim) 16%, var(--navy-deep)),
+    color-mix(in srgb, var(--gold-dim) 26%, var(--navy-deep)) 40%,
+    color-mix(in srgb, var(--gold-dim) 16%, var(--navy-deep)));
   border-top: 1px solid rgba(var(--gold-dim-rgb), 0.1);
   border-bottom: 1px solid rgba(var(--gold-dim-rgb), 0.22);
   position: sticky;
@@ -3760,7 +3763,9 @@ dialog:not([open]) {
   align-items: center;
   gap: 10px;
   padding: 10px 52px;
-  background: linear-gradient(90deg, #2d1e00 0%, #3a2800 100%);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--gold-dim) 22%, var(--navy-deep)) 0%,
+    color-mix(in srgb, var(--gold-dim) 32%, var(--navy-deep)) 100%);
   border-bottom: 1px solid rgba(var(--gold-dim-rgb), 0.3);
   position: sticky;
   top: 0;
