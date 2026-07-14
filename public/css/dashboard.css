@@ -2249,11 +2249,13 @@ dialog:not([open]) {
 .event-hero__overlay {
   position: absolute;
   inset: 0;
+  /* Neutral obsidian scrim — not the old racing-green (10,28,21) left
+     over from the pre-rebrand "Court & Clubhouse" palette. */
   background: linear-gradient(
     108deg,
-    rgba(10, 28, 21, 0.93) 0%,
-    rgba(10, 28, 21, 0.78) 38%,
-    rgba(10, 28, 21, 0.28) 68%,
+    rgba(10, 10, 12, 0.93) 0%,
+    rgba(10, 10, 12, 0.78) 38%,
+    rgba(10, 10, 12, 0.28) 68%,
     transparent 100%
   );
   display: flex;
@@ -2464,7 +2466,7 @@ dialog:not([open]) {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(10, 28, 21, 0.65);
+  background: rgba(10, 10, 12, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2485,7 +2487,7 @@ dialog:not([open]) {
   border-radius: 6px;
   flex-direction: column;
   /* overflow: hidden; */
-  box-shadow: 0 24px 64px rgba(10, 28, 21, 0.35);
+  box-shadow: 0 24px 64px rgba(10, 10, 12, 0.35);
 }
 
 .ticket-popup__header {
@@ -2576,7 +2578,7 @@ dialog:not([open]) {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(10, 28, 21, 0.55);
+  background: rgba(10, 10, 12, 0.55);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.3);
   border-radius: var(--radius-sm);
   color: var(--gold-light);
@@ -3874,10 +3876,10 @@ dialog:not([open]) {
 
 .event-modal .modal-close {
   z-index: 10;
-  background: rgba(14, 36, 27, 0.55);
+  background: rgba(10, 10, 12, 0.55);
   border-radius: 50%;
   /* Fixed light tone — this badge sits on the hero photo, permanently dark
-     in both themes; a theme-flipping color went near-black-on-dark-green
+     in both themes; a theme-flipping color went near-black-on-dark
      (invisible) in dark mode. */
   color: rgba(245, 247, 249, 0.85);
   opacity: 1;
@@ -3886,7 +3888,7 @@ dialog:not([open]) {
 }
 
 .event-modal .modal-close:hover {
-  background: rgba(14, 36, 27, 0.85);
+  background: rgba(10, 10, 12, 0.85);
   color: #fff;
 }
 
