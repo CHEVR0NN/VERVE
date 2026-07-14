@@ -4920,29 +4920,29 @@ dialog:not([open]) {
   box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px rgba(var(--rose-glow-rgb), 0.6);
 }
 
-/* Placeholder pattern art per action - pure CSS, no external images (no CLS) */
+/* Photo art per action, tinted with a rose/rose-gold overlay to stay on-brand */
 .action-card__art {
   height: 128px;
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid var(--hairline);
+  background-size: cover;
+  background-position: center;
 }
 .action-card--book .action-card__art {
   background:
-    repeating-linear-gradient(90deg, rgba(var(--gold-dim-rgb),0.14) 0 1px, transparent 1px 34px),
-    repeating-linear-gradient(0deg, rgba(var(--gold-dim-rgb),0.14) 0 1px, transparent 1px 34px),
-    linear-gradient(135deg, color-mix(in srgb, var(--teal) 22%, var(--card)), var(--card));
+    linear-gradient(135deg, rgba(var(--gold-dim-rgb), 0.58), rgba(var(--rose-glow-rgb), 0.4)),
+    url('../asset/facility-booking.jpg') center/cover no-repeat;
 }
 .action-card--dine .action-card__art {
   background:
-    radial-gradient(circle at 30% 40%, rgba(var(--rose-glow-rgb),0.25), transparent 42%),
-    radial-gradient(circle at 72% 68%, rgba(var(--gold-dim-rgb),0.2), transparent 45%),
-    linear-gradient(135deg, color-mix(in srgb, var(--gold) 20%, var(--card)), var(--card));
+    linear-gradient(135deg, rgba(var(--rose-glow-rgb), 0.5), rgba(var(--gold-dim-rgb), 0.45)),
+    url('../asset/dining-reservation.jpg') center/cover no-repeat;
 }
 .action-card--guest .action-card__art {
   background:
-    repeating-linear-gradient(45deg, rgba(var(--gold-dim-rgb),0.12) 0 2px, transparent 2px 16px),
-    linear-gradient(135deg, color-mix(in srgb, var(--coral) 34%, var(--card)), var(--card));
+    linear-gradient(135deg, rgba(var(--gold-dim-rgb), 0.5), rgba(var(--rose-glow-rgb), 0.45)),
+    url('../asset/register-guests.jpg') center/cover no-repeat;
 }
 .action-card__body {
   display: flex;
