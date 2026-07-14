@@ -2315,7 +2315,11 @@ dialog:not([open]) {
   font-family: var(--font-display);
   font-style: italic;
   font-size: 15px;
-  color: rgba(var(--card-rgb), 0.6);
+  /* Fixed light tone, not var(--card-rgb) — this sits on the hero photo's
+     hardcoded dark scrim (.event-hero__overlay), which stays dark in BOTH
+     themes, so a theme-flipping color went near-black (illegible) in dark
+     mode. */
+  color: rgba(245, 247, 249, 0.75);
   letter-spacing: 0.07em;
 }
 
@@ -2331,7 +2335,8 @@ dialog:not([open]) {
 .event-hero__tagline {
   font-family: var(--font-ui);
   font-size: 13.5px;
-  color: rgba(var(--card-rgb), 0.65);
+  /* Fixed light tone — same reasoning as .event-hero__date-line above. */
+  color: rgba(245, 247, 249, 0.75);
   line-height: 1.65;
   max-width: 500px;
 }
@@ -3871,7 +3876,10 @@ dialog:not([open]) {
   z-index: 10;
   background: rgba(14, 36, 27, 0.55);
   border-radius: 50%;
-  color: rgba(var(--card-rgb), 0.8);
+  /* Fixed light tone — this badge sits on the hero photo, permanently dark
+     in both themes; a theme-flipping color went near-black-on-dark-green
+     (invisible) in dark mode. */
+  color: rgba(245, 247, 249, 0.85);
   opacity: 1;
   top: 12px;
   right: 14px;
@@ -4367,7 +4375,9 @@ dialog:not([open]) {
   position: absolute;
   top: 14px;
   right: 16px;
-  color: rgba(var(--card-rgb), 0.85);
+  /* Fixed light tone — this modal is a permanently-dark room, so a
+     theme-flipping color rendered near-black-on-near-black (invisible). */
+  color: rgba(245, 247, 249, 0.85);
   font-size: 28px;
   background: transparent;
   border: none;
