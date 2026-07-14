@@ -30,18 +30,15 @@
       <span class="side-nav__wordmark">Verve</span>
     </div>
 
-    <!-- ── TAB NAVIGATION (vertical) ── -->
+    <!-- ── TAB NAVIGATION ── -->
     <nav class="dash-tabs" role="tablist" aria-label="Sections">
       <button class="dash-tab dash-tab--active" data-tab="home" role="tab">
-        <svg class="dash-tab__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
         <span>Dashboard</span>
       </button>
       <button class="dash-tab" data-tab="events" role="tab">
-        <svg class="dash-tab__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
         <span>Club Events</span>
       </button>
       <button class="dash-tab" data-tab="notices" role="tab">
-        <svg class="dash-tab__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         <span>Notices</span>
         <span class="tab-badge tab-badge--alert" id="noticesTabBadge" hidden>0</span>
       </button>
@@ -158,41 +155,28 @@
       <section class="home-actions">
         <div class="section-eyebrow">Concierge</div>
         <div class="action-cards">
-          <button class="action-card action-card--book" data-modal="facilityModal">
+          <button class="action-card action-card--feature action-card--book" data-modal="facilityModal">
             <span class="action-card__art" aria-hidden="true"></span>
             <span class="action-card__body">
-              <span class="action-card__icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18M3 12h18"/></svg>
-              </span>
               <span class="action-card__title">Reserve Venue</span>
               <span class="action-card__desc">Secure a court or space, in moments.</span>
               <span class="action-card__cta">Begin <span aria-hidden="true">→</span></span>
             </span>
           </button>
 
-          <button class="action-card action-card--dine" data-modal="diningModal">
-            <span class="action-card__art" aria-hidden="true"></span>
-            <span class="action-card__body">
-              <span class="action-card__icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v20M6 2a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3M18 2v20M18 2c-2 0-3 2-3 5v3c0 2 1 3 3 3"/></svg>
-              </span>
+          <div class="action-card-list">
+            <button class="action-card action-card--row action-card--dine" data-modal="diningModal">
               <span class="action-card__title">Secure Table</span>
               <span class="action-card__desc">Dining reserved to your taste.</span>
               <span class="action-card__cta">Begin <span aria-hidden="true">→</span></span>
-            </span>
-          </button>
+            </button>
 
-          <button class="action-card action-card--guest" data-modal="guestModal">
-            <span class="action-card__art" aria-hidden="true"></span>
-            <span class="action-card__body">
-              <span class="action-card__icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/><path d="M17 8.5a3 3 0 1 0 0-6M21.5 20c0-3-2-5.2-5-5.8"/></svg>
-              </span>
+            <button class="action-card action-card--row action-card--guest" data-modal="guestModal">
               <span class="action-card__title">Invite Guest</span>
               <span class="action-card__desc">Extend a personal invitation.</span>
               <span class="action-card__cta">Begin <span aria-hidden="true">→</span></span>
-            </span>
-          </button>
+            </button>
+          </div>
         </div>
       </section>
 
