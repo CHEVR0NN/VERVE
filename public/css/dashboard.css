@@ -4612,94 +4612,80 @@ dialog:not([open]) {
   color: var(--gold);
   margin-bottom: 16px;
 }
-/* Asymmetric tension: one wide photographic "feature" action, paired with a
-   tight, borderless list of two supporting actions — not three equal boxes. */
+/* Three photo cards, but not a uniform tile grid: each card's image runs
+   a different height, so the row reads as an editorial stagger rather
+   than three identical SaaS-style boxes. */
 .action-cards {
   display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: 40px;
-  align-items: stretch;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
 }
 @media (max-width: 900px) {
   .action-cards { grid-template-columns: 1fr; }
 }
 
 .action-card {
+  display: flex;
+  flex-direction: column;
   text-align: left;
-  background: none;
-  border: none;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
   cursor: pointer;
   padding: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+}
+.action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(var(--gold-dim-rgb), 0.45);
 }
 .action-card:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px rgba(var(--rose-glow-rgb), 0.6);
 }
 
-/* ── Feature action: the one card allowed visual richness ── */
-.action-card--feature {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
-  background: var(--card);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease-out, border-color 0.3s ease-out;
-}
-.action-card--feature:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(var(--gold-dim-rgb), 0.45);
-}
-.action-card--feature .action-card__art {
-  height: 168px;
+/* Photo art per action, tinted with a rose/rose-gold overlay to stay
+   on-brand. Heights are deliberately uneven — tall / short / mid-tall. */
+.action-card__art {
   border-bottom: 1px solid var(--hairline);
   background-size: cover;
   background-position: center;
 }
 .action-card--book .action-card__art {
+  height: 210px;
   background:
     linear-gradient(135deg, rgba(var(--gold-dim-rgb), 0.58), rgba(var(--rose-glow-rgb), 0.4)),
     url('../asset/facility-booking.jpg') center/cover no-repeat;
 }
-.action-card--feature .action-card__body {
+.action-card--dine .action-card__art {
+  height: 150px;
+  background:
+    linear-gradient(135deg, rgba(var(--rose-glow-rgb), 0.5), rgba(var(--gold-dim-rgb), 0.45)),
+    url('../asset/dining-reservation.jpg') center/cover no-repeat;
+}
+.action-card--guest .action-card__art {
+  height: 185px;
+  background:
+    linear-gradient(135deg, rgba(var(--gold-dim-rgb), 0.5), rgba(var(--rose-glow-rgb), 0.45)),
+    url('../asset/register-guests.jpg') center/cover no-repeat;
+}
+@media (max-width: 900px) {
+  .action-card--book .action-card__art,
+  .action-card--dine .action-card__art,
+  .action-card--guest .action-card__art { height: 180px; }
+}
+
+.action-card__body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 26px 26px 28px;
+  padding: 22px 22px 24px;
   flex: 1;
 }
-.action-card--feature .action-card__title {
-  font-size: 24px;
-}
-
-/* ── Supporting actions: raw typographic rows, one vertical hairline holds
-   the whole list together, a bottom hairline separates each row ── */
-.action-card-list {
-  display: flex;
-  flex-direction: column;
-  border-left: 1px solid var(--hairline);
-  padding-left: 30px;
-}
-.action-card--row {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 0 0 22px;
-  margin-bottom: 22px;
-  border-bottom: 1px solid var(--hairline);
-  transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.action-card-list .action-card--row:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-.action-card--row:hover {
-  padding-left: 8px;
-}
-
 .action-card__title {
   font-family: var(--font-display);
   font-size: 19px;
