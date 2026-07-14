@@ -594,20 +594,26 @@
   <button class="modal-close" id="eventModalClose">&times;</button>
   <div class="event-modal__img-wrap">
     <img id="eventModalImg" src="" alt="" />
+    <span class="event-modal__badge" id="eventModalAccess" hidden></span>
   </div>
   <div class="event-modal__body">
     <h3 class="event-modal__title" id="eventModalTitle"></h3>
     <ul class="event-modal__meta">
-      <li>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        <span id="eventModalDate"></span>
-      </li>
-      <li>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span id="eventModalVenue"></span>
-      </li>
+      <li><span id="eventModalDate"></span></li>
+      <li><span id="eventModalVenue"></span></li>
     </ul>
     <p class="event-modal__desc" id="eventModalDesc"></p>
+
+    <div class="event-modal__highlights" id="eventModalHighlightsWrap" hidden>
+      <span class="event-modal__section-label">Highlights</span>
+      <ul class="event-modal__highlights-list" id="eventModalHighlights"></ul>
+    </div>
+
+    <div class="event-modal__dress-row" id="eventModalDressWrap" hidden>
+      <span class="event-modal__section-label">Dress Code</span>
+      <span class="event-modal__dress-value" id="eventModalDress"></span>
+    </div>
+
     <div class="event-modal__btn-row">
       <button class="event-modal__pdf-btn" id="eventModalPdfBtn" hidden>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -694,49 +700,91 @@ const CURATED_EXPERIENCES = [
   {
     title: 'The Grand Sommelier’s Table: Rare Vintages & Caviar',
     desc:   'An intimate, multi-course tasting journey pairing legendary Premier Cru champagne and old-world red vintages with world-class caviar.',
+    date:   'Friday, 14 August 2026 | 7:00pm – 10:30pm',
     venue:  'The Vintage Room',
     access: 'Members Only · 12 Seats',
-    img:    'http://googleusercontent.com/image_collection/image_retrieval/12298633410014639080_0',
+    dressCode: 'Smart Formal',
+    highlights: [
+      'Five rare vintages personally selected by our resident sommelier',
+      'Petrossian Ossetra caviar service with traditional accompaniments',
+      'Convivial single chef’s table seating just 12 guests',
+    ],
+    img:    './asset/events/1.png',
   },
   {
     title: 'Twilight Clay Court Invitational',
     desc:   'A sophisticated, floodlit evening tennis tournament under the stars. Matches are followed by a courtside cocktail reception.',
+    date:   'Saturday, 5 September 2026 | 6:30pm – 10:00pm',
     venue:  'Championship Clay Courts',
     access: 'Members & Guests',
-    img:    'http://googleusercontent.com/image_collection/image_retrieval/1848002297000882672_0',
+    dressCode: 'Tennis Whites',
+    highlights: [
+      'Round-robin doubles format, open to all skill levels',
+      'Championship courts reserved exclusively and fully floodlit',
+      'Courtside cocktail reception immediately follows play',
+    ],
+    img:    './asset/events/2.png',
   },
   {
     title: 'Sunset Lounge: Live Jazz & Champagne',
     desc:   'A golden hour social set against a panoramic backdrop. Enjoy a live acoustic jazz trio while sipping premium champagne and hand-crafted canapés.',
+    date:   'Friday, 18 September 2026 | 6:00pm – 9:00pm',
     venue:  'The Obsidian Terrace',
     access: 'Members & Invited Guests',
-    img:    'http://googleusercontent.com/image_collection/image_retrieval/5790912665245144332_0',
+    dressCode: 'Smart Casual',
+    highlights: [
+      'Live acoustic jazz trio from golden hour into the evening',
+      'Champagne pairing curated by our in-house sommelier',
+      'Unobstructed sunset views across the Obsidian Terrace',
+    ],
+    img:    './asset/events/3.png',
   },
   {
     title: 'Junior Elite Tennis Masterclass',
     desc:   'A highly technical, professional-led clinic designed to elevate the stance, stroke play, and tactical thinking of our junior members.',
+    date:   'Saturday, 3 October 2026 | 9:00am – 12:00pm',
     venue:  'Indoor Tennis Pavilion',
     access: 'Family Members',
-    img:    'http://googleusercontent.com/image_collection/image_retrieval/14747261579204666511_0',
+    dressCode: 'Tennis Attire',
+    highlights: [
+      'Led by a nationally certified coaching professional',
+      'Small-group format, capped at 8 juniors per session',
+      'Video stroke analysis included for every participant',
+    ],
+    img:    './asset/events/4.png',
   },
   {
     title: 'Sunrise Zen: Soundbath & Alabaster Matcha',
     desc:   'A restorative, sensory wellness experience combining a deep Tibetan sound bowl meditation with a guided tasting of ceremonial matcha.',
+    date:   'Sunday, 11 October 2026 | 7:00am – 9:00am',
     venue:  'The Wellness Pavilion',
     access: 'Members & Spa Passes',
-    img:    'http://googleusercontent.com/image_collection/image_retrieval/6516733717004041918_0',
+    dressCode: 'Comfortable Loungewear',
+    highlights: [
+      '45-minute Tibetan singing bowl sound meditation',
+      'Guided ceremonial-grade matcha tasting with a tea master',
+      'Mats, cushions, and blankets provided',
+    ],
+    img:    './asset/events/5.png',
   },
   {
     title: 'Vernissage: Private Art Exhibition & Aged Cognac',
     desc:   'A private, exclusive viewing of avant-garde contemporary art pieces curated by local galleries, with an estate cognac pairing masterclass.',
+    date:   'Thursday, 22 October 2026 | 7:00pm – 10:00pm',
     venue:  'The Gallery Lounge',
     access: 'Invitation-Only · VIP',
-    img:    'http://googleusercontent.com/image_collection/image_retrieval/1387766382087888897_0',
+    dressCode: 'Cocktail Attire',
+    highlights: [
+      'First look at an avant-garde collection before public release',
+      'Guided walkthrough with the curating gallerist',
+      'Estate cognac flight paired to each exhibited piece',
+    ],
+    img:    './asset/events/6.png',
   },
 ];
 
 // ── Merge static + dynamic events from backend ────────────────────────
-let EVENTS = [...STATIC_EVENTS];
+let EVENTS = [...CURATED_EXPERIENCES, ...STATIC_EVENTS];
 const EVENTS_API = 'https://backend-production-41dc3.up.railway.app/api/events/active';
 
 function formatEventDate(dateStr, duration) {
@@ -767,8 +815,8 @@ function formatEventDate(dateStr, duration) {
           _id:   ev._id || '',
         };
       });
-      // Prepend backend-created events before the static ones
-      EVENTS = [...backendEvents, ...STATIC_EVENTS];
+      // Prepend backend-created events before the curated + static ones
+      EVENTS = [...backendEvents, ...CURATED_EXPERIENCES, ...STATIC_EVENTS];
     }
   } catch (e) {
     console.warn('Failed to load events from backend:', e);
@@ -1155,6 +1203,29 @@ function formatEventDate(dateStr, duration) {
     document.getElementById('eventModalDate').textContent   = ev.date  || '';
     document.getElementById('eventModalVenue').textContent  = ev.venue || '';
     document.getElementById('eventModalDesc').textContent   = ev.desc  || '';
+
+    const accessBadge = document.getElementById('eventModalAccess');
+    if (ev.access) { accessBadge.textContent = ev.access; accessBadge.hidden = false; }
+    else            { accessBadge.hidden = true; }
+
+    const highlightsWrap = document.getElementById('eventModalHighlightsWrap');
+    const highlightsList = document.getElementById('eventModalHighlights');
+    if (ev.highlights && ev.highlights.length) {
+      highlightsList.innerHTML = ev.highlights.map(function(h) { return '<li>' + escHtml(h) + '</li>'; }).join('');
+      highlightsWrap.hidden = false;
+    } else {
+      highlightsList.innerHTML = '';
+      highlightsWrap.hidden = true;
+    }
+
+    const dressWrap = document.getElementById('eventModalDressWrap');
+    if (ev.dressCode) {
+      document.getElementById('eventModalDress').textContent = ev.dressCode;
+      dressWrap.hidden = false;
+    } else {
+      dressWrap.hidden = true;
+    }
+
     const pdfBtn   = document.getElementById('eventModalPdfBtn');
     const pdfEmbed = document.getElementById('eventModalPdfEmbed');
     const pdfFrame = document.getElementById('eventModalPdfFrame');
@@ -1263,6 +1334,7 @@ function formatEventDate(dateStr, duration) {
           '<p class="exp-card__venue">' + escHtml(ev.venue) + '</p>' +
           '<p class="exp-card__desc">' + escHtml(ev.desc) + '</p>' +
         '</div>';
+      card.addEventListener('click', function() { openEventModal(ev); });
       grid.appendChild(card);
     });
     const countEl = document.getElementById('expCount');
