@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verve — Dashboard</title>
+  <script>
+    // Applied before first paint to avoid a flash of the wrong theme.
+    (function () {
+      var saved = localStorage.getItem('vrv_theme');
+      if (saved === 'dark' || saved === 'light') document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="./css/dashboard.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,30 +22,41 @@
 <div class="dashboard-wrap">
 
   <!-- ══════════════════════════════════════
-       HEADER
+       LEFT VERTICAL NAV
   ══════════════════════════════════════ -->
-  <header class="dashboard-header">
-    <div class="dashboard-brand">
+  <aside class="side-nav">
+    <div class="side-nav__brand">
       <a href="dashboard.html" class="dashboard-logo-link" aria-label="Go to home"><img src="./asset/src logo.png" alt="Verve Logo" class="dashboard-logo" /></a>
-      <span>Verve</span>
-      <a href="dashboard-home.html" class="new-home-link">New Home</a>
+      <span class="side-nav__wordmark">Verve</span>
     </div>
 
+    <!-- ── TAB NAVIGATION (vertical) ── -->
+    <nav class="dash-tabs" role="tablist" aria-label="Sections">
+      <button class="dash-tab dash-tab--active" data-tab="home" role="tab">
+        <svg class="dash-tab__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="dash-tab" data-tab="events" role="tab">
+        <svg class="dash-tab__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+        <span>Club Events</span>
+      </button>
+      <button class="dash-tab" data-tab="notices" role="tab">
+        <svg class="dash-tab__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span>Notices</span>
+        <span class="tab-badge tab-badge--alert" id="noticesTabBadge" hidden>0</span>
+      </button>
+    </nav>
 
-      <!-- ── TAB NAVIGATION ── -->
-  <nav class="dash-tabs" role="tablist">
-    <button class="dash-tab dash-tab--active" data-tab="home" role="tab">Dashboard</button>
-    <button class="dash-tab" data-tab="events" role="tab">
-      Club Events
-      <!-- <span class="tab-badge">6</span> alisin n for good-->
-    </button>
-    <button class="dash-tab" data-tab="notices" role="tab">
-      Notices
-      <span class="tab-badge tab-badge--alert" id="noticesTabBadge" hidden>0</span>
-    </button>
-  </nav>
-
-      <div class="header-right">
+    <div class="side-nav__foot">
+      <button class="btn-theme-toggle" id="themeToggleBtn" aria-label="Switch to light mode" title="Switch theme">
+        <svg class="theme-icon theme-icon--sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5"/>
+          <path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>
+        </svg>
+        <svg class="theme-icon theme-icon--moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+          <path d="M20 14.2A8.5 8.5 0 1 1 9.8 4a6.7 6.7 0 0 0 10.2 10.2z"/>
+        </svg>
+      </button>
       <button class="btn-notif" id="notifBtn" aria-label="Notices">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
@@ -50,8 +68,10 @@
         <span class="profile-icon-initial" id="profileIconInitial">M</span>
       </button>
     </div>
+  </aside>
 
-  </header>
+  <!-- Main scrolling column -->
+  <div class="main-col">
 
   <!-- ── NOTIFICATION QUICK-PEEK DROPDOWN ── -->
   <div class="notif-dropdown" id="notifDropdown" hidden>
@@ -109,139 +129,119 @@
        TAB: HOME
   ══════════════════════════════════════ -->
   <div class="tab-panel" id="panel-home">
+    <div class="home-grid">
 
-    <section class="greeting-card">
-      <div class="greeting-card__deco" aria-hidden="true"></div>
-      <div class="greeting-card__top">
-        <div class="greeting-card__text">
-          <h2 id="memberGreeting">Hello, Member!</h2>
+      <!-- ── HERO CANVAS (col-span 12) ── -->
+      <section class="home-hero">
+        <div class="home-hero__left">
+          <h2 id="memberGreeting">Welcome back.</h2>
           <div class="greeting-meta">
             <p id="memberId">ID: —</p>
             <span class="greeting-divider" aria-hidden="true"></span>
             <span class="greeting-date" id="greetingDate"></span>
           </div>
         </div>
-        <span class="member-tier-badge" id="memberTierBadge">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          Member
-        </span>
-      </div>
-      <div class="greeting-rule" aria-hidden="true"></div>
-      <div class="stats-bar">
-        <div class="stat-tile">
-          <div class="stat-tile__icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-          </div>
-          <span class="stat-tile__num" id="statFacility">—</span>
-          <span class="stat-tile__label">Facility Bookings</span>
-        </div>
-        <div class="stat-tile">
-          <div class="stat-tile__icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-          </div>
-          <span class="stat-tile__num" id="statDining">—</span>
-          <span class="stat-tile__label">Dining Reservations</span>
-        </div>
-        <div class="stat-tile">
-          <div class="stat-tile__icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <span class="stat-tile__num" id="statGuests">—</span>
-          <span class="stat-tile__label">Guests Registered</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="cards-grid">
-      <article class="card">
-        <div class="card-image" data-tagline="Reserve your court today">
-          <img src="./asset/booking-facility.jpg" alt="Facility Booking" />
-          <span class="card-number" aria-hidden="true"></span>
-        </div>
-        <div class="card-content">
-          <div class="card-content__header">
-            <p class="card-title">Book Facility</p>
-            <svg class="card-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-          </div>
-          <p class="card-desc">Reserve your space with ease.</p>
-          <button class="btn-action" data-modal="facilityModal">Book Now</button>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card-image" data-tagline="Dine with us at your preferred time">
-          <img src="./asset/dining-reservation.jpg" alt="Dining Reservation" />
-          <span class="card-number" aria-hidden="true"></span>
-        </div>
-        <div class="card-content">
-          <div class="card-content__header">
-            <h3 class="card-title">Dining Reservation</h3>
-            <svg class="card-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-          </div>
-          <p class="card-desc">Reserve your table with us.</p>
-          <button class="btn-action" data-modal="diningModal">Reserve Now</button>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card-image" data-tagline="Add visiting guests per request">
-          <img src="./asset/register-guests.jpg" alt="Register Guests" />
-          <span class="card-number" aria-hidden="true"></span>
-        </div>
-        <div class="card-content">
-          <div class="card-content__header">
-            <h3 class="card-title">Register Guests</h3>
-            <svg class="card-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <p class="card-desc">Extend the invitation to your guests.</p>
-          <button class="btn-action" data-modal="guestModal">Register Now</button>
-        </div>
-      </article>
-    </section>
-
-    <div class="bottom-panels">
-      <section class="panel-bookings">
-        <div class="panel-header">
-          <div class="panel-header__left">
-            <span class="panel-label">UPCOMING BOOKINGS</span>
-            <span class="panel-count" id="totalBookings">0 bookings</span>
-          </div>
-          <button class="panel-header__action" id="viewAllBtn">View All</button>
-        </div>
-        <div id="upcomingList" class="upcoming-list">
-          <div class="empty-state">
-            <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="20" width="80" height="65" rx="4" stroke="#ad974f" stroke-width="1.5" stroke-dasharray="4 3"/>
-              <rect x="35" y="10" width="12" height="20" rx="2" fill="#002366"/>
-              <rect x="73" y="10" width="12" height="20" rx="2" fill="#002366"/>
-              <rect x="35" y="10" width="12" height="20" rx="2" stroke="#ad974f" stroke-width="1.5"/>
-              <rect x="73" y="10" width="12" height="20" rx="2" stroke="#ad974f" stroke-width="1.5"/>
-              <line x1="20" y1="38" x2="100" y2="38" stroke="#ad974f" stroke-width="1.5" stroke-dasharray="4 3"/>
-              <circle cx="60" cy="65" r="14" stroke="#ad974f" stroke-width="1.5" opacity="0.5"/>
-              <line x1="60" y1="58" x2="60" y2="65" stroke="#ad974f" stroke-width="1.5" stroke-linecap="round"/>
-              <line x1="60" y1="65" x2="65" y2="70" stroke="#ad974f" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-            <p>No bookings yet. Create one above.</p>
+        <div class="home-hero__right">
+          <span class="next-res-chip" id="nextReservationChip">
+            <span class="next-res-chip__label">Next Reservation</span>
+            <span class="next-res-chip__value" id="nextReservationValue">Nothing scheduled</span>
+          </span>
+          <div class="stat-chips">
+            <span class="stat-chip"><strong id="statFacility">—</strong> Facility</span>
+            <span class="stat-chip"><strong id="statDining">—</strong> Dining</span>
+            <span class="stat-chip"><strong id="statGuests">—</strong> Guests</span>
           </div>
         </div>
       </section>
 
-      <section class="panel-guests">
-        <div class="panel-header">
-          <div class="panel-header__left">
-            <span class="panel-label">Registered Guests</span>
-            <span class="panel-count" id="totalGuestsCount">0 guests</span>
-          </div>
-        </div>
-        <div id="guestList" class="guest-list">
-          <div class="empty-state">
-            <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="60" cy="36" r="16" stroke="#ad974f" stroke-width="1.5" stroke-dasharray="4 3"/>
-              <path d="M28 84 Q28 62 60 62 Q92 62 92 84" stroke="#ad974f" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
-            </svg>
-            <p>No guests registered yet.</p>
-          </div>
+      <!-- ── CORE ACTIONS (col-span 12 · lg:col-span 8) ── -->
+      <section class="home-actions">
+        <div class="section-eyebrow">Concierge</div>
+        <div class="action-cards">
+          <button class="action-card action-card--book" data-modal="facilityModal">
+            <span class="action-card__art" aria-hidden="true"></span>
+            <span class="action-card__body">
+              <span class="action-card__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18M3 12h18"/></svg>
+              </span>
+              <span class="action-card__title">Reserve Venue</span>
+              <span class="action-card__desc">Secure a court or space, in moments.</span>
+              <span class="action-card__cta">Begin <span aria-hidden="true">→</span></span>
+            </span>
+          </button>
+
+          <button class="action-card action-card--dine" data-modal="diningModal">
+            <span class="action-card__art" aria-hidden="true"></span>
+            <span class="action-card__body">
+              <span class="action-card__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v20M6 2a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3M18 2v20M18 2c-2 0-3 2-3 5v3c0 2 1 3 3 3"/></svg>
+              </span>
+              <span class="action-card__title">Secure Table</span>
+              <span class="action-card__desc">Dining reserved to your taste.</span>
+              <span class="action-card__cta">Begin <span aria-hidden="true">→</span></span>
+            </span>
+          </button>
+
+          <button class="action-card action-card--guest" data-modal="guestModal">
+            <span class="action-card__art" aria-hidden="true"></span>
+            <span class="action-card__body">
+              <span class="action-card__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/><path d="M17 8.5a3 3 0 1 0 0-6M21.5 20c0-3-2-5.2-5-5.8"/></svg>
+              </span>
+              <span class="action-card__title">Invite Guest</span>
+              <span class="action-card__desc">Extend a personal invitation.</span>
+              <span class="action-card__cta">Begin <span aria-hidden="true">→</span></span>
+            </span>
+          </button>
         </div>
       </section>
-    </div>
+
+      <!-- ── ACTIVITY & CONCIERGE FEED (col-span 12 · lg:col-span 4) ── -->
+      <aside class="home-feed">
+        <section class="panel-bookings feed-panel">
+          <div class="panel-header">
+            <div class="panel-header__left">
+              <span class="panel-label">Upcoming Bookings</span>
+              <span class="panel-count" id="totalBookings">0 bookings</span>
+            </div>
+            <button class="panel-header__action" id="viewAllBtn">View All</button>
+          </div>
+          <div id="upcomingList" class="upcoming-list">
+            <div class="empty-state">
+              <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="20" y="20" width="80" height="65" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/>
+                <rect x="35" y="10" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                <rect x="73" y="10" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                <line x1="20" y1="38" x2="100" y2="38" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/>
+                <circle cx="60" cy="65" r="14" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                <line x1="60" y1="58" x2="60" y2="65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                <line x1="60" y1="65" x2="65" y2="70" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              </svg>
+              <p>No bookings yet. Reserve one above.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-guests feed-panel">
+          <div class="panel-header">
+            <div class="panel-header__left">
+              <span class="panel-label">Registered Guests</span>
+              <span class="panel-count" id="totalGuestsCount">0 guests</span>
+            </div>
+          </div>
+          <div id="guestList" class="guest-list">
+            <div class="empty-state">
+              <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="60" cy="36" r="16" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/>
+                <path d="M28 84 Q28 62 60 62 Q92 62 92 84" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" fill="none" opacity="0.5"/>
+              </svg>
+              <p>No guests registered yet.</p>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+    </div><!-- /home-grid -->
   </div><!-- /panel-home -->
 
 
@@ -343,7 +343,7 @@
     </div><!-- /notices-page -->
   </div><!-- /panel-notices -->
 
-
+  </div><!-- /main-col -->
 </div><!-- /dashboard-wrap -->
 
 
@@ -355,8 +355,8 @@
 <!-- Facility Modal -->
 <dialog id="facilityModal" class="modal-dialog">
   <button class="modal-close" data-close>&times;</button>
-  <h3>Book Facility</h3>
-  <p class="modal-step">Step 1-4: select facility → date/time → pax/notes → confirm</p>
+  <h3>Reserve Venue</h3>
+  <p class="modal-step">Select your venue, choose a time, and we'll take care of the rest.</p>
   <form id="facilityForm">
     <label>Facility
       <select id="facilityName" required><option value="">Loading facilities…</option></select>
@@ -380,8 +380,8 @@
 <!-- Dining Modal -->
 <dialog id="diningModal" class="modal-dialog">
   <button class="modal-close" data-close>&times;</button>
-  <h3>Dining Reservation</h3>
-  <p class="modal-step">Step 1-4: venue → date/time → pax/special requests → summary</p>
+  <h3>Secure Table</h3>
+  <p class="modal-step">Reserve your table — share any preferences and we'll prepare accordingly.</p>
   <form id="diningForm">
     <label>Venue
       <select id="diningVenue" required><option value="">Loading venues…</option></select>
@@ -445,8 +445,8 @@
 <!-- Guest Modal -->
 <dialog id="guestModal" class="modal-dialog">
   <button class="modal-close" data-close>&times;</button>
-  <h3>Register Guests</h3>
-  <p class="modal-step">Add up to 4 guests per month, including optional phone number.</p>
+  <h3>Invite Guest</h3>
+  <p class="modal-step">Extend a personal invitation — up to 4 guests each month.</p>
   <p class="modal-step modal-step--info" id="guestQuotaInfo" style="display:none;"></p>
   <form id="guestForm">
     <div id="guestContainer"></div>
@@ -1436,7 +1436,7 @@ function formatEventDate(dateStr, duration) {
 
       // Reflect live
       const greeting = document.getElementById('memberGreeting');
-      if (greeting) greeting.textContent = `Hello, ${name} !`;
+      if (greeting) greeting.textContent = `Welcome back, ${name}.`;
       document.getElementById('profileIconInitial').textContent = initial(name);
       document.getElementById('profileDropAvatar').textContent  = initial(name);
       document.getElementById('profileDropName').textContent    = name;
@@ -1459,6 +1459,50 @@ function formatEventDate(dateStr, duration) {
     localStorage.removeItem('src_member');
     window.location.href = 'index.html';
   });
+})();
+</script>
+
+<!-- Next Reservation chip -->
+<script>
+(function () {
+  const API_BASE = 'https://backend-production-41dc3.up.railway.app';
+  const token = localStorage.getItem('vrv_token');
+  const valueEl = document.getElementById('nextReservationValue');
+  if (!token || !valueEl) return;
+
+  const PAST = ['cancelled', 'late-cancellation', 'checked-in', 'no-show', 'completed', 'done', 'late-fee-paid'];
+  const todaySG = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Singapore' });
+
+  function fmtTime(t) {
+    if (!t) return '';
+    const [h, m] = t.split(':').map(Number);
+    if (isNaN(h)) return t;
+    const p = h < 12 ? 'AM' : 'PM';
+    const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+    return `${h12}:${String(m).padStart(2, '0')} ${p}`;
+  }
+  function fmtDay(d) {
+    if (d === todaySG) return 'Today';
+    return new Date(d + 'T00:00:00+08:00').toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Singapore' });
+  }
+
+  fetch(`${API_BASE}/api/member/bookings`, {
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+  })
+    .then(r => r.json())
+    .then(data => {
+      const rows = (data.bookings || [])
+        .filter(b => b.booking_type !== 'block')
+        .filter(b => !PAST.includes((b.booking_status || 'confirmed').toLowerCase().replace(/[\s_]+/g, '-')))
+        .filter(b => (b.slot_date || '') >= todaySG)
+        .sort((a, b) => (a.slot_date + a.slot_start_time).localeCompare(b.slot_date + b.slot_start_time));
+      if (rows.length) {
+        const b = rows[0];
+        valueEl.textContent = `${fmtDay(b.slot_date)}, ${fmtTime(b.slot_start_time)} · ${b.facility_or_venue}`;
+        document.getElementById('nextReservationChip').classList.add('is-active');
+      }
+    })
+    .catch(() => {});
 })();
 </script>
 

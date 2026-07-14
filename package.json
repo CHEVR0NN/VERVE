@@ -2,7 +2,7 @@
   "name": "verve-frontend",
   "version": "1.0.0",
   "scripts": {
-    "start": "serve public -p $PORT"
+    "start": "serve public"
   },
   "dependencies": {
     "serve": "^14.2.3"

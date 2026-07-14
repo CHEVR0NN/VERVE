@@ -91,6 +91,16 @@
     return `${endH}:${m.toString().padStart(2, '0')}`;
   }
 
+  // ── Theme toggle ──────────────────────────────────────────────────────────
+  document.getElementById('themeToggleBtn').addEventListener('click', function () {
+    const root = document.documentElement;
+    const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('vrv_theme', next);
+    this.setAttribute('aria-label', next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  });
+
   // ── Auth guard ────────────────────────────────────────────────────────────
   const token  = localStorage.getItem('vrv_token');
   const member = JSON.parse(localStorage.getItem('src_member') || 'null');
@@ -100,7 +110,7 @@
   }
 
   // ── Member info ───────────────────────────────────────────────────────────
-  document.getElementById('memberGreeting').textContent = `Hello, ${member.name || 'Member'} !`;
+  document.getElementById('memberGreeting').textContent = `Welcome back, ${member.name || 'Member'}.`;
   document.getElementById('memberId').textContent       = `Member ID: ${member.membership_number || '—'}`;
 
   // ── Greeting date ─────────────────────────────────────────────────────────
@@ -626,20 +636,6 @@
       }
     });
   });
-
-  // ── Deep-link a modal open via #open=facility|dining|guest (used by dashboard-home.html) ──
-  // Hash-based rather than a query string: static hosts (incl. this project's
-  // own `serve public` dev server) redirect /dashboard.html -> /dashboard and
-  // drop query strings on the way, but a URL fragment never reaches the
-  // server at all, so it survives that redirect intact.
-  (function openModalFromHash() {
-    const match  = /^#open=(facility|dining|guest)$/.exec(location.hash);
-    const target = match && { facility: 'facilityModal', dining: 'diningModal', guest: 'guestModal' }[match[1]];
-    if (!target) return;
-    showModal(target);
-    if (target === 'guestModal') loadGuestQuota();
-    history.replaceState(null, '', location.pathname + location.search);
-  })();
 
   document.querySelectorAll('[data-close]').forEach(btn => {
     btn.addEventListener('click', () => closeModal(btn));
