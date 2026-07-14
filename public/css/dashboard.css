@@ -63,8 +63,8 @@
   /* --- Structures & Shadows --- */
   --radius:     0;
   --radius-sm:  0;
-  --shadow:     none;
-  --shadow-lg:  none;
+  --shadow:     0 1px 0 rgba(255,255,255,0.04) inset, 0 16px 40px -22px rgba(0,0,0,0.6);
+  --shadow-lg:  0 1px 0 rgba(255,255,255,0.05) inset, 0 30px 60px -26px rgba(0,0,0,0.7);
 
   --panel-bg:   var(--card);
   --panel-hi:   #232328;
@@ -98,8 +98,8 @@
   /* --- Structures & Shadows --- */
   --radius:     0;
   --radius-sm:  0;
-  --shadow:     none;
-  --shadow-lg:  none;
+  --shadow:     0 10px 28px -16px rgba(30,30,34,0.14);
+  --shadow-lg:  0 22px 48px -20px rgba(30,30,34,0.16);
 
   --panel-bg:   #ffffff;
   --panel-hi:   #f0eee9;
@@ -127,8 +127,8 @@
     --coral:      #cfae93; /* champagne (pending) */
     --radius:     0;
     --radius-sm:  0;
-    --shadow:     none;
-    --shadow-lg:  none;
+    --shadow:     0 10px 28px -16px rgba(30,30,34,0.14);
+    --shadow-lg:  0 22px 48px -20px rgba(30,30,34,0.16);
     --panel-bg:   #ffffff;
     --panel-hi:   #f0eee9;
     --hairline:   rgba(var(--ink-rgb), 0.12);
@@ -141,7 +141,11 @@ html {
 }
 
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(1100px 520px at 82% -12%, rgba(191,177,148,0.07), transparent 62%),
+    radial-gradient(900px 480px at -8% 108%, rgba(194,89,114,0.045), transparent 58%),
+    var(--bg);
+  background-attachment: fixed;
   background-image:
     radial-gradient(46vw 46vw at 92% -8%, color-mix(in srgb, var(--teal) 10%, transparent), transparent 62%),
     radial-gradient(40vw 40vw at -6% 12%, color-mix(in srgb, var(--coral) 8%, transparent), transparent 62%),
@@ -608,7 +612,7 @@ dialog:not([open]) {
 
 .stat-tile:hover {
   transform: translateY(-4px);
-  box-shadow: none;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 22px 44px -20px rgba(0,0,0,0.65), 0 0 0 1px rgba(191,177,148,0.14);
   border-color: rgba(var(--gold-dim-rgb), 0.4);
 }
 

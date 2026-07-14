@@ -129,22 +129,23 @@ body {
 /* Raised obsidian cards on the deep ground */
 .pcard {
   position: relative;
-  background: var(--card, #151518);
+  background: linear-gradient(170deg, #18171b 0%, #121114 100%);
   padding: 52px 44px 44px;
   display: flex;
   flex-direction: column;
   gap: 24px;
   text-decoration: none;
   overflow: hidden;
-  transition: background 0.35s ease, box-shadow 0.35s ease;
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
   cursor: pointer;
   text-align: center;
   align-items: center;
 }
 
 .pcard:hover {
-  background: #1a1a1e;
-  box-shadow: none;
+  background: linear-gradient(170deg, #1c1b20 0%, #141317 100%);
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -28px rgba(0,0,0,0.75);
 }
 
 /* top accent line (gold, expands on hover) */
@@ -217,6 +218,7 @@ body {
   background: linear-gradient(135deg, #e8e8eb 0%, #ffffff 48%, #cfcfd4 100%);
   color: #1a191f;
   border: none;
+  box-shadow: 0 0 0 1px rgba(191,177,148,0.3), 0 12px 30px -14px rgba(0,0,0,0.55);
   font-family: var(--font-display, 'Faculty Glyphic', serif);
   font-size: 12px;
   font-weight: 600;
