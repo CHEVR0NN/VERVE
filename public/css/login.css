@@ -48,21 +48,15 @@ body {
 .login-brand__logo-wrap {
   width: 72px;
   height: 72px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(173, 151, 79, 0.55);
-  overflow: hidden;
-  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(173, 151, 79, 0.18);
 }
 
 .login-brand__logo {
   width: 64px;
   height: 64px;
   object-fit: contain;
-  border-radius: 50%;
 }
 
 .login-brand__name {

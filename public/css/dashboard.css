@@ -243,10 +243,7 @@ dialog:not([open]) {
 .dashboard-logo {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(var(--gold-dim-rgb), 0.5);
   object-fit: contain;
-  background: rgba(255, 255, 255, 0.04);
 }
 
 .dashboard-logo-link {

@@ -97,21 +97,15 @@ body {
 .brand__logo-wrap {
   width: 80px;
   height: 80px;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 4px 24px rgba(173, 151, 79, 0.18);
 }
 
 .brand__logo {
   width: 72px;
   height: 72px;
   object-fit: contain;
-  border-radius: 50%;
 }
 
 .brand__rule {
