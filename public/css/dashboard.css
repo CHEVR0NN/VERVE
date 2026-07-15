@@ -188,6 +188,14 @@ dialog:not([open]) {
 /* ── THEME TOGGLE ─────────────────────── */
 
 .btn-theme-toggle {
+  /* style.css pins .btn-theme-toggle as position:fixed;top:24;right:24;z-index:10
+     for the landing hero. dashboard.html loads that sheet too, so we must reset
+     it back into the nav flow here — otherwise it floats to the top-right corner
+     and overlaps the profile/notif buttons. */
+  position: static;
+  top: auto;
+  right: auto;
+  z-index: auto;
   width: 38px;
   height: 38px;
   background: transparent;
@@ -295,6 +303,15 @@ dialog:not([open]) {
   gap: 8px;
   padding: 0 0 0 18px;
   border-left: 1px solid rgba(245, 247, 249, 0.1);
+  /* Never let the icon buttons compress — dash-tabs (flex:1) yields the
+     space instead, so the theme toggle/notif/profile circles can't shrink
+     into each other on narrow viewports. */
+  flex-shrink: 0;
+}
+.side-nav__foot .btn-theme-toggle,
+.side-nav__foot .btn-notif,
+.side-nav__foot .btn-profile-icon {
+  flex-shrink: 0;
 }
 
 /* Main scrolling column below the top nav */
@@ -1991,7 +2008,6 @@ dialog:not([open]) {
 }
 
 /* ═══════════════════════════════════════════════════
-   NEW FEATURE STYLES
    Header · Bell · Banner · Tabs · Events · Notices
 ═══════════════════════════════════════════════════ */
 
@@ -3577,6 +3593,7 @@ dialog:not([open]) {
   display: flex;
   flex-direction: row;
   gap: 4px;
+  min-width: 0;
 }
 
 .dash-tab {
