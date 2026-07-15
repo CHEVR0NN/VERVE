@@ -60,19 +60,17 @@
   // ─── seed data (dates are relative to "today" so the demo always looks live) ─
   const T = todayStr();
   const members = [
-    { membership_number: 'VRV-0001', name: 'Alice Tan',  email: 'alice.tan@vrv.com',    phone: '+65 9123 4561', membership_tier: 'Full Member', is_flagged: false },
-    { membership_number: 'VRV-0002', name: 'Bob Lim',    email: 'bob.lim@vrv.com',      phone: '+65 9123 4562', membership_tier: 'Full Member', is_flagged: true  },
-    { membership_number: 'VRV-0003', name: 'Carol Ng',   email: 'carol.ng@vrv.com',     phone: '+65 9123 4563', membership_tier: 'Full Member', is_flagged: false },
-    { membership_number: 'VRV-0004', name: 'David Chen', email: 'brixdodd07@gmail.com', phone: '+65 9123 4564', membership_tier: 'Full Member', is_flagged: false },
+    { membership_number: 'VRV-0001', name: 'Ava Sinclair',  email: 'ava.sinclair@vrv.com',    phone: '+1 (702) 555-0161', membership_tier: 'Full Member', is_flagged: false },
+    { membership_number: 'VRV-0002', name: 'Cole Bennett',    email: 'cole.bennett@vrv.com',      phone: '+1 (702) 555-0162', membership_tier: 'Full Member', is_flagged: true  },
+    { membership_number: 'VRV-0003', name: 'Grace Holloway',   email: 'grace.holloway@vrv.com',     phone: '+1 (702) 555-0163', membership_tier: 'Full Member', is_flagged: false },
+    { membership_number: 'VRV-0004', name: 'Everett Shaw', email: 'everett.shaw@vrv.com', phone: '+1 (702) 555-0164', membership_tier: 'Full Member', is_flagged: false },
   ];
 
   const accounts = [
-    { username: 'frontdesk1',  password: 'VRV@Desk1', type: 'staff',      role: 'frontdesk', displayName: 'Front Desk 1' },
-    { username: 'frontdesk2',  password: 'VRV@Desk2', type: 'staff',      role: 'frontdesk', displayName: 'Front Desk 2' },
-    { username: 'frontdesk3',  password: 'VRV@Desk3', type: 'staff',      role: 'frontdesk', displayName: 'Front Desk 3' },
-    { username: 'security1',   password: 'VRV@Sec1',  type: 'staff',      role: 'security',  displayName: 'Security 1' },
-    { username: 'fnb_manager', password: 'VRV@FnB1',  type: 'staff',      role: 'fnb',       displayName: 'F&B Manager' },
-    { username: 'admin',       password: 'admin123',  type: 'management', role: 'management', displayName: 'Admin' },
+    { username: 'staff',    password: 'staff123', type: 'staff',      role: 'frontdesk', displayName: 'Front Desk' },
+    { username: 'security', password: 'staff123', type: 'staff',      role: 'security',  displayName: 'Security' },
+    { username: 'fnb',      password: 'staff123', type: 'staff',      role: 'fnb',       displayName: 'F&B Manager' },
+    { username: 'admin',    password: 'admin123', type: 'management', role: 'management', displayName: 'Admin' },
   ];
 
   function mkBooking(o) {
@@ -90,35 +88,35 @@
 
   let bookings = [
     // ── today: staff schedule / occupancy / dashboard ──
-    mkBooking({ membership_number: 'VRV-0001', email: 'alice.tan@vrv.com', name: 'Alice Tan', facility_or_venue: 'Tennis', slot_date: T, slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'Confirmed' }),
-    mkBooking({ membership_number: 'VRV-0002', email: 'bob.lim@vrv.com', name: 'Bob Lim', facility_or_venue: 'Squash', slot_date: T, slot_start_time: '10:00', slot_end_time: '11:00', booking_status: 'Checked In' }),
-    mkBooking({ membership_number: 'VRV-0003', email: 'carol.ng@vrv.com', name: 'Carol Ng', facility_or_venue: 'Gym', slot_date: T, slot_start_time: '07:00', slot_end_time: '08:00', booking_status: 'Completed', outlet_pax: '1' }),
-    mkBooking({ membership_number: 'VRV-0004', email: 'brixdodd07@gmail.com', name: 'David Chen', facility_or_venue: 'Le Mansion', booking_shift: 'Lunch', slot_date: T, slot_start_time: '12:00', slot_end_time: '13:00', outlet_pax: '4', booking_status: 'Confirmed' }),
-    mkBooking({ membership_number: 'VRV-0001', email: 'alice.tan@vrv.com', name: 'Alice Tan', facility_or_venue: 'Oasis', booking_shift: 'Dinner', slot_date: T, slot_start_time: '19:00', slot_end_time: '20:00', outlet_pax: '2', booking_status: 'Confirmed', notes: 'Window seat please', special_request: 'Window seat please', booking_type: 'dining' }),
-    mkBooking({ booking_reference: uid('WK'), membership_number: 'WALKIN', email: '', name: 'Tan Wei Ming', facility_or_venue: 'Tennis', slot_date: T, slot_start_time: '15:00', slot_end_time: '16:00', outlet_pax: '1', booking_status: 'Walkin', booking_type: 'walkin', source: 'walkin', created_by: 'frontdesk1', notes: 'Phone: +65 8123 4567' }),
-    mkBooking({ membership_number: 'VRV-0001', email: 'alice.tan@vrv.com', name: 'Rachel Wong', facility_or_venue: 'Barkerslounge', slot_date: T, slot_start_time: '18:30', slot_end_time: '19:30', outlet_pax: '1', booking_status: 'Confirmed', booking_type: 'guest_pass', source: 'guest_pass', guest_email: 'rachel.wong@example.com', guest_phone: '+65 8123 9988' }),
+    mkBooking({ membership_number: 'VRV-0001', email: 'ava.sinclair@vrv.com', name: 'Ava Sinclair', facility_or_venue: 'Tennis', slot_date: T, slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'Confirmed' }),
+    mkBooking({ membership_number: 'VRV-0002', email: 'cole.bennett@vrv.com', name: 'Cole Bennett', facility_or_venue: 'Squash', slot_date: T, slot_start_time: '10:00', slot_end_time: '11:00', booking_status: 'Checked In' }),
+    mkBooking({ membership_number: 'VRV-0003', email: 'grace.holloway@vrv.com', name: 'Grace Holloway', facility_or_venue: 'Gym', slot_date: T, slot_start_time: '07:00', slot_end_time: '08:00', booking_status: 'Completed', outlet_pax: '1' }),
+    mkBooking({ membership_number: 'VRV-0004', email: 'everett.shaw@vrv.com', name: 'Everett Shaw', facility_or_venue: 'Le Mansion', booking_shift: 'Lunch', slot_date: T, slot_start_time: '12:00', slot_end_time: '13:00', outlet_pax: '4', booking_status: 'Confirmed' }),
+    mkBooking({ membership_number: 'VRV-0001', email: 'ava.sinclair@vrv.com', name: 'Ava Sinclair', facility_or_venue: 'Oasis', booking_shift: 'Dinner', slot_date: T, slot_start_time: '19:00', slot_end_time: '20:00', outlet_pax: '2', booking_status: 'Confirmed', notes: 'Window seat please', special_request: 'Window seat please', booking_type: 'dining' }),
+    mkBooking({ booking_reference: uid('WK'), membership_number: 'WALKIN', email: '', name: 'Wyatt Reese', facility_or_venue: 'Tennis', slot_date: T, slot_start_time: '15:00', slot_end_time: '16:00', outlet_pax: '1', booking_status: 'Walkin', booking_type: 'walkin', source: 'walkin', created_by: 'staff', notes: 'Phone: +1 (702) 555-0177' }),
+    mkBooking({ membership_number: 'VRV-0001', email: 'ava.sinclair@vrv.com', name: 'Harper Quinn', facility_or_venue: 'Barkerslounge', slot_date: T, slot_start_time: '18:30', slot_end_time: '19:30', outlet_pax: '1', booking_status: 'Confirmed', booking_type: 'guest_pass', source: 'guest_pass', guest_email: 'harper.quinn@vrv.com', guest_phone: '+1 (702) 555-0188' }),
 
     // ── future ──
-    mkBooking({ membership_number: 'VRV-0001', email: 'alice.tan@vrv.com', name: 'Alice Tan', facility_or_venue: 'Tennis', slot_date: addDays(T, 4), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'Confirmed' }),
-    mkBooking({ membership_number: 'VRV-0002', email: 'bob.lim@vrv.com', name: 'Bob Lim', facility_or_venue: 'Gym', slot_date: addDays(T, 2), slot_start_time: '17:00', slot_end_time: '18:00', booking_status: 'Confirmed' }),
+    mkBooking({ membership_number: 'VRV-0001', email: 'ava.sinclair@vrv.com', name: 'Ava Sinclair', facility_or_venue: 'Tennis', slot_date: addDays(T, 4), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'Confirmed' }),
+    mkBooking({ membership_number: 'VRV-0002', email: 'cole.bennett@vrv.com', name: 'Cole Bennett', facility_or_venue: 'Gym', slot_date: addDays(T, 2), slot_start_time: '17:00', slot_end_time: '18:00', booking_status: 'Confirmed' }),
 
     // ── past: completed / cancelled / no-shows / late-cancellations ──
-    mkBooking({ membership_number: 'VRV-0001', email: 'alice.tan@vrv.com', name: 'Alice Tan', facility_or_venue: 'Gym', slot_date: addDays(T, -9), slot_start_time: '08:00', slot_end_time: '09:00', booking_status: 'Completed' }),
-    mkBooking({ membership_number: 'VRV-0001', email: 'alice.tan@vrv.com', name: 'Alice Tan', facility_or_venue: 'Squash', slot_date: addDays(T, -16), slot_start_time: '11:00', slot_end_time: '12:00', booking_status: 'Cancelled' }),
-    mkBooking({ membership_number: 'VRV-0001', email: 'alice.tan@vrv.com', name: 'Alice Tan', facility_or_venue: 'Le Mansion', booking_shift: 'Dinner', slot_date: addDays(T, -7), slot_start_time: '19:00', slot_end_time: '20:00', outlet_pax: '2', booking_status: 'Cancelled', late_cancellation: true, fee_waived: false, booking_type: 'dining' }),
-    mkBooking({ membership_number: 'VRV-0003', email: 'carol.ng@vrv.com', name: 'Carol Ng', facility_or_venue: 'Tennis', slot_date: addDays(T, -8), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'Cancelled', late_cancellation: true, fee_waived: true, waiver_reason: 'Family emergency', waiver_by: 'frontdesk2' }),
-    mkBooking({ membership_number: 'VRV-0002', email: 'bob.lim@vrv.com', name: 'Bob Lim', facility_or_venue: 'Squash', slot_date: addDays(T, -3), slot_start_time: '10:00', slot_end_time: '11:00', booking_status: 'Cancelled', late_cancellation: true, fee_waived: false }),
+    mkBooking({ membership_number: 'VRV-0001', email: 'ava.sinclair@vrv.com', name: 'Ava Sinclair', facility_or_venue: 'Gym', slot_date: addDays(T, -9), slot_start_time: '08:00', slot_end_time: '09:00', booking_status: 'Completed' }),
+    mkBooking({ membership_number: 'VRV-0001', email: 'ava.sinclair@vrv.com', name: 'Ava Sinclair', facility_or_venue: 'Squash', slot_date: addDays(T, -16), slot_start_time: '11:00', slot_end_time: '12:00', booking_status: 'Cancelled' }),
+    mkBooking({ membership_number: 'VRV-0001', email: 'ava.sinclair@vrv.com', name: 'Ava Sinclair', facility_or_venue: 'Le Mansion', booking_shift: 'Dinner', slot_date: addDays(T, -7), slot_start_time: '19:00', slot_end_time: '20:00', outlet_pax: '2', booking_status: 'Cancelled', late_cancellation: true, fee_waived: false, booking_type: 'dining' }),
+    mkBooking({ membership_number: 'VRV-0003', email: 'grace.holloway@vrv.com', name: 'Grace Holloway', facility_or_venue: 'Tennis', slot_date: addDays(T, -8), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'Cancelled', late_cancellation: true, fee_waived: true, waiver_reason: 'Family emergency', waiver_by: 'staff' }),
+    mkBooking({ membership_number: 'VRV-0002', email: 'cole.bennett@vrv.com', name: 'Cole Bennett', facility_or_venue: 'Squash', slot_date: addDays(T, -3), slot_start_time: '10:00', slot_end_time: '11:00', booking_status: 'Cancelled', late_cancellation: true, fee_waived: false }),
 
     // ── no-shows (Bob x4 -> flagged/amber, David x2) ──
-    mkBooking({ membership_number: 'VRV-0002', email: 'bob.lim@vrv.com', name: 'Bob Lim', facility_or_venue: 'Squash', slot_date: addDays(T, -2), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'No Show' }),
-    mkBooking({ membership_number: 'VRV-0002', email: 'bob.lim@vrv.com', name: 'Bob Lim', facility_or_venue: 'Tennis', slot_date: addDays(T, -5), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'No Show' }),
-    mkBooking({ membership_number: 'VRV-0002', email: 'bob.lim@vrv.com', name: 'Bob Lim', facility_or_venue: 'Squash', slot_date: addDays(T, -12), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'No Show' }),
-    mkBooking({ membership_number: 'VRV-0002', email: 'bob.lim@vrv.com', name: 'Bob Lim', facility_or_venue: 'Gym', slot_date: addDays(T, -20), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'No Show' }),
-    mkBooking({ membership_number: 'VRV-0004', email: 'brixdodd07@gmail.com', name: 'David Chen', facility_or_venue: 'Tennis', slot_date: addDays(T, -6), slot_start_time: '14:00', slot_end_time: '15:00', booking_status: 'No Show' }),
-    mkBooking({ membership_number: 'VRV-0004', email: 'brixdodd07@gmail.com', name: 'David Chen', facility_or_venue: 'Oasis', slot_date: addDays(T, -14), slot_start_time: '18:00', slot_end_time: '19:00', booking_status: 'No Show' }),
+    mkBooking({ membership_number: 'VRV-0002', email: 'cole.bennett@vrv.com', name: 'Cole Bennett', facility_or_venue: 'Squash', slot_date: addDays(T, -2), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'No Show' }),
+    mkBooking({ membership_number: 'VRV-0002', email: 'cole.bennett@vrv.com', name: 'Cole Bennett', facility_or_venue: 'Tennis', slot_date: addDays(T, -5), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'No Show' }),
+    mkBooking({ membership_number: 'VRV-0002', email: 'cole.bennett@vrv.com', name: 'Cole Bennett', facility_or_venue: 'Squash', slot_date: addDays(T, -12), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'No Show' }),
+    mkBooking({ membership_number: 'VRV-0002', email: 'cole.bennett@vrv.com', name: 'Cole Bennett', facility_or_venue: 'Gym', slot_date: addDays(T, -20), slot_start_time: '09:00', slot_end_time: '10:00', booking_status: 'No Show' }),
+    mkBooking({ membership_number: 'VRV-0004', email: 'everett.shaw@vrv.com', name: 'Everett Shaw', facility_or_venue: 'Tennis', slot_date: addDays(T, -6), slot_start_time: '14:00', slot_end_time: '15:00', booking_status: 'No Show' }),
+    mkBooking({ membership_number: 'VRV-0004', email: 'everett.shaw@vrv.com', name: 'Everett Shaw', facility_or_venue: 'Oasis', slot_date: addDays(T, -14), slot_start_time: '18:00', slot_end_time: '19:00', booking_status: 'No Show' }),
 
     // ── another guest pass this month, from Bob, for the Guest Audit page ──
-    mkBooking({ membership_number: 'VRV-0002', email: 'bob.lim@vrv.com', name: 'Marcus Lee', facility_or_venue: 'Oasis', slot_date: addDays(T, -1), slot_start_time: '12:00', slot_end_time: '13:00', outlet_pax: '1', booking_status: 'Confirmed', booking_type: 'guest_pass', source: 'guest_pass', guest_email: 'marcus.lee@example.com', guest_phone: '' }),
+    mkBooking({ membership_number: 'VRV-0002', email: 'cole.bennett@vrv.com', name: 'Nolan Pierce', facility_or_venue: 'Oasis', slot_date: addDays(T, -1), slot_start_time: '12:00', slot_end_time: '13:00', outlet_pax: '1', booking_status: 'Confirmed', booking_type: 'guest_pass', source: 'guest_pass', guest_email: 'nolan.pierce@vrv.com', guest_phone: '' }),
 
     // ── facility block ──
     mkBooking({ booking_reference: uid('BLK'), membership_number: 'MGMT', email: 'block@vrv.internal', name: 'BLOCK: Court resurfacing', facility_or_venue: 'Tennis', slot_date: addDays(T, 2), slot_date_to: addDays(T, 3), slot_start_time: '00:00', slot_end_time: '23:59', booking_type: 'block', booking_status: 'Confirmed', notes: 'Court resurfacing', created_by: 'admin', source: 'management' }),
@@ -149,7 +147,7 @@
   ];
   let replies = [
     {
-      _id: uid('rpl'), notification_id: notifications[0]._id, sender_type: 'member', sender_name: 'Alice Tan',
+      _id: uid('rpl'), notification_id: notifications[0]._id, sender_type: 'member', sender_name: 'Ava Sinclair',
       membership_number: 'VRV-0001', message: 'Will the gym stay open during this period?', createdAt: isoNow(), updatedAt: isoNow(),
     },
   ];
