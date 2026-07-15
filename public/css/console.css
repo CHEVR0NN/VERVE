@@ -789,6 +789,55 @@ html, body {
   box-shadow: 0 0 0 3px rgba(var(--gold-rgb), 0.14), 0 6px 22px -8px rgba(var(--gold-rgb), 0.35);
 }
 
+/* ── NATIVE DATE / TIME PICKERS ──────────
+   The field + trigger icon are brandable; the popup calendar/clock is
+   rendered natively by the browser and cannot be themed by the page. */
+.field__input[type="date"],
+.field__input[type="time"],
+.filter-input[type="date"],
+.filter-input[type="time"] {
+  cursor: pointer;
+  color-scheme: dark; /* dark-themes the native popup + spinners */
+}
+
+/* Recolour the trigger glyph to rose gold (replaces the dark default) */
+.field__input::-webkit-calendar-picker-indicator,
+.filter-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.8;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px 15px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.field__input::-webkit-calendar-picker-indicator:hover,
+.filter-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+.field__input[type="date"]::-webkit-calendar-picker-indicator,
+.filter-input[type="date"]::-webkit-calendar-picker-indicator {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%23D49A8F' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='3' width='11' height='11' rx='2'/%3E%3Cpath d='M2.5 6.5h11M5.5 1.5v3M10.5 1.5v3'/%3E%3C/svg%3E");
+}
+.field__input[type="time"]::-webkit-calendar-picker-indicator,
+.filter-input[type="time"]::-webkit-calendar-picker-indicator {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%23D49A8F' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6'/%3E%3Cpath d='M8 4.8V8l2.2 1.6'/%3E%3C/svg%3E");
+}
+
+/* Date/time value text + placeholder segments on the dark field */
+.field__input::-webkit-datetime-edit,
+.filter-input::-webkit-datetime-edit { color: var(--ink); }
+.field__input::-webkit-datetime-edit-fields-wrapper { color: var(--ink); }
+.field__input::-webkit-datetime-edit-text { color: var(--gold-dim); padding: 0 1px; }
+
+/* Number spinners (PAX count, quota) — tinted to match */
+.field__input[type="number"]::-webkit-inner-spin-button,
+.field__input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.65;
+  filter: hue-rotate(-10deg);
+}
+.field__input[type="number"] { color-scheme: dark; }
+
 .inline-result {
   font-family: var(--font-display);
   font-size: 18px;
