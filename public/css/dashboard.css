@@ -2164,7 +2164,10 @@ dialog:not([open]) {
   color: #bbb;
   letter-spacing: 0.04em;
 }
-.notif-item--unread .notif-content strong { color: var(--navy-deep); }
+/* Unread emphasis via weight, not a hardcoded dark color — var(--navy-deep)
+   was near-black and vanished on the dark dropdown in dark mode. var(--ink)
+   stays readable in both themes. */
+.notif-item--unread .notif-content strong { color: var(--ink); font-weight: 700; }
 
 .notif-dropdown__footer {
   padding: 10px 18px;
@@ -3516,7 +3519,10 @@ dialog:not([open]) {
   letter-spacing: 0.06em;
 }
 
-.notif-item--unread .notif-content strong { color: var(--navy-deep); }
+/* Unread emphasis via weight, not a hardcoded dark color — var(--navy-deep)
+   was near-black and vanished on the dark dropdown in dark mode. var(--ink)
+   stays readable in both themes. */
+.notif-item--unread .notif-content strong { color: var(--ink); font-weight: 700; }
 
 .notif-dropdown__footer {
   padding: 10px 18px;
