@@ -360,29 +360,30 @@
       'Oasis': 'Oasis',
     };
 
-    // Dashboard-matching colour palette
+    // Dusk Glow & Rose Gold palette — matches css/style.css :root tokens
     const COLORS = {
       navy:      '#1e1e22',
-      navyDeep:  '#0a0a0c',
-      gold:      '#BFB194',
-      goldLight: '#E8DFD0',
-      goldDim:   '#9a8e73',
-      white:     '#f8f9fa',
-      green:     '#c25972',
-      red:       '#c96a5e',
-      amber:     '#e3cbb3',
-      blue:      '#7d9bc4',
+      navyDeep:  '#16161D', // charcoal slate card — tooltip / segment gap
+      gold:      '#D49A8F', // luminous rose gold
+      goldLight: '#F5E6E3', // warm champagne
+      goldDim:   '#a97c72', // muted rose gold — metadata
+      white:     '#f3f3f5', // platinum text
+      green:     '#c25972', // crimson blush — approved / success
+      red:       '#c96a5e', // sunset red — alerts
+      amber:     '#e3cbb3', // champagne — pending
+      blue:      '#E8A297', // sunset coral — replaces off-brand blue
     };
 
-    const VENUE_COLORS = ['#BFB194', '#c25972', '#e3cbb3', '#7d9bc4', '#a98bc0', '#8e8e96'];
+    // Warm categorical ramp — rose gold → crimson → champagne → coral → muted rose → steel
+    const VENUE_COLORS = ['#D49A8F', '#c25972', '#e3cbb3', '#E8A297', '#a97c72', '#8e8e96'];
     const STATUS_COLORS = {
-      'Confirmed':  '#BFB194',
+      'Confirmed':  '#D49A8F',
       'Checked In': '#c25972',
       'No-Show':    '#c96a5e',
       'Cancelled':  '#8e8e96',
       'Pending':    '#e3cbb3',
       'Overdue':    '#d9a878',
-      'Walkin':     '#7d9bc4',
+      'Walkin':     '#E8A297',
       'Completed':  '#d98ba0',
     };
     // Map any booking_status variant to its canonical GHL picklist value
@@ -412,7 +413,7 @@
       if (key === 'guest_pass' || key === 'guest pass' || key === 'guest') return 'Guest';
       return 'Facility'; // facility, advance, block, cancellation, etc.
     }
-    const TYPE_COLORS  = { 'Facility': '#BFB194', 'Dining': '#c25972', 'Walkin': '#7d9bc4', 'Guest': '#e3cbb3' };
+    const TYPE_COLORS  = { 'Facility': '#D49A8F', 'Dining': '#c25972', 'Walkin': '#E8A297', 'Guest': '#e3cbb3' };
     const TYPE_LABELS  = { 'Facility': 'Facility', 'Dining': 'Dining', 'Walkin': 'Walk-in', 'Guest': 'Guest' };
 
     // Shared Chart.js defaults
@@ -494,8 +495,8 @@
             datasets: [{
               label: 'Bookings',
               data: sortedDates.map(d => dateCounts[d]),
-              borderColor: COLORS.navy,
-              backgroundColor: 'rgba(191,177,148,0.10)',
+              borderColor: COLORS.gold,
+              backgroundColor: 'rgba(212,154,143,0.12)',
               borderWidth: 2,
               pointBackgroundColor: COLORS.gold,
               pointBorderColor: COLORS.navy,
@@ -513,7 +514,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(191,177,148,0.35)',
+                borderColor: 'rgba(212,154,143,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
                 titleFont: { family: "'Faculty Glyphic', Georgia, serif", size: 14, weight: '600' },
@@ -551,7 +552,7 @@
             datasets: [{
               data: venueKeys.map(k => venueCounts[k]),
               backgroundColor: venueKeys.map((_, i) => VENUE_COLORS[i % VENUE_COLORS.length]),
-              borderColor: '#fff',
+              borderColor: COLORS.navyDeep,
               borderWidth: 2,
             }],
           },
@@ -567,7 +568,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(191,177,148,0.35)',
+                borderColor: 'rgba(212,154,143,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -592,7 +593,7 @@
             datasets: [{
               data: statusKeys.map(k => statusCounts[k]),
               backgroundColor: statusKeys.map(k => STATUS_COLORS[k] || '#999'),
-              borderColor: '#fff',
+              borderColor: COLORS.navyDeep,
               borderWidth: 2,
             }],
           },
@@ -608,7 +609,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(191,177,148,0.35)',
+                borderColor: 'rgba(212,154,143,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -633,7 +634,7 @@
             datasets: [{
               data: typeKeys.map(k => typeCounts[k]),
               backgroundColor: typeKeys.map(k => TYPE_COLORS[k] || '#999'),
-              borderColor: '#fff',
+              borderColor: COLORS.navyDeep,
               borderWidth: 2,
             }],
           },
@@ -649,7 +650,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(191,177,148,0.35)',
+                borderColor: 'rgba(212,154,143,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -693,7 +694,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(191,177,148,0.35)',
+                borderColor: 'rgba(212,154,143,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
@@ -730,7 +731,7 @@
             datasets: [{
               data: [memberCount, staffCount, guestCount],
               backgroundColor: [COLORS.navy, COLORS.gold, COLORS.goldLight],
-              borderColor: '#fff',
+              borderColor: COLORS.navyDeep,
               borderWidth: 2,
             }],
           },
@@ -746,7 +747,7 @@
                 backgroundColor: COLORS.navyDeep,
                 titleColor: COLORS.goldLight,
                 bodyColor: COLORS.white,
-                borderColor: 'rgba(191,177,148,0.35)',
+                borderColor: 'rgba(212,154,143,0.35)',
                 borderWidth: 1,
                 cornerRadius: 0,
               },
