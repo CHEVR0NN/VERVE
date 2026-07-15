@@ -133,30 +133,23 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ── THEME TOGGLE (fixed, sits over the photo in both themes) ───────── */
+/* ── THEME TOGGLE (anchored inline with the footer links) ───────── */
 
 .btn-theme-toggle {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 10;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-pill);
-  background: rgba(20,20,24,0.45);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.16);
-  color: rgba(255,255,255,0.85);
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--muted);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s, transform 0.15s, background 0.2s;
+  transition: color 0.2s, transform 0.15s;
 }
 .btn-theme-toggle:hover {
-  border-color: var(--gold);
-  color: var(--gold-light);
+  color: var(--gold-dim);
   transform: scale(1.06);
 }
 :root[data-theme="light"] .theme-icon--sun,
