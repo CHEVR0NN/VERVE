@@ -222,14 +222,17 @@ html, body {
 
 /* ── MAIN CONTENT ────────────────────── */
 .console-main {
+  position: relative;
   overflow-y: auto;
   height: 100vh;
   background:
-    radial-gradient(1100px 540px at 88% -14%, rgba(212,154,143,0.075), transparent 62%),
-    radial-gradient(800px 460px at -10% 112%, rgba(194,89,114,0.05), transparent 58%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(1200px 600px at 90% -12%, rgba(212,154,143,0.11), transparent 60%),
+    radial-gradient(900px 520px at -8% 112%, rgba(194,89,114,0.06), transparent 58%),
+    radial-gradient(140% 90% at 50% 0%, transparent 62%, rgba(0,0,0,0.14) 100%),
     var(--bg, #0a0a0c);
   background-attachment: fixed;
-  padding: 52px 60px;
+  padding: 52px 52px 72px;
 }
 
 /* ── VIEW HEADER ─────────────────────── */
@@ -357,6 +360,7 @@ html, body {
   border-collapse: collapse;
   font-size: 13.5px;
   background: transparent;
+  font-variant-numeric: tabular-nums;
 }
 
 .data-table thead {
@@ -365,21 +369,22 @@ html, body {
 
 .data-table th {
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
-  padding: 17px 20px;
+  padding: 16px 16px;
   text-align: left;
   white-space: nowrap;
+  border-bottom: 1px solid rgba(212,154,143,0.22);
 }
 
 .data-table td {
   font-family: var(--font-ui);
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 400;
-  padding: 16px 20px;
+  padding: 14px 16px;
   border-bottom: 1px solid rgba(var(--ink-rgb),0.07);
   color: var(--ink);
   vertical-align: middle;
@@ -1451,3 +1456,59 @@ dialog:not([open]) {
 :root[data-theme="light"] .fee-status--pending { color: #a5433a; }
 :root[data-theme="light"] .fee-status--waived  { color: #86642f; }
 :root[data-theme="light"] .fee-status--paid    { color: #9a3556; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM POLISH — motion, depth, typographic refinement
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tabular figures so stat numbers align and read as data, not text */
+.kpi-tile__num,
+.gauge-card__count,
+.member-card__meta,
+.inline-result { font-variant-numeric: tabular-nums; }
+
+/* ── ENTRANCE MOTION ──────────────────────
+   Content blocks rise + fade on load, gently staggered top to bottom. */
+@keyframes vrv-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.console-main > * {
+  animation: vrv-rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.console-main > *:nth-child(1) { animation-delay: 0.04s; }
+.console-main > *:nth-child(2) { animation-delay: 0.11s; }
+.console-main > *:nth-child(3) { animation-delay: 0.18s; }
+.console-main > *:nth-child(4) { animation-delay: 0.25s; }
+.console-main > *:nth-child(5) { animation-delay: 0.32s; }
+.console-main > *:nth-child(n+6) { animation-delay: 0.39s; }
+
+/* ── MICRO-INTERACTIONS ───────────────────
+   Cards lift softly toward the light; rows warm on hover. */
+.chart-card,
+.gauge-card,
+.member-card {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+.chart-card:hover,
+.gauge-card:hover,
+.member-card:hover {
+  transform: translateY(-3px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 22px 46px -26px rgba(0,0,0,0.6), var(--glow-rose);
+}
+
+.data-table tbody tr {
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+.data-table tbody tr:hover {
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .console-main > *,
+  .chart-card,
+  .gauge-card,
+  .member-card,
+  .kpi-tile { animation: none !important; transition: none !important; }
+}
