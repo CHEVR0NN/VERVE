@@ -268,11 +268,11 @@ html, body {
 
 .view__title {
   font-family: var(--font-display);
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 300;
   color: var(--ink);
-  letter-spacing: 0.06em;
-  line-height: 1;
+  letter-spacing: 0.05em;
+  line-height: 1.04;
   margin-bottom: 8px;
 }
 
@@ -662,6 +662,16 @@ html, body {
   border-color: var(--gold);
   color: var(--gold);
   background: rgba(212,154,143,0.06);
+}
+
+/* Compact modifier for table-row actions (JS-rendered `btn-sm btn-secondary`
+   / `btn-sm btn-primary`). Size-only so it composes with either base button —
+   it was undefined in the console, so those actions rendered full-size. */
+.btn-sm {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  padding: 6px 14px;
+  white-space: nowrap;
 }
 
 /* Small action buttons inside table rows */
@@ -1300,7 +1310,7 @@ dialog:not([open]) {
     padding: 28px 24px;
   }
 
-  .view__title { font-size: 36px; }
+  .view__title { font-size: 30px; }
 
   .kpi-grid { gap: 16px; }
   .kpi-tile__num { font-size: 40px; }
