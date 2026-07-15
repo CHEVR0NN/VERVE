@@ -200,6 +200,25 @@ html, body {
   border-color: rgba(248,249,250,0.28);
 }
 
+/* Logout + theme toggle share a row; sidebar stays dark in both themes */
+.sidebar__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sidebar__footer-actions .btn-logout {
+  flex: 1;
+  text-align: center;
+}
+.sidebar__footer .btn-theme-toggle {
+  position: static;
+  top: auto;
+  right: auto;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
 /* ── MAIN CONTENT ────────────────────── */
 .console-main {
   overflow-y: auto;
@@ -279,8 +298,8 @@ html, body {
   font-size: 11px;
   letter-spacing: 0.08em;
   color: var(--muted);
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
   border-radius: var(--radius-pill, 999px);
   padding: 7px 14px;
   white-space: nowrap;
@@ -300,8 +319,8 @@ html, body {
   font-size: 14px;
   letter-spacing: 0.04em;
   color: var(--ink);
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
   border-radius: var(--radius-pill, 999px);
   padding: 10px 18px;
   outline: none;
@@ -323,10 +342,10 @@ html, body {
 .table-wrap {
   width: 100%;
   overflow-x: auto;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
   border-top: 1px solid rgba(212,154,143,0.3);
   border-radius: var(--radius-2xl, 20px);
-  background: rgba(22,22,29,0.6);
+  background: var(--table-wrap-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 18px 42px -28px rgba(0,0,0,0.65);
@@ -340,7 +359,7 @@ html, body {
 }
 
 .data-table thead {
-  background: rgba(30,30,34,0.55);
+  background: var(--table-head);
 }
 
 .data-table th {
@@ -349,7 +368,7 @@ html, body {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold-light);
+  color: var(--gold);
   padding: 17px 20px;
   text-align: left;
   white-space: nowrap;
@@ -360,7 +379,7 @@ html, body {
   font-size: 15px;
   font-weight: 400;
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(243,243,245,0.07);
+  border-bottom: 1px solid rgba(var(--ink-rgb),0.07);
   color: var(--ink);
   vertical-align: middle;
 }
@@ -454,7 +473,7 @@ html, body {
 }
 
 #lateFeesTable .cell-actions .btn-row--navy {
-  border: 1px solid rgba(243,243,245,0.22);
+  border: 1px solid rgba(var(--ink-rgb),0.22);
   color: var(--ink);
 }
 #lateFeesTable .cell-actions .btn-row--navy:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
@@ -633,7 +652,7 @@ html, body {
   text-transform: uppercase;
   color: var(--ink);
   background: transparent;
-  border: 1px solid rgba(243,243,245,0.22);
+  border: 1px solid rgba(var(--ink-rgb),0.22);
   border-radius: var(--radius-pill, 999px);
   padding: 13px;
   cursor: pointer;
@@ -641,7 +660,7 @@ html, body {
 }
 .btn-secondary:hover {
   border-color: var(--gold);
-  color: var(--gold-light);
+  color: var(--gold);
   background: rgba(212,154,143,0.06);
 }
 
@@ -666,7 +685,7 @@ html, body {
   text-transform: uppercase;
   color: var(--ink);
   background: transparent;
-  border: 1px solid rgba(243,243,245,0.22);
+  border: 1px solid rgba(var(--ink-rgb),0.22);
   border-radius: var(--radius-pill, 999px);
   padding: 5px;
   cursor: pointer;
@@ -675,7 +694,7 @@ html, body {
 
 .btn-row--navy {
   background: transparent;
-  border: 1px solid rgba(243,243,245,0.22);
+  border: 1px solid rgba(var(--ink-rgb),0.22);
   color: var(--ink);
 }
 .btn-row--navy:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
@@ -696,8 +715,8 @@ html, body {
 
 /* ── FORM PANEL ──────────────────────── */
 .form-panel {
-  background: linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #18171b;
-  border: 1px solid rgba(255,255,255,0.04);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-top: 1px solid rgba(212,154,143,0.3);
   border-radius: var(--radius-2xl, 20px);
   backdrop-filter: blur(12px);
@@ -735,7 +754,7 @@ html, body {
   flex-direction: column;
   gap: 16px;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(243,243,245,0.07);
+  border-bottom: 1px solid rgba(var(--ink-rgb),0.07);
 }
 
 /* Selects match .field__input (style.css): filled rounded box + rose-gold chevron */
@@ -862,9 +881,9 @@ html, body {
 }
 
 .member-card {
-  background: linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #18171b;
+  background: var(--glass-card);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 18px 40px -24px rgba(0,0,0,0.6);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
   border-left: 2px solid var(--gold);
   border-radius: var(--radius-2xl, 20px);
   backdrop-filter: blur(12px);
@@ -937,8 +956,8 @@ html, body {
 }
 
 .kpi-tile {
-  background: linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #18171b;
-  border: 1px solid rgba(255,255,255,0.04);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-top: 2px solid var(--gold);
   border-radius: var(--radius-2xl, 20px);
   backdrop-filter: blur(12px);
@@ -1012,9 +1031,9 @@ html, body {
 }
 
 .gauge-card {
-  background: linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #18171b;
-  border: 1px solid rgba(255,255,255,0.04);
-  border-top: 2px solid var(--hairline, rgba(243,243,245,0.12));
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
+  border-top: 2px solid var(--hairline, rgba(var(--ink-rgb),0.12));
   border-radius: var(--radius-2xl, 20px);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1040,7 +1059,7 @@ html, body {
 
 .gauge-bar {
   height: 7px;
-  background: rgba(243,243,245,0.08);
+  background: rgba(var(--ink-rgb),0.08);
   border-radius: var(--radius-pill, 999px);
   overflow: hidden;
 }
@@ -1110,8 +1129,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 24px;
-  background: #151518;
-  border: 1px solid rgba(243,243,245,0.1);
+  background: var(--surface-2);
+  border: 1px solid rgba(var(--ink-rgb),0.1);
   padding: 28px 32px;
 }
 
@@ -1158,7 +1177,7 @@ html, body {
   content: '';
   flex: 1;
   height: 1px;
-  background: rgba(243,243,245,0.1);
+  background: rgba(var(--ink-rgb),0.1);
 }
 
 .section-divider span {
@@ -1193,8 +1212,8 @@ dialog:not([open]) {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 50;
-  background: linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #19181c;
-  border: 1px solid rgba(255,255,255,0.04);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-top: 1px solid rgba(212,154,143,0.45);
   border-radius: var(--radius-2xl, 20px);
   backdrop-filter: blur(12px);
@@ -1250,7 +1269,7 @@ dialog:not([open]) {
 .modal-close:hover { color: var(--ink); opacity: 1; }
 
 .sep {
-  color: rgba(243,243,245,0.18);
+  color: rgba(var(--ink-rgb),0.18);
 }
 
 /* ── RESPONSIVE ──────────────────────── */
@@ -1302,8 +1321,8 @@ dialog:not([open]) {
 
 .chart-card {
   flex: 1;
-  background: linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #18171b;
-  border: 1px solid rgba(255,255,255,0.04);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-top: 1px solid rgba(212,154,143,0.3);
   border-radius: var(--radius-2xl, 20px);
   backdrop-filter: blur(12px);
@@ -1371,11 +1390,52 @@ dialog:not([open]) {
   font-family: var(--font-ui);
   font-size: 13px;
   line-height: 1.4;
-  background: #151518;
-  border-bottom: 1px solid rgba(243,243,245,0.1);
+  background: var(--surface-2);
+  border-bottom: 1px solid rgba(var(--ink-rgb),0.1);
   color: var(--ink);
   transition: opacity 0.3s;
 }
 #staff-notify.notify--error   { color: #c96a5e; border-bottom-color: rgba(165,48,48,0.2); }
 #staff-notify.notify--success { color: #c25972; border-bottom-color: rgba(26,107,58,0.2); }
 #staff-notify.notify--hidden  { opacity: 0; pointer-events: none; }
+
+/* ── LIGHT-MODE CONTRAST OVERRIDES ────────
+   Badge/label hues above are tuned for the obsidian ground; on the
+   alabaster surface they need darker ink + stronger tint to stay legible. */
+:root[data-theme="light"] .status--confirmed       { background: rgba(169,104,90,0.14); color: #a9685a; }
+:root[data-theme="light"] .status--pending,
+:root[data-theme="light"] .status--overdue          { background: rgba(150,110,60,0.15);  color: #86642f; }
+:root[data-theme="light"] .status--checked-in       { background: rgba(168,79,106,0.14);  color: #a84f6a; }
+:root[data-theme="light"] .status--no-show          { background: rgba(165,67,58,0.13);   color: #a5433a; }
+:root[data-theme="light"] .status--cancelled        { background: rgba(30,30,34,0.08);    color: #5f5f68; }
+:root[data-theme="light"] .status--done             { background: rgba(154,53,86,0.13);   color: #9a3556; }
+:root[data-theme="light"] .status--late-fee-paid,
+:root[data-theme="light"] .status--late_fee_paid    { background: rgba(111,84,144,0.13);  color: #6f5490; }
+
+:root[data-theme="light"] .gauge-badge--green       { background: rgba(168,79,106,0.13);  color: #a84f6a; }
+:root[data-theme="light"] .gauge-badge--amber       { background: rgba(150,110,60,0.15);  color: #86642f; }
+:root[data-theme="light"] .gauge-badge--red         { background: rgba(165,67,58,0.13);   color: #a5433a; }
+
+:root[data-theme="light"] .kpi-tile__num--amber     { color: #96702f; }
+:root[data-theme="light"] .block-duration--live     { color: #86642f; }
+:root[data-theme="light"] .block-duration--live::before { background: #a8435b; }
+:root[data-theme="light"] .fnb-request__badge {
+  background: rgba(150,110,60,0.16);
+  border-color: rgba(150,110,60,0.4);
+  color: #86642f;
+}
+:root[data-theme="light"] #fnbTable tr.fnb-row--has-request {
+  background: rgba(150,110,60,0.06);
+  border-left-color: rgba(150,110,60,0.4);
+}
+:root[data-theme="light"] .data-table tr.row--overdue { border-left-color: #b5893f; }
+:root[data-theme="light"] .data-table tr.row--amber   { background: rgba(150,110,60,0.06); }
+
+/* Fee-status text (Late Cancellation Fees table) — themeable, was inline */
+.fee-status { font-weight: 600; }
+.fee-status--pending { color: #c96a5e; }
+.fee-status--waived  { color: #e3cbb3; }
+.fee-status--paid    { color: #c25972; }
+:root[data-theme="light"] .fee-status--pending { color: #a5433a; }
+:root[data-theme="light"] .fee-status--waived  { color: #86642f; }
+:root[data-theme="light"] .fee-status--paid    { color: #9a3556; }

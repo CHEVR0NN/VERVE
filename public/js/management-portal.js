@@ -1097,9 +1097,9 @@
 
         tbody.innerHTML = rows.map(b => {
           let feeStatus = 'Pending';
-          let statusColor = '#c96a5e';
-          if (b.fee_waived) { feeStatus = 'Waived'; statusColor = '#e3cbb3'; }
-          else if (/late_fee_paid/i.test(b.booking_status)) { feeStatus = 'Paid'; statusColor = '#c25972'; }
+          let statusClass = 'fee-status--pending';
+          if (b.fee_waived) { feeStatus = 'Waived'; statusClass = 'fee-status--waived'; }
+          else if (/late_fee_paid/i.test(b.booking_status)) { feeStatus = 'Paid'; statusClass = 'fee-status--paid'; }
 
           return `
           <tr>
@@ -1112,7 +1112,7 @@
             <td>${b.facility_or_venue || '—'}</td>
             <td>${b.slot_date || '—'} ${b.slot_start_time || ''}</td>
             <td>${b.updatedAt ? new Date(b.updatedAt).toLocaleString('en-SG') : '—'}</td>
-            <td><span style="color:${statusColor};font-weight:600">${feeStatus}</span></td>
+            <td><span class="fee-status ${statusClass}">${feeStatus}</span></td>
             <td>
               ${b.waiver_reason
                 ? `<div class="cell-waiver" onclick="this.classList.toggle('cell-waiver--open')"><span class="cell-waiver__text">${b.waiver_reason}</span><span class="cell-waiver__toggle"></span></div>`

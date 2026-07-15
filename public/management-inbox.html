@@ -6,13 +6,14 @@
   <title>Verve — Inbox</title>
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="./css/console.css" />
+  <script src="./js/theme.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
   <style>
     /* Inbox — Dusk Glow & Rose Gold (matches css/console.css conventions) */
     .inbox-thread {
-      background: linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #18171b;
-      border: 1px solid rgba(255,255,255,0.04);
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
       border-top: 1px solid rgba(212,154,143,0.3);
       border-radius: var(--radius-2xl, 20px);
       backdrop-filter: blur(12px);
@@ -28,7 +29,7 @@
     .inbox-thread__badge { background: linear-gradient(135deg, #D49A8F 0%, #F5E6E3 100%); color: #1a191f; font-family: var(--font-display); font-size: 12px; font-weight: 700; padding: 4px 13px; border-radius: var(--radius-pill, 999px); letter-spacing: 0.06em; white-space: nowrap; }
     .inbox-thread__chevron { font-size: 14px; color: var(--gold-dim); transition: transform 0.2s; }
     .inbox-thread__head.is-open .inbox-thread__chevron { transform: rotate(180deg); }
-    .inbox-thread__body { display: none; border-top: 1px solid rgba(255,255,255,0.05); padding: 20px 26px; }
+    .inbox-thread__body { display: none; border-top: 1px solid var(--glass-border); padding: 20px 26px; }
     .inbox-thread__body.is-open { display: block; }
     .inbox-notice { font-family: var(--font-ui); font-size: 13px; color: var(--muted); padding: 12px 16px; background: rgba(212,154,143,0.05); border: 1px solid rgba(212,154,143,0.14); border-left: 2px solid var(--gold); border-radius: var(--radius-xl, 16px); margin-bottom: 16px; }
     .inbox-notice strong { color: var(--ink); }
@@ -37,7 +38,7 @@
     .inbox-msg--mgmt { flex-direction: row-reverse; }
     .inbox-msg__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--navy); color: var(--gold-light); font-family: var(--font-display); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .inbox-msg--mgmt .inbox-msg__avatar { background: linear-gradient(135deg, #D49A8F 0%, #F5E6E3 100%); color: #1a191f; }
-    .inbox-msg__bubble { max-width: 70%; padding: 10px 16px; border-radius: var(--radius-xl, 16px); background: #1e1e22; border: 1px solid rgba(255,255,255,0.04); }
+    .inbox-msg__bubble { max-width: 70%; padding: 10px 16px; border-radius: var(--radius-xl, 16px); background: rgba(var(--ink-rgb),0.05); border: 1px solid var(--glass-border); }
     .inbox-msg--mgmt .inbox-msg__bubble { background: rgba(212,154,143,0.12); border-color: rgba(212,154,143,0.18); }
     .inbox-msg__name { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--ink); }
     .inbox-msg__name em { font-weight: 500; color: var(--gold); font-size: 13px; }
@@ -109,7 +110,13 @@
           <span class="staff-badge__name" id="staffName">Admin</span>
           <span class="staff-badge__role" id="staffRole">Management</span>
         </div>
-        <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+        <div class="sidebar__footer-actions">
+          <a href="gateway.html" class="btn-logout" id="logoutBtn">Logout</a>
+          <button class="btn-theme-toggle" id="themeToggleBtn" aria-label="Switch to light mode" title="Switch theme">
+            <svg class="theme-icon theme-icon--sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+            <svg class="theme-icon theme-icon--moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M20 14.2A8.5 8.5 0 1 1 9.8 4a6.7 6.7 0 0 0 10.2 10.2z"/></svg>
+          </button>
+        </div>
       </div>
     </aside>
 

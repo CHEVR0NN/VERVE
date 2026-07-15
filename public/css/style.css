@@ -39,6 +39,15 @@
   --platinum-light: #ffffff;
   --hairline:   rgba(243,243,245,0.09);
 
+  /* Console surface tokens — content area flips with theme; sidebar stays dark */
+  --glass-card:    linear-gradient(170deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%), #18171b;
+  --glass-border:  rgba(255,255,255,0.04);
+  --surface-2:     #151518;
+  --table-wrap-bg: rgba(22,22,29,0.6);
+  --table-head:    rgba(30,30,34,0.55);
+  --chip-bg:       rgba(255,255,255,0.03);
+  --chip-border:   rgba(255,255,255,0.08);
+
   --radius-pill: 999px;
   --radius-xl:   16px;
   --radius-2xl:  20px;
@@ -71,6 +80,13 @@
   --crimson:    #a8435b;
   --champagne:  #cfae93;
   --hairline:   rgba(30,30,34,0.12);
+  --glass-card:    linear-gradient(170deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 100%), #ffffff;
+  --glass-border:  rgba(30,30,34,0.09);
+  --surface-2:     #efeae4;
+  --table-wrap-bg: rgba(255,255,255,0.8);
+  --table-head:    rgba(169,104,90,0.08);
+  --chip-bg:       rgba(30,30,34,0.03);
+  --chip-border:   rgba(30,30,34,0.12);
 }
 
 @media (prefers-color-scheme: light) {
@@ -94,6 +110,13 @@
     --crimson:    #a8435b;
     --champagne:  #cfae93;
     --hairline:   rgba(30,30,34,0.12);
+    --glass-card:    linear-gradient(170deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 100%), #ffffff;
+    --glass-border:  rgba(30,30,34,0.09);
+    --surface-2:     #efeae4;
+    --table-wrap-bg: rgba(255,255,255,0.8);
+    --table-head:    rgba(169,104,90,0.08);
+    --chip-bg:       rgba(30,30,34,0.03);
+    --chip-border:   rgba(30,30,34,0.12);
   }
 }
 
