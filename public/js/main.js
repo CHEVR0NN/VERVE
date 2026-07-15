@@ -1,3 +1,17 @@
+// ── Theme toggle (runs regardless of login state) ────────────────────────
+(function () {
+  const btn = document.getElementById('themeToggleBtn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    const root    = document.documentElement;
+    const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next    = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('vrv_theme', next);
+    btn.setAttribute('aria-label', next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  });
+})();
+
 (function () {
 
   const API_BASE = 'https://backend-production-41dc3.up.railway.app';

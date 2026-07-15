@@ -478,8 +478,8 @@
   <div class="confirm-body">
     <div class="confirm-badge">
       <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="26" cy="26" r="25" stroke="#BFB194" stroke-width="2"/>
-        <path d="M15 27l7 7 15-15" stroke="#BFB194" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="26" cy="26" r="25" stroke="#D49A8F" stroke-width="2"/>
+        <path d="M15 27l7 7 15-15" stroke="#D49A8F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
     <h3>Booking Confirmed</h3>
@@ -530,8 +530,8 @@
   <div class="confirm-body">
     <div class="confirm-badge">
       <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="26" cy="26" r="25" stroke="#BFB194" stroke-width="2"/>
-        <path d="M15 27l7 7 15-15" stroke="#BFB194" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="26" cy="26" r="25" stroke="#D49A8F" stroke-width="2"/>
+        <path d="M15 27l7 7 15-15" stroke="#D49A8F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
     <h3>Guests Registered</h3>
@@ -964,14 +964,46 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
     });
   }
 
+  // Anchors a footer-triggered dropdown next to its button, measuring the
+  // dropdown's actual rendered size so it never lands off-screen or
+  // disconnected from the button (hardcoded fixed offsets did both).
+  window.__vervePositionDropdown = function (btn, dropdown) {
+    const r = btn.getBoundingClientRect();
+    dropdown.style.top = 'auto';
+    dropdown.style.bottom = 'auto';
+    dropdown.style.left = 'auto';
+    dropdown.style.right = 'auto';
+
+    dropdown.style.visibility = 'hidden';
+    dropdown.hidden = false;
+    const dw = dropdown.offsetWidth;
+    const dh = dropdown.offsetHeight;
+    dropdown.hidden = true;
+    dropdown.style.visibility = '';
+
+    let left = r.right + 12;
+    if (left + dw > window.innerWidth - 12) left = Math.max(12, r.left - dw - 12);
+
+    // Never overlap the trigger button itself: prefer opening below it
+    // (top clears r.bottom); only open upward (bottom clears r.top) if
+    // there isn't room below; otherwise clamp fully inside the viewport.
+    const gap = 10;
+    let top;
+    if (r.bottom + gap + dh <= window.innerHeight - 12) {
+      top = r.bottom + gap;
+    } else if (r.top - gap - dh >= 12) {
+      top = r.top - gap - dh;
+    } else {
+      top = Math.max(12, Math.min(r.top, window.innerHeight - dh - 12));
+    }
+
+    dropdown.style.left = Math.round(left) + 'px';
+    dropdown.style.top  = Math.round(top) + 'px';
+  };
+
   notifBtn.addEventListener('click', e => {
     e.stopPropagation();
-    if (notifDropdown.hidden) {
-      const r = notifBtn.getBoundingClientRect();
-      notifDropdown.style.top = 'auto';
-      notifDropdown.style.left = Math.round(r.right + 12) + 'px';
-      notifDropdown.style.bottom = Math.round(window.innerHeight - r.bottom) + 'px';
-    }
+    if (notifDropdown.hidden) window.__vervePositionDropdown(notifBtn, notifDropdown);
     notifDropdown.hidden = !notifDropdown.hidden;
   });
 
@@ -1500,12 +1532,7 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
     // Close notif dropdown if open
     const notifDropdown = document.getElementById('notifDropdown');
     if (notifDropdown) notifDropdown.hidden = true;
-    if (profileDropdown.hidden) {
-      const r = profileBtn.getBoundingClientRect();
-      profileDropdown.style.top = 'auto';
-      profileDropdown.style.left = Math.round(r.right + 12) + 'px';
-      profileDropdown.style.bottom = Math.round(window.innerHeight - r.bottom) + 'px';
-    }
+    if (profileDropdown.hidden) window.__vervePositionDropdown(profileBtn, profileDropdown);
     profileDropdown.hidden = !profileDropdown.hidden;
     profileBtn.classList.toggle('is-active', !profileDropdown.hidden);
   });

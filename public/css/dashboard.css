@@ -704,13 +704,14 @@ dialog:not([open]) {
   background: var(--panel-hi);
 }
 
-/* Subtle rose-gold wash over every card photo */
+/* Rose-gold wash over every card photo */
 .card-image::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.28), transparent 60%);
-  mix-blend-mode: overlay;
+  background:
+    linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.4), transparent 55%),
+    linear-gradient(340deg, rgba(var(--coral-rgb, 232,162,151), 0.28), transparent 60%);
   pointer-events: none;
   z-index: 1;
 }
@@ -1004,15 +1005,19 @@ dialog:not([open]) {
 .booking-type--facility { color: var(--muted); }
 .booking-type--dining   { color: var(--gold-dim); }
 
-/* Status / fee / timing indicators: minimalist typography + a single
-   6px micro-dot (::before, filled with currentColor) instead of a
-   colored pill background. */
+/* Status / fee / timing indicators: a 6px micro-dot (::before, filled
+   with currentColor) PLUS a tinted pill background (color-mix off the
+   same currentColor) so different statuses are easy to tell apart at
+   a glance, not just by a subtle text-color difference. */
 .booking-status-badge,
 .fee-status-chip,
 .timing-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border-radius: var(--radius-pill, 999px);
+  background: color-mix(in srgb, currentColor 16%, transparent);
   font-family: var(--font-ui);
   font-size: 9.5px;
   font-weight: 700;
@@ -1032,9 +1037,10 @@ dialog:not([open]) {
   flex-shrink: 0;
 }
 
-/* Muted, elegant status tones — mapped to accent variables.
-   Success → crimson rose (--teal); Pending/attention → rose gold;
-   Closed/negative → muted neutral. */
+/* Clearly separated status tones — mapped to accent variables.
+   Approved/live → crimson blush (--teal); Pending/attention → warm
+   champagne (deliberately NOT --gold-dim, which reads too close to
+   crimson at a glance); Closed/negative → muted neutral. */
 .booking-status--confirmed,
 .booking-status--checked-in,
 .booking-status--completed,
@@ -1043,17 +1049,17 @@ dialog:not([open]) {
 
 .booking-status--pending,
 .booking-status--overdue,
-.booking-status--walkin { color: var(--gold-dim); }
+.booking-status--walkin { color: var(--champagne); }
 
 .booking-status--no-show,
 .booking-status--cancelled,
 .booking-status--late-cancellation { color: var(--muted); }
 
-.fee-status--outstanding { color: var(--gold-dim); }
+.fee-status--outstanding { color: var(--champagne); }
 .fee-status--paid        { color: var(--teal); }
 .fee-status--waived      { color: var(--muted); }
 
-.timing-chip--soon { color: var(--gold-dim); }
+.timing-chip--soon { color: var(--champagne); }
 .timing-chip--live { color: var(--teal); }
 
 .booking-section-header {
@@ -2045,13 +2051,13 @@ dialog:not([open]) {
   top: 60px;
   right: 52px;
   width: 370px;
-  background: rgba(var(--card-rgb), 0.85);
+  background: rgba(var(--card-rgb), 0.98);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(var(--gold-dim-rgb), 0.2);
   border-radius: var(--radius-2xl, 20px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  z-index: 9999;
   animation: slideDown 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -2274,6 +2280,7 @@ dialog:not([open]) {
 .event-hero__overlay {
   position: absolute;
   inset: 0;
+  z-index: 2;
   /* Neutral obsidian scrim — not the old racing-green (10,28,21) left
      over from the pre-rebrand "Court & Clubhouse" palette. */
   background:
@@ -2284,7 +2291,7 @@ dialog:not([open]) {
       rgba(10, 10, 12, 0.28) 68%,
       transparent 100%
     ),
-    radial-gradient(60% 60% at 100% 100%, rgba(var(--rose-glow-rgb), 0.22), transparent 70%);
+    radial-gradient(60% 60% at 100% 100%, rgba(var(--rose-glow-rgb), 0.32), transparent 70%);
   display: flex;
   align-items: flex-end;
 }
@@ -2604,9 +2611,9 @@ dialog:not([open]) {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.2), transparent 55%);
-  mix-blend-mode: overlay;
+  background: linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.35), transparent 45%);
   pointer-events: none;
+  z-index: 0;
 }
 
 .carousel-btn {
@@ -3381,7 +3388,7 @@ dialog:not([open]) {
   left: 256px;
   bottom: 22px;
   width: 360px;
-  background: rgba(var(--card-rgb), 0.85);
+  background: rgba(var(--card-rgb), 0.98);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--hairline);
@@ -3389,7 +3396,7 @@ dialog:not([open]) {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  z-index: 100;
+  z-index: 9999;
   animation: slideDown 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 @media (max-width: 820px) {
@@ -3697,13 +3704,14 @@ dialog:not([open]) {
     var(--panel-hi);
 }
 
-/* Subtle rose-gold wash over every experience photo */
+/* Rose-gold wash over every experience photo */
 .exp-card__img-wrap::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.24), transparent 60%);
-  mix-blend-mode: overlay;
+  background:
+    linear-gradient(160deg, rgba(var(--rose-glow-rgb), 0.4), transparent 55%),
+    linear-gradient(340deg, rgba(var(--coral-rgb, 232,162,151), 0.28), transparent 60%);
   pointer-events: none;
   z-index: 1;
 }
@@ -3840,6 +3848,8 @@ dialog:not([open]) {
 .event-register-tickets {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 10px;
 }
 
@@ -3863,15 +3873,19 @@ dialog:not([open]) {
 .ticket-step-btn {
   width: 40px;
   height: 40px;
-  background: var(--navy-pale, #f4f6fb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--ink-rgb), 0.06);
   border: none;
   font-size: 18px;
+  line-height: 1;
   color: var(--ink);
   cursor: pointer;
   transition: background 0.2s;
   font-family: var(--font-ui);
 }
-.ticket-step-btn:hover { background: rgba(var(--ink-rgb), 0.1); }
+.ticket-step-btn:hover { background: rgba(var(--gold-dim-rgb), 0.18); }
 
 .ticket-step-val {
   min-width: 48px;
@@ -4447,13 +4461,13 @@ dialog:not([open]) {
   left: 256px;
   bottom: 22px;
   width: 240px;
-  background: rgba(var(--card-rgb), 0.85);
+  background: rgba(var(--card-rgb), 0.98);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--hairline);
   border-top: 2px solid rgba(var(--gold-dim-rgb), 0.5);
   box-shadow: var(--shadow-lg);
-  z-index: 100;
+  z-index: 9999;
   animation: slideDown 0.2s cubic-bezier(0.4,0,0.2,1);
   border-radius: var(--radius);
   overflow: hidden;

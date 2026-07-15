@@ -4,11 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verve — Member Portal</title>
+  <script>
+    // Applied before first paint to avoid a flash of the wrong theme.
+    (function () {
+      var saved = localStorage.getItem('vrv_theme');
+      if (saved === 'dark' || saved === 'light') document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
 </head>
 <body>
+
+  <button class="btn-theme-toggle" id="themeToggleBtn" aria-label="Switch to light mode" title="Switch theme">
+    <svg class="theme-icon theme-icon--sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4.5"/>
+      <path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>
+    </svg>
+    <svg class="theme-icon theme-icon--moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+      <path d="M20 14.2A8.5 8.5 0 1 1 9.8 4a6.7 6.7 0 0 0 10.2 10.2z"/>
+    </svg>
+  </button>
 
   <div class="split-screen">
 
@@ -73,11 +90,11 @@
 
         </form>
 
-        <!-- <footer class="panel__footer">
+        <footer class="panel__footer">
           <a href="#" class="footer-link">Need help?</a>
           <span class="footer-sep">·</span>
           <a href="#" class="footer-link">Privacy Policy</a>
-        </footer> -->
+        </footer>
 
       </div>
 
@@ -89,12 +106,18 @@
     <!-- RIGHT PANEL — 70% IMAGE -->
     <div class="panel panel--visual" id="visualPanel">
       
-      <img src="./asset/login-bg.jpg" alt="Verve at Meridian Green" class="visual__img" />
+      <img src="./asset/login-bg.jpg" alt="Verve Est. 1983, Nevada" class="visual__img" />
       <div class="visual__overlay"></div>
       <div class="visual__caption">
         <span class="visual__caption-line">Greenhills, Nevada</span>
         <span class="visual__caption-year">Since 1983</span>
+        <span class="visual__chip">Private Members Club</span>
       </div>
+      <blockquote class="visual__quote">
+        <span class="visual__quote-mark" aria-hidden="true">“</span>
+        <p class="visual__quote-text">A quiet standard of hospitality — the kind you notice only by how effortless it feels.</p>
+        <cite class="visual__quote-attr">The Verve Journal</cite>
+      </blockquote>
     </div>
 
   </div>
