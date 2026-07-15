@@ -163,17 +163,18 @@ body {
 /* Small uppercase gold labels/CTAs sit on white/alabaster card & page
    backgrounds in light mode, where --gold only measures ~3.3:1 contrast
    (fails AA's 4.5:1 for small text). Dark mode already clears 7.5:1 with
-   plain --gold there, so this override is scoped to light mode only. */
+   plain --gold there, so this override is scoped to light mode only.
+   .action-card__cta is excluded: it always sits on the action card's dark
+   photo scrim (in both themes), so it keeps its own fixed light color
+   instead of following the page theme. */
 :root[data-theme="light"] .section-eyebrow,
 :root[data-theme="light"] .next-res-chip__label,
-:root[data-theme="light"] .action-card__cta,
 :root[data-theme="light"] .btn-secondary:hover {
   color: var(--gold-dim);
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) .section-eyebrow,
   :root:not([data-theme]) .next-res-chip__label,
-  :root:not([data-theme]) .action-card__cta,
   :root:not([data-theme]) .btn-secondary:hover {
     color: var(--gold-dim);
   }
@@ -4888,107 +4889,124 @@ dialog:not([open]) {
   color: var(--gold);
   margin-bottom: 16px;
 }
-/* Three photo cards, but not a uniform tile grid: each card's image runs
-   a different height, so the row reads as an editorial stagger rather
-   than three identical SaaS-style boxes. */
+/* Three full-bleed photo cards: the image fills the whole card, a bottom
+   scrim carries the text, and all three are equal height so the row reads
+   as a calm, gallery-like set rather than a staggered grid. Text colours
+   are fixed light (not theme tokens) because they always sit on the dark
+   scrim, in both light and dark mode. */
 .action-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  align-items: start;
+  align-items: stretch;
 }
 @media (max-width: 900px) {
   .action-cards { grid-template-columns: 1fr; }
 }
 
 .action-card {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   text-align: left;
+  min-height: 320px;
   border: 1px solid var(--hairline);
   border-radius: var(--radius);
-  background: var(--card);
-  box-shadow: var(--shadow);
   overflow: hidden;
   cursor: pointer;
   padding: 0;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+  box-shadow: var(--shadow);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease-out, border-color 0.3s ease-out;
 }
 .action-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(var(--gold-dim-rgb), 0.45);
+  border-color: rgba(var(--gold-dim-rgb), 0.55);
 }
 .action-card:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px rgba(var(--rose-glow-rgb), 0.6);
 }
+@media (max-width: 900px) {
+  .action-card { min-height: 260px; }
+}
 
-/* Photo art per action, tinted with a rose/rose-gold overlay to stay
-   on-brand. Heights are deliberately uneven — tall / short / mid-tall. */
+/* Full-bleed image layer (zooms gently on hover) */
 .action-card__art {
-  border-bottom: 1px solid var(--hairline);
+  position: absolute;
+  inset: 0;
+  z-index: -2;
   background-size: cover;
   background-position: center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.action-card--book .action-card__art {
-  height: 210px;
+.action-card:hover .action-card__art { transform: scale(1.06); }
+.action-card--book .action-card__art  { background-image: url('../asset/facility-booking.jpg'); }
+.action-card--dine .action-card__art  { background-image: url('../asset/dining-reservation.jpg'); }
+.action-card--guest .action-card__art { background-image: url('../asset/register-guests.jpg'); }
+
+/* Legibility scrim (dark, bottom-weighted) + a faint rose-gold brand tint */
+.action-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background:
-    linear-gradient(135deg, rgba(var(--gold-dim-rgb), 0.58), rgba(var(--rose-glow-rgb), 0.4)),
-    url('../asset/facility-booking.jpg') center/cover no-repeat;
-}
-.action-card--dine .action-card__art {
-  height: 150px;
-  background:
-    linear-gradient(135deg, rgba(var(--rose-glow-rgb), 0.5), rgba(var(--gold-dim-rgb), 0.45)),
-    url('../asset/dining-reservation.jpg') center/cover no-repeat;
-}
-.action-card--guest .action-card__art {
-  height: 185px;
-  background:
-    linear-gradient(135deg, rgba(var(--gold-dim-rgb), 0.5), rgba(var(--rose-glow-rgb), 0.45)),
-    url('../asset/register-guests.jpg') center/cover no-repeat;
-}
-@media (max-width: 900px) {
-  .action-card--book .action-card__art,
-  .action-card--dine .action-card__art,
-  .action-card--guest .action-card__art { height: 180px; }
+    linear-gradient(to top,
+      rgba(12,10,14,0.90) 0%,
+      rgba(12,10,14,0.55) 30%,
+      rgba(12,10,14,0.12) 58%,
+      rgba(12,10,14,0) 100%),
+    linear-gradient(135deg,
+      rgba(var(--gold-dim-rgb), 0.22),
+      rgba(var(--rose-glow-rgb), 0.10));
 }
 
 .action-card__body {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 22px 22px 24px;
-  flex: 1;
+  gap: 7px;
+  padding: 24px 24px 26px;
 }
 .action-card__title {
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--ink);
+  letter-spacing: 0.02em;
+  color: #F6EBE7;
+  text-shadow: 0 1px 14px rgba(0,0,0,0.4);
 }
 .action-card__desc {
   font-family: var(--font-ui);
   font-size: 12.5px;
   line-height: 1.5;
-  color: var(--muted);
-  flex: 1;
+  color: rgba(246,235,231,0.82);
+  text-shadow: 0 1px 10px rgba(0,0,0,0.35);
 }
 .action-card__cta {
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: #E3B3A6;
   display: inline-flex;
-  gap: 6px;
-  margin-top: 4px;
+  align-items: center;
+  gap: 7px;
+  margin-top: 6px;
   transition: gap 0.3s ease-out;
 }
-.action-card:hover .action-card__cta { gap: 11px; }
+.action-card:hover .action-card__cta { gap: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  .action-card,
+  .action-card__art,
+  .action-card__cta { transition: none; }
+  .action-card:hover { transform: none; }
+  .action-card:hover .action-card__art { transform: none; }
+}
 
 /* Activity & Concierge feed (full width, below the actions; guests stacks below bookings) */
 .home-feed {
