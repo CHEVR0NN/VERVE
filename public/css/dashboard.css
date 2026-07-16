@@ -1494,7 +1494,7 @@ dialog:not([open]) {
 
 .modal-dialog h3 {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 23px;
   font-weight: 300;
   color: var(--ink);
   letter-spacing: 0.05em;
