@@ -63,7 +63,10 @@
         <span class="notif-badge" id="notifBadge" hidden>0</span>
       </button>
       <button class="btn-profile-icon" id="profileBtn" aria-label="Profile menu">
-        <span class="profile-icon-initial" id="profileIconInitial">M</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
       </button>
     </div>
   </aside>
@@ -1519,7 +1522,6 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
   // ── Seed header icon and dropdown header ────────────────────────────
   function initial(name) { return (name || 'M').charAt(0).toUpperCase(); }
 
-  document.getElementById('profileIconInitial').textContent  = initial(member.name);
   document.getElementById('profileDropAvatar').textContent   = initial(member.name);
   document.getElementById('profileDropName').textContent     = member.name  || 'Member';
   document.getElementById('profileDropId').textContent       = member.membership_number ? 'ID: ' + member.membership_number : '—';
@@ -1613,7 +1615,6 @@ if (evtBadge) evtBadge.textContent = CURATED_EXPERIENCES.length;
       // Reflect live
       const greeting = document.getElementById('memberGreeting');
       if (greeting) greeting.textContent = `Welcome back, ${name}.`;
-      document.getElementById('profileIconInitial').textContent = initial(name);
       document.getElementById('profileDropAvatar').textContent  = initial(name);
       document.getElementById('profileDropName').textContent    = name;
 

@@ -4467,13 +4467,8 @@ dialog:not([open]) {
   background: rgba(var(--gold-dim-rgb), 0.22);
   border-color: var(--gold);
 }
-.profile-icon-initial {
-  font-family: 'Faculty Glyphic', serif;
-  font-size: 15px;
-  font-weight: 700;
+.btn-profile-icon svg {
   color: var(--white);
-  letter-spacing: 0.03em;
-  line-height: 1;
   pointer-events: none;
 }
 
