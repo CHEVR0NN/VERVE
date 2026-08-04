@@ -17,10 +17,10 @@ export function toRFEdges(edges: WorkflowEdge[]): RFEdge[] {
 export function fromRFNodes(nodes: RFNode[]): WorkflowNode[] {
   return nodes.map((n) => ({
     id: n.id,
-    type: n.type,
+    type: n.type as WorkflowNode['type'],
     position: n.position,
-    data: n.data,
-  })) as unknown as WorkflowNode[];
+    data: n.data as unknown as WorkflowNode['data'],
+  })) as WorkflowNode[];
 }
 
 export function fromRFEdges(edges: RFEdge[]): WorkflowEdge[] {
