@@ -7,7 +7,7 @@ export function DelayNode({ data, selected }: NodeProps) {
   return (
     <>
       <Handle type="target" position={Position.Left} />
-      <BaseNode kind="Delay" title={d.label} subtitle={`Waits ${d.simulatedDuration}`} selected={selected} accent="#8e8e96" />
+      <BaseNode kind="Delay" title={d.label} subtitle={`Waits ${d.simulatedDuration}`} selected={selected} accent="var(--muted)" />
       <Handle type="source" position={Position.Right} />
     </>
   );

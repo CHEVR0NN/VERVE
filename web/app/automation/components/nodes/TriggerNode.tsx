@@ -6,7 +6,7 @@ export function TriggerNode({ data, selected }: NodeProps) {
   const d = data as unknown as TriggerData;
   return (
     <>
-      <BaseNode kind="Trigger" title={d.label} subtitle={d.description} selected={selected} accent="#a97c72" />
+      <BaseNode kind="Trigger" title={d.label} subtitle={d.description} selected={selected} accent="var(--gold-dim)" />
       <Handle type="source" position={Position.Right} />
     </>
   );

@@ -1,0 +1,238 @@
+@import 'tailwindcss';
+
+/* ── Verve design tokens ──────────────────────────────────────────────────
+   Ported verbatim from public/css/style.css:14-121 (member portal source of
+   truth). Theme-dependent — redefined per [data-theme] below — so these stay
+   as plain custom properties rather than static @theme values. */
+:root,
+:root[data-theme='dark'] {
+  --gold: #d49a8f;
+  --gold-rgb: 212, 154, 143;
+  --gold-light: #f5e6e3;
+  --gold-dim: #a97c72;
+  --coral: #e8a297;
+  --coral-rgb: 232, 162, 151;
+  --navy: #1e1e22;
+  --navy-deep: #111113;
+  --bg: #0d0d11;
+  --card: #16161d;
+  --panel-grad-1: #18171b;
+  --panel-grad-2: #121114;
+  --white: #f3f3f5;
+  --ink: #f3f3f5;
+  --ink-rgb: 243, 243, 245;
+  --muted: #8e8e96;
+  --crimson: #c25972;
+  --champagne: #e3cbb3;
+  --platinum: #e0e0e0;
+  --platinum-light: #ffffff;
+  --hairline: rgba(243, 243, 245, 0.09);
+  --shadow-lg: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 30px 60px -26px rgba(0, 0, 0, 0.7);
+
+  --glass-card: linear-gradient(170deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.015) 100%), #18171b;
+  --glass-border: rgba(255, 255, 255, 0.04);
+  --surface-2: #151518;
+  --table-wrap-bg: rgba(22, 22, 29, 0.6);
+  --table-head: rgba(30, 30, 34, 0.55);
+  --chip-bg: rgba(255, 255, 255, 0.03);
+  --chip-border: rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme='light'] {
+  --gold: #a9685a;
+  --gold-rgb: 169, 104, 90;
+  --gold-light: #c98f80;
+  --gold-dim: #7d4b40;
+  --coral: #c46a53;
+  --coral-rgb: 196, 106, 83;
+  --navy: #1a1a1d;
+  --navy-deep: #0e0e10;
+  --bg: #f7f5f2;
+  --card: #ffffff;
+  --panel-grad-1: #ffffff;
+  --panel-grad-2: #f3f0ec;
+  --white: #f3f3f5;
+  --ink: #1e1e22;
+  --ink-rgb: 30, 30, 34;
+  --muted: #6e6e78;
+  --crimson: #a8435b;
+  --champagne: #cfae93;
+  --hairline: rgba(30, 30, 34, 0.12);
+  --shadow-lg: 0 22px 48px -20px rgba(30, 30, 34, 0.16);
+  --glass-card: linear-gradient(170deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%), #ffffff;
+  --glass-border: rgba(30, 30, 34, 0.09);
+  --surface-2: #efeae4;
+  --table-wrap-bg: rgba(255, 255, 255, 0.8);
+  --table-head: rgba(169, 104, 90, 0.08);
+  --chip-bg: rgba(30, 30, 34, 0.03);
+  --chip-border: rgba(30, 30, 34, 0.12);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --gold: #a9685a;
+    --gold-rgb: 169, 104, 90;
+    --gold-light: #c98f80;
+    --gold-dim: #7d4b40;
+    --coral: #c46a53;
+    --coral-rgb: 196, 106, 83;
+    --navy: #1a1a1d;
+    --navy-deep: #0e0e10;
+    --bg: #f7f5f2;
+    --card: #ffffff;
+    --panel-grad-1: #ffffff;
+    --panel-grad-2: #f3f0ec;
+    --white: #f3f3f5;
+    --ink: #1e1e22;
+    --ink-rgb: 30, 30, 34;
+    --muted: #6e6e78;
+    --crimson: #a8435b;
+    --champagne: #cfae93;
+    --hairline: rgba(30, 30, 34, 0.12);
+    --shadow-lg: 0 22px 48px -20px rgba(30, 30, 34, 0.16);
+    --glass-card: linear-gradient(170deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%), #ffffff;
+    --glass-border: rgba(30, 30, 34, 0.09);
+    --surface-2: #efeae4;
+    --table-wrap-bg: rgba(255, 255, 255, 0.8);
+    --table-head: rgba(169, 104, 90, 0.08);
+    --chip-bg: rgba(30, 30, 34, 0.03);
+    --chip-border: rgba(30, 30, 34, 0.12);
+  }
+}
+
+/* ── Tailwind utility mapping ─────────────────────────────────────────────
+   Theme-dependent tokens keep the `--color-` indirection so utilities like
+   bg-gold / text-ink track the live [data-theme] value above (not a static
+   snapshot). Theme-invariant tokens (radius, fonts) are declared directly. */
+@theme inline {
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dim: var(--gold-dim);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-bg: var(--bg);
+  --color-white-token: var(--white);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+
+  --animate-fade-up: fadeUp 0.7s ease both;
+  --animate-panel-reveal: panelReveal 0.85s cubic-bezier(0.4, 0, 0.2, 1) both;
+  --animate-img-reveal: imgReveal 1.1s cubic-bezier(0.4, 0, 0.2, 1) both;
+  --animate-shake: shake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@theme {
+  --radius-pill: 999px;
+  --radius-xl: 16px;
+  --font-display: 'Faculty Glyphic', Georgia, serif;
+  --font-ui: 'Quicksand', 'Palatino Linotype', sans-serif;
+}
+
+/* ── Theme toggle icon swap, ported verbatim from style.css:155-164.
+   Kept as plain CSS (rather than React state) so the correct icon shows
+   pre-hydration, driven by the same [data-theme] attribute the inline
+   anti-FOUC script sets synchronously before paint. ── */
+:root[data-theme='light'] .theme-icon--sun,
+:root:not([data-theme]) .theme-icon--sun {
+  display: block;
+}
+:root[data-theme='light'] .theme-icon--moon,
+:root:not([data-theme]) .theme-icon--moon {
+  display: none;
+}
+:root[data-theme='dark'] .theme-icon--sun {
+  display: none;
+}
+:root[data-theme='dark'] .theme-icon--moon {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-icon--sun {
+    display: none;
+  }
+  :root:not([data-theme]) .theme-icon--moon {
+    display: block;
+  }
+}
+
+/* ── Base rules ported from style.css:3-12,123-134 (beyond Tailwind Preflight) ── */
+::selection {
+  background: rgba(191, 177, 148, 0.32);
+  color: #f6f3ec;
+}
+
+/* The source site never resets line-height (browser default `normal`
+   applies everywhere). Tailwind Preflight sets html to 1.5, which throws
+   off every text element's box height — undo it to match source exactly. */
+html {
+  line-height: normal;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--ink);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* ── Entrance / interaction keyframes, ported from style.css:575-618 ─────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panelReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes imgReveal {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
