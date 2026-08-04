@@ -41,6 +41,8 @@ export function Canvas() {
     [selectNode],
   );
 
+  // Drag-to-reposition isn't wired up (out of scope for this build) — kept here,
+  // voided, so the adapter/store hooks are visible for whoever wants to add it.
   void handleNodesChange;
   void fromRFNodes;
   void setNodes;
@@ -54,6 +56,7 @@ export function Canvas() {
         onConnect={handleConnect}
         onNodeClick={handleNodeClick}
         onPaneClick={() => selectNode(null)}
+        nodesDraggable={false}
         fitView
       >
         <Background />
