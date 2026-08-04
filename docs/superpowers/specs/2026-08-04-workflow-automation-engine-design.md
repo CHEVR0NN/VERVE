@@ -41,7 +41,7 @@ Plain serializable JSON, versioned via `schemaVersion` so persisted workflows ca
   - `condition`: exactly one outgoing edge with `sourceHandle: 'true'` and exactly one with `'false'`. Any other count is an error.
   - `branch`: ≥2 outgoing edges (a branch with one child is pointless — flagged as error).
   - `merge`: ≥2 incoming edges.
-  - `action` / `delay`: exactly 1 outgoing edge. Fan-out must go through an explicit `branch` node, so "this runs in parallel" is always a visible modeling choice, never implicit from having two edges out of an action.
+  - `action` / `delay`: **at most** 1 outgoing edge (0 means a terminal step). Fan-out must go through an explicit `branch` node, so "this runs in parallel" is always a visible modeling choice, never implicit from having two edges out of an action.
 
 `validateGraph()` returns `{ errors: ValidationIssue[], warnings: ValidationIssue[] }`, each tagged with the offending node/edge id. The canvas renders these as inline badges on the specific node; a run is blocked while `errors.length > 0`.
 
@@ -50,16 +50,20 @@ Plain serializable JSON, versioned via `schemaVersion` so persisted workflows ca
 Hand-written tokenizer → recursive-descent parser → AST → tree-walking evaluator. Three independently unit-tested stages, deliberately un-clever (no Pratt parsing, no precedence-climbing tables) so the recursive-descent structure maps 1:1 to the grammar and reads plainly.
 
 ```
-expression := orExpr
+expression  := orExpr
 orExpr      := andExpr ( "||" andExpr )*
 andExpr     := equality ( "&&" equality )*
 equality    := comparison ( ("==" | "!=") comparison )*
-comparison  := unary ( ("<" | "<=" | ">" | ">=") unary )*
-unary       := "!" unary | primary
+comparison  := addExpr ( ("<" | "<=" | ">" | ">=") addExpr )*
+addExpr     := mulExpr ( ("+" | "-") mulExpr )*
+mulExpr     := unary ( ("*" | "/") unary )*
+unary       := "!" unary | "-" unary | primary
 primary     := NUMBER | STRING | BOOLEAN | fieldAccess | "(" expression ")" | call
 fieldAccess := IDENT ( "." IDENT | "[" expression "]" )*
 call        := fieldAccess "(" ( expression ("," expression)* )? ")"
 ```
+
+`addExpr`/`mulExpr` give the "basic string/number ops" the original spec asked for (`+` also does string concatenation when either side is a string) — standard precedence tier added between comparison and unary, still one recursive-descent method per grammar rule.
 
 Covers everything the demo workflows need: `member.dues_overdue_days > 30`, `member.tags.includes('vip')`, `event.no_show_count / event.capacity > 0.3 && event.rsvp_count >= 10`. Comparing a string to a number, or calling a method that isn't defined on the resolved value, throws a typed `EvalError` (caught by the executor and surfaced as a node error, not a crash).
 
@@ -150,5 +154,5 @@ Engine core gets thorough coverage; UI gets light smoke coverage only.
 - **`localStorage` over IndexedDB**: simplicity for a small, capped dataset; would need IndexedDB or a real backend once workflow/run volume grows past a few MB.
 - **Completion-order trace** (queue-driven) over a fixed topological pass: more honestly reflects concurrent timing, at the cost of needing fake timers in tests to keep ordering deterministic.
 - **Single-thread concurrency** (interleaved async, not real multi-core): fine here since nodes are I/O-simulated (timers), not CPU-bound; real parallel *execution* would need workers or server-side orchestration.
-- **Deliberately small expression grammar** (no arithmetic, no ternary, no user-defined functions): scoped exactly to what Condition nodes need. Documented as an intentional boundary, not an oversight — a real rules engine would grow this incrementally as workflows demanded it.
+- **Deliberately small expression grammar** (no ternary, no user-defined functions, no assignment): scoped exactly to what Condition nodes need — comparisons, boolean logic, field/index access, calls, and basic arithmetic. Documented as an intentional boundary, not an oversight — a real rules engine would grow this incrementally as workflows demanded it.
 - **No real side effects**: Action nodes simulate their effect (log + mock output) rather than actually sending email/SMS — appropriate for a fully offline portfolio demo; a production version would need an adapter layer per action type.
