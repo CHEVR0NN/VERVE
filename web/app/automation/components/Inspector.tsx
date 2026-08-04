@@ -38,8 +38,15 @@ export function Inspector() {
             className="font-mono text-[12px] py-1.5 px-2 rounded-md border border-[var(--hairline)] bg-[var(--card)] text-ink"
             defaultValue={node.data.expression}
             onChange={(e) => {
-              setExpressionDraft(e.target.value);
-              if (!parseError) updateNodeData(node.id, { expression: e.target.value });
+              const value = e.target.value;
+              setExpressionDraft(value);
+              try {
+                parse(value);
+                updateNodeData(node.id, { expression: value });
+              } catch {
+                // invalid expression — don't write to the store; the parseError memo
+                // (driven by expressionDraft) will surface the message on next render
+              }
             }}
           />
           {parseError && <span className="font-ui text-[11px] text-[#c96a5e]">{parseError}</span>}
