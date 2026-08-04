@@ -87,6 +87,21 @@ describe('runWorkflow', () => {
     expect(trace.find((s) => s.nodeId === 'onFalse')!.status).toBe('ran');
   });
 
+  it('marks a node as errored when its expression throws', async () => {
+    const graph: WorkflowGraph = {
+      schemaVersion: 1, id: 'g', name: 'erroring',
+      nodes: [
+        { id: 't', type: 'trigger', position: { x: 0, y: 0 }, data: { label: 'Start', description: '' } },
+        { id: 'c', type: 'condition', position: { x: 0, y: 0 }, data: { label: 'Check', expression: 'nonexistent.field == 1' } },
+      ],
+      edges: [{ id: 'e1', source: 't', target: 'c' }],
+    };
+    const trace = await collectTrace(graph, baseContext);
+    const cStep = trace.find((s) => s.nodeId === 'c')!;
+    expect(cStep.status).toBe('error');
+    expect(cStep.reason).toMatch(/nonexistent/i);
+  });
+
   it('runs branch paths concurrently — the fast path completes before the delayed sibling', async () => {
     vi.useFakeTimers();
     const steps: string[] = [];

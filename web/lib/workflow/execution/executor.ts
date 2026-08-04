@@ -11,6 +11,12 @@ function createSignal() {
   return { promise, resolve };
 }
 
+/**
+ * Executes a workflow graph, yielding an ExecutionStep as each node completes.
+ * Precondition: the graph must already be validated (validateGraph(graph).errors
+ * is empty) — this function does not itself check for cycles or malformed graphs,
+ * and will silently omit nodes that can never satisfy their incoming-edge count.
+ */
 export async function* runWorkflow(graph: WorkflowGraph, context: EvalContext): AsyncGenerator<ExecutionStep> {
   const nodesById = new Map(graph.nodes.map((n) => [n.id, n]));
   const outgoingOf = (id: string) => graph.edges.filter((e) => e.source === id);
@@ -99,6 +105,10 @@ export async function* runWorkflow(graph: WorkflowGraph, context: EvalContext): 
           output = result;
           reason = `Expression "${node.data.expression}" evaluated to ${result}`;
           break;
+        }
+        default: {
+          const _exhaustive: never = node;
+          throw new Error(`Unhandled node type '${_exhaustive}'`);
         }
       }
 
