@@ -1,0 +1,37 @@
+import type { WorkflowGraph } from '../types';
+
+export const onboardingWorkflow: WorkflowGraph = {
+  schemaVersion: 1,
+  id: 'example-onboarding',
+  name: 'New Member Onboarding',
+  nodes: [
+    { id: 'trigger-1', type: 'trigger', position: { x: 0, y: 200 }, data: { label: 'New membership created', description: 'Fires when a membership record is created' } },
+    { id: 'action-welcome', type: 'action', position: { x: 240, y: 200 }, data: { label: 'Send welcome email', description: 'Welcome packet + club handbook' } },
+    { id: 'delay-3d', type: 'delay', position: { x: 480, y: 200 }, data: { label: 'Wait 3 days', simulatedDuration: '3d', demoMs: 1200 } },
+    { id: 'condition-profile', type: 'condition', position: { x: 720, y: 200 }, data: { label: 'Profile completed?', expression: 'member.completed_profile == false' } },
+    { id: 'action-remind', type: 'action', position: { x: 960, y: 80 }, data: { label: 'Send profile reminder', description: 'Prompt to finish onboarding form' } },
+    { id: 'delay-2d', type: 'delay', position: { x: 1200, y: 80 }, data: { label: 'Wait 2 days', simulatedDuration: '2d', demoMs: 1200 } },
+    { id: 'action-notify-concierge', type: 'action', position: { x: 1440, y: 80 }, data: { label: 'Notify concierge', description: 'Flag for a personal follow-up call' } },
+    { id: 'action-invite', type: 'action', position: { x: 960, y: 340 }, data: { label: 'Add to orientation invite list', description: '' } },
+    { id: 'branch-1', type: 'branch', position: { x: 1200, y: 340 }, data: { label: 'Fan out setup tasks' } },
+    { id: 'action-locker', type: 'action', position: { x: 1440, y: 260 }, data: { label: 'Assign locker', description: '' } },
+    { id: 'action-concierge-call', type: 'action', position: { x: 1440, y: 420 }, data: { label: 'Schedule concierge call', description: '' } },
+    { id: 'merge-1', type: 'merge', position: { x: 1680, y: 340 }, data: { label: 'Join setup tasks' } },
+    { id: 'action-complete', type: 'action', position: { x: 1920, y: 340 }, data: { label: 'Mark onboarding complete', description: '' } },
+  ],
+  edges: [
+    { id: 'e1', source: 'trigger-1', target: 'action-welcome' },
+    { id: 'e2', source: 'action-welcome', target: 'delay-3d' },
+    { id: 'e3', source: 'delay-3d', target: 'condition-profile' },
+    { id: 'e4', source: 'condition-profile', target: 'action-remind', sourceHandle: 'true' },
+    { id: 'e5', source: 'condition-profile', target: 'action-invite', sourceHandle: 'false' },
+    { id: 'e6', source: 'action-remind', target: 'delay-2d' },
+    { id: 'e7', source: 'delay-2d', target: 'action-notify-concierge' },
+    { id: 'e8', source: 'action-invite', target: 'branch-1' },
+    { id: 'e9', source: 'branch-1', target: 'action-locker' },
+    { id: 'e10', source: 'branch-1', target: 'action-concierge-call' },
+    { id: 'e11', source: 'action-locker', target: 'merge-1' },
+    { id: 'e12', source: 'action-concierge-call', target: 'merge-1' },
+    { id: 'e13', source: 'merge-1', target: 'action-complete' },
+  ],
+};
