@@ -1,8 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkflowStore } from '@/stores/useWorkflowStore';
-import { parse, ParseError } from '@/lib/workflow/expression/parser';
+import { parse } from '@/lib/workflow/expression/parser';
 
 export function Inspector() {
   const graph = useWorkflowStore((s) => s.graph);
@@ -12,15 +12,14 @@ export function Inspector() {
   const node = graph.nodes.find((n) => n.id === selectedNodeId) ?? null;
 
   const [expressionDraft, setExpressionDraft] = useState('');
-  const parseError = useMemo(() => {
-    if (node?.type !== 'condition') return null;
-    try {
-      parse(expressionDraft || node.data.expression);
-      return null;
-    } catch (err) {
-      return err instanceof ParseError ? err.message : String(err);
+  const [parseError, setParseError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (node?.type === 'condition') {
+      setExpressionDraft(node.data.expression);
+      setParseError(null);
     }
-  }, [expressionDraft, node]);
+  }, [node?.id]);
 
   if (!node) {
     return <div className="p-5 font-ui text-[12px] text-muted">Select a node to inspect it.</div>;
@@ -33,19 +32,20 @@ export function Inspector() {
 
       {node.type === 'condition' && (
         <div className="flex flex-col gap-1.5">
-          <label className="font-ui text-[11px] text-muted">Expression</label>
+          <label htmlFor="condition-expression" className="font-ui text-[11px] text-muted">Expression</label>
           <input
+            id="condition-expression"
             className="font-mono text-[12px] py-1.5 px-2 rounded-md border border-[var(--hairline)] bg-[var(--card)] text-ink"
-            defaultValue={node.data.expression}
+            value={expressionDraft}
             onChange={(e) => {
               const value = e.target.value;
               setExpressionDraft(value);
               try {
                 parse(value);
+                setParseError(null);
                 updateNodeData(node.id, { expression: value });
-              } catch {
-                // invalid expression — don't write to the store; the parseError memo
-                // (driven by expressionDraft) will surface the message on next render
+              } catch (err) {
+                setParseError(err instanceof Error ? err.message : String(err));
               }
             }}
           />

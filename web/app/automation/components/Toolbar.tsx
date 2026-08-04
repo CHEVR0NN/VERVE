@@ -17,6 +17,8 @@ export function Toolbar() {
   return (
     <div className="flex items-center gap-3 py-3 px-5 border-b border-[var(--hairline)] bg-[var(--navy)]">
       <select
+        aria-label="Select example workflow"
+        disabled={runStatus === 'running'}
         className="bg-transparent border border-[rgba(245,247,249,0.14)] rounded-md text-[12px] font-ui text-[#f5f7f9] py-1.5 px-2"
         value={graph.id}
         onChange={(e) => {
