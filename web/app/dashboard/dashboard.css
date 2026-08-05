@@ -1,0 +1,334 @@
+/* Dashboard-scoped token re-theme, ported from public/css/dashboard.css:1-227.
+   The original re-declares style.css's shared tokens at :root (dashboard.css
+   loads after style.css, so its :root wins for the whole dashboard.html page).
+   Since this Next.js app has ONE shared globals.css (used by the login page,
+   already pixel-verified in Phase 1), we cannot touch :root here without
+   corrupting that page. Instead these values are scoped to .dashboard-page,
+   a wrapper div only this route renders — CSS custom properties inherit
+   down from there exactly like :root does for the whole original page. */
+/* data-theme lives on <html>, never on this div, so "dark" is simply the
+   unqualified default here — matching :root, :root[data-theme="dark"] in
+   the original (both resolve to the same values there too). */
+.dashboard-page {
+  --bg: #0a0a0c;
+  --card: #151518;
+  --card-rgb: 21, 21, 24;
+  --gold-dim-rgb: 169, 124, 114;
+  --teal: #c25972;
+  --platinum-rgb: 224, 224, 224;
+  --rose-glow-rgb: 212, 154, 143;
+  --radius: 20px;
+  --radius-sm: 14px;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 16px 40px -22px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 30px 60px -26px rgba(0, 0, 0, 0.7);
+  --panel-bg: var(--card);
+  --panel-hi: #232328;
+  --hairline: rgba(var(--ink-rgb), 0.08);
+}
+
+:root[data-theme='light'] .dashboard-page {
+  --bg: #f7f5f2;
+  --card: #ffffff;
+  --card-rgb: 255, 255, 255;
+  --gold-dim-rgb: 125, 75, 64;
+  --teal: #a8435b;
+  --radius: 20px;
+  --radius-sm: 14px;
+  --shadow: 0 10px 28px -16px rgba(30, 30, 34, 0.14);
+  --shadow-lg: 0 22px 48px -20px rgba(30, 30, 34, 0.16);
+  --panel-bg: #ffffff;
+  --panel-hi: #f0eee9;
+  --hairline: rgba(var(--ink-rgb), 0.12);
+}
+
+@media (prefers-color-scheme: light) {
+  html:not([data-theme]) .dashboard-page {
+    --bg: #f7f5f2;
+    --card: #ffffff;
+    --card-rgb: 255, 255, 255;
+    --gold-dim-rgb: 125, 75, 64;
+    --teal: #a8435b;
+    --shadow: 0 10px 28px -16px rgba(30, 30, 34, 0.14);
+    --shadow-lg: 0 22px 48px -20px rgba(30, 30, 34, 0.16);
+    --panel-bg: #ffffff;
+    --panel-hi: #f0eee9;
+    --hairline: rgba(var(--ink-rgb), 0.12);
+  }
+}
+
+/* Every modal is its own permanently-dark "private viewing room" in both
+   page themes — ported verbatim from dashboard.css:1428-1438. */
+.vrv-modal {
+  --ink: #f4f2ee;
+  --ink-rgb: 244, 242, 238;
+  --white: #f4f2ee;
+  --muted: #a49a92;
+  --card: #211f26;
+  --card-rgb: 33, 31, 38;
+  --hairline: rgba(244, 242, 238, 0.1);
+}
+
+/* ── Shared modal/button primitives, ported from dashboard.css:1428-1694.
+   Reused verbatim across every modal (facility/dining/edit/guest/all-bookings/
+   confirmation/qr-view/guest-confirmation/summary/profile/cancel-confirm) —
+   extracted once here rather than repeated as inline Tailwind soup 10+ times. */
+.modal-dialog-base {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 90%;
+  max-width: 480px;
+  max-height: 82vh;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(var(--gold-dim-rgb), 0.1), transparent 60%),
+    linear-gradient(160deg, #201e25 0%, #17161b 100%);
+  border: 1px solid rgba(244, 242, 238, 0.08);
+  border-top: 2px solid rgba(var(--rose-glow-rgb), 0.7);
+  border-radius: var(--radius);
+  padding: 44px 48px 40px;
+  z-index: 50;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  overflow-y: auto;
+  color: var(--ink);
+  animation: modalOpen 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.modal-dialog-base::backdrop {
+  display: none;
+}
+
+.modal-close-base {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+.modal-close-base:hover {
+  color: var(--ink);
+}
+
+.modal-h3-base {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.modal-step-base {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gold-dim);
+  letter-spacing: 0.06em;
+  margin-bottom: 24px;
+}
+
+.modal-label-base {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.modal-input-base {
+  padding: 10px 12px;
+  border: 1px solid rgba(var(--ink-rgb), 0.15);
+  border-radius: var(--radius-xl, 16px);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink);
+  background: rgba(var(--card-rgb), 0.7);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.modal-input-base:focus {
+  border-color: var(--gold);
+  background: var(--panel-bg);
+  box-shadow: 0 0 0 3px rgba(var(--gold-dim-rgb), 0.14);
+}
+textarea.modal-input-base {
+  resize: vertical;
+}
+
+.time-error-base {
+  font-size: 11.5px;
+  color: #c96a5e;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  margin-top: -2px;
+}
+
+.btn-primary-base {
+  padding: 13px 30px;
+  border-radius: var(--radius-pill, 999px);
+  background: linear-gradient(135deg, var(--platinum) 0%, var(--platinum-light) 100%);
+  color: #14131a;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: box-shadow 0.28s, transform 0.18s, filter 0.28s;
+  margin-top: 8px;
+}
+.btn-primary-base:hover {
+  filter: brightness(1.02);
+  box-shadow: 0 0 0 1px rgba(var(--rose-glow-rgb), 0.6), 0 0 24px -2px rgba(var(--rose-glow-rgb), 0.55), 0 10px 28px -10px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary-base {
+  padding: 13px 30px;
+  border-radius: var(--radius-pill, 999px);
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(var(--platinum-rgb), 0.4);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.25s, border-color 0.25s, background 0.25s;
+  margin-top: 8px;
+}
+.btn-secondary-base:hover {
+  color: var(--gold);
+  border-color: rgba(var(--gold-dim-rgb), 0.55);
+  background: rgba(var(--gold-dim-rgb), 0.06);
+}
+
+.btn-ghost-base {
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill, 999px);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-ghost-base:hover {
+  background: rgba(var(--gold-dim-rgb), 0.08);
+  color: var(--gold-dim);
+  border-color: rgba(var(--gold-dim-rgb), 0.3);
+}
+
+.confirmation-modal-base {
+  max-width: 420px;
+  text-align: center;
+  padding: 40px 36px 32px;
+}
+
+/* Override style.css's overflow:hidden (globals.css) so the dashboard can
+   scroll normally — ported from dashboard.css:139-161. */
+.dashboard-page {
+  overflow: visible;
+  height: auto;
+}
+html:has(.dashboard-page) {
+  overflow-y: auto;
+  height: auto;
+}
+html:has(.dashboard-page) body {
+  overflow: visible;
+  height: auto;
+}
+
+/* Keep closed dialogs hidden — ported from dashboard.css:185-187. */
+dialog:not([open]) {
+  display: none !important;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes overlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes detailsReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tabReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
