@@ -5,23 +5,58 @@ Portfolio feature for VERVE: a hand-built workflow graph engine (typed nodes/edg
 ## 1. Graph data model
 
 ```ts
-type NodeType = 'trigger' | 'action' | 'condition' | 'delay' | 'branch' | 'merge';
+export type NodeType = 'trigger' | 'action' | 'condition' | 'delay' | 'branch' | 'merge';
 
-interface WorkflowNode {
-  id: string;
-  type: NodeType;
-  position: { x: number; y: number };
-  data: TriggerData | ActionData | ConditionData | DelayData | BranchData | MergeData;
+export interface Point {
+  x: number;
+  y: number;
 }
 
-interface WorkflowEdge {
+export interface TriggerData {
+  label: string;
+  description: string;
+}
+
+export interface ActionData {
+  label: string;
+  description: string;
+}
+
+export interface ConditionData {
+  label: string;
+  expression: string;
+}
+
+export interface DelayData {
+  label: string;
+  simulatedDuration: string;
+  demoMs: number;
+}
+
+export interface BranchData {
+  label: string;
+}
+
+export interface MergeData {
+  label: string;
+}
+
+export type WorkflowNode =
+  | { id: string; type: 'trigger'; position: Point; data: TriggerData }
+  | { id: string; type: 'action'; position: Point; data: ActionData }
+  | { id: string; type: 'condition'; position: Point; data: ConditionData }
+  | { id: string; type: 'delay'; position: Point; data: DelayData }
+  | { id: string; type: 'branch'; position: Point; data: BranchData }
+  | { id: string; type: 'merge'; position: Point; data: MergeData };
+
+export interface WorkflowEdge {
   id: string;
   source: string;
-  sourceHandle?: 'true' | 'false' | null; // only condition nodes use this
   target: string;
+  sourceHandle?: 'true' | 'false' | null;
 }
 
-interface WorkflowGraph {
+export interface WorkflowGraph {
   schemaVersion: 1;
   id: string;
   name: string;

@@ -37,22 +37,6 @@ Log in with a Membership ID and matching email.
 - **Staff**: daily schedule, QR check-in, walk-in logging, F&B service view, member lookup, late-cancellation fee waivers
 - **Management**: KPI dashboard, occupancy tracking, analytics, no-show and guest audit, facility blocks, event management, inbox
 
-## Workflow automation engine
-
-A hand-built workflow automation engine lives at `/automation` in the `web/` Next.js app — a typed graph model, cycle/type validation, a hand-written recursive-descent expression parser/evaluator, and a concurrent async execution engine with a replayable trace, wrapped in a React Flow canvas. No backend, no external services — everything runs and persists (`localStorage`) client-side.
-
-See `docs/superpowers/specs/2026-08-04-workflow-automation-engine-design.md` for the full design: the graph data model, the expression grammar, how execution ordering and branching are resolved, and the trade-offs made along the way.
-
-Run it locally:
-
-```bash
-cd web
-npm install
-npm run dev
-```
-
-Open `http://localhost:3000/automation`. Run the engine's own test suite with `cd web && npm test`.
-
 ## Running locally
 
 ```
@@ -73,3 +57,19 @@ Deployed as a static site on Vercel, output directory set to `public` (see `verc
 ## Note
 
 This is a portfolio demo, not a production system. All data is mock, held in memory, and resets on page reload.
+
+## Workflow automation engine
+
+A hand-built workflow automation engine lives at `/automation` in the `web/` Next.js app — a typed graph model, cycle/type validation, a hand-written recursive-descent expression parser/evaluator, and a concurrent async execution engine with a replayable trace, wrapped in a React Flow canvas. No backend, no external services — everything runs and persists (`localStorage`) client-side.
+
+See `docs/superpowers/specs/2026-08-04-workflow-automation-engine-design.md` for the full design: the graph data model, the expression grammar, how execution ordering and branching are resolved, and the trade-offs made along the way.
+
+Run it locally:
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000/automation`. Run the engine's own test suite with `cd web && npm test`.
