@@ -129,6 +129,7 @@ export async function* runWorkflow(graph: WorkflowGraph, context: EvalContext): 
         reason: err instanceof Error ? err.message : String(err),
       });
       notify();
+      for (const edge of outgoingOf(nodeId)) arriveEdge(edge.target, true);
     }
   }
 

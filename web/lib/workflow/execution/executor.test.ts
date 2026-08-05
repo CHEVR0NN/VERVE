@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { runWorkflow, collectTrace } from './executor';
 import type { WorkflowGraph } from '../types';
 import type { EvalContext } from '../expression/context';
@@ -64,6 +64,26 @@ function parallelGraph(): WorkflowGraph {
   };
 }
 
+function sharedDescendantGraph(): WorkflowGraph {
+  return {
+    schemaVersion: 1, id: 'g', name: 'shared-descendant',
+    nodes: [
+      { id: 't', type: 'trigger', position: { x: 0, y: 0 }, data: { label: 'Start', description: '' } },
+      { id: 'c', type: 'condition', position: { x: 0, y: 0 }, data: { label: 'Check', expression: 'true' } },
+      { id: 'a', type: 'action', position: { x: 0, y: 0 }, data: { label: 'A', description: '' } },
+      { id: 'b', type: 'action', position: { x: 0, y: 0 }, data: { label: 'B', description: '' } },
+      { id: 'shared', type: 'action', position: { x: 0, y: 0 }, data: { label: 'Shared', description: '' } },
+    ],
+    edges: [
+      { id: 'e1', source: 't', target: 'c' },
+      { id: 'e2', source: 'c', target: 'a', sourceHandle: 'true' },
+      { id: 'e3', source: 'c', target: 'b', sourceHandle: 'false' },
+      { id: 'e4', source: 'a', target: 'shared' },
+      { id: 'e5', source: 'b', target: 'shared' },
+    ],
+  };
+}
+
 describe('runWorkflow', () => {
   it('runs a linear graph in order', async () => {
     const trace = await collectTrace(linearGraph(), baseContext);
@@ -100,6 +120,39 @@ describe('runWorkflow', () => {
     const cStep = trace.find((s) => s.nodeId === 'c')!;
     expect(cStep.status).toBe('error');
     expect(cStep.reason).toMatch(/nonexistent/i);
+  });
+
+  it('does not drop a downstream node from the trace when its only upstream node errors', async () => {
+    const graph: WorkflowGraph = {
+      schemaVersion: 1, id: 'g', name: 'erroring-with-downstream',
+      nodes: [
+        { id: 't', type: 'trigger', position: { x: 0, y: 0 }, data: { label: 'Start', description: '' } },
+        { id: 'c', type: 'condition', position: { x: 0, y: 0 }, data: { label: 'Check', expression: 'nonexistent.field == 1' } },
+        { id: 'downstream', type: 'action', position: { x: 0, y: 0 }, data: { label: 'Downstream', description: '' } },
+      ],
+      edges: [
+        { id: 'e1', source: 't', target: 'c' },
+        { id: 'e2', source: 'c', target: 'downstream', sourceHandle: 'true' },
+      ],
+    };
+    const trace = await collectTrace(graph, baseContext);
+    const cStep = trace.find((s) => s.nodeId === 'c')!;
+    const downstreamStep = trace.find((s) => s.nodeId === 'downstream');
+    expect(cStep.status).toBe('error');
+    expect(downstreamStep).toBeDefined();
+    expect(downstreamStep!.status).toBe('skipped');
+    expect(downstreamStep!.reason).toBeTruthy();
+  });
+
+  it('runs a node reachable from both the taken and untaken branch exactly once', async () => {
+    const trace = await collectTrace(sharedDescendantGraph(), baseContext);
+    const aStep = trace.find((s) => s.nodeId === 'a')!;
+    const bStep = trace.find((s) => s.nodeId === 'b')!;
+    const sharedStep = trace.find((s) => s.nodeId === 'shared')!;
+    expect(aStep.status).toBe('ran');
+    expect(bStep.status).toBe('skipped');
+    expect(sharedStep.status).toBe('ran');
+    expect(trace.filter((s) => s.nodeId === 'shared')).toHaveLength(1);
   });
 
   it('runs branch paths concurrently — the fast path completes before the delayed sibling', async () => {

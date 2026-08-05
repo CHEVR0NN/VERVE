@@ -144,7 +144,7 @@ interface ExecutionStep {
 
 Two Zustand stores, matching the two concerns:
 
-- `useWorkflowStore` — the graph being edited: `nodes`, `edges`, `activeGraphId`, mutators (`addNode`, `updateNode`, `removeNode`, `connect`, `disconnect`), and the current `ValidationResult` (recomputed on every graph change).
+- `useWorkflowStore` — the graph being edited: `graph` (the whole `WorkflowGraph`), `selectedNodeId`, and the current `ValidationResult` as `validation` (recomputed on every graph change). Methods: `loadGraph(graph)` (swap in a different example — does not persist), `setNodes`/`setEdges` (replace the node/edge arrays, e.g. from the canvas adapter), `updateNodeData(nodeId, data)` (patch one node's data), `selectNode(nodeId)`. `setNodes`/`setEdges`/`updateNodeData` also call `saveWorkflow` so edits persist across reloads under the graph's own `id`.
 - `useExecutionStore` — one run's lifecycle: `status: 'idle' | 'running' | 'done' | 'error'`, `trace: ExecutionStep[]`, `scrubIndex`, actions `run()` (consumes the generator, appending to `trace` as steps arrive), `scrubTo(index)`, `reset()`.
 
 ## 6. Persistence
@@ -156,13 +156,15 @@ Two Zustand stores, matching the two concerns:
 
 Both keyed under `schemaVersion`; a migration function is a no-op today but the seam exists.
 
+Known, disclosed gap: `saveWorkflow`/`loadWorkflows` are wired into `useWorkflowStore` (edits persist across reloads), but `deleteWorkflow` and `loadRuns` remain implemented and unit-tested utility functions with no UI hook yet — there's no "delete a workflow" affordance in the UI, and past-run history is written on every run (`saveRun`) but never surfaced or reloaded in the Execution Log. This is a scope boundary, not an oversight — see section 10.
+
 ## 7. UI / routing
 
 New standalone route `web/app/automation/page.tsx`, no auth check, styled with the existing Verve design tokens (navy/gold/coral, light/dark via `[data-theme]`) already in `globals.css`. Layout:
 
-- **Left rail** — workflow picker (3 built-in examples + any saved custom ones), Validate button, Run button.
-- **Center** — React Flow canvas with a custom node component per `NodeType` (six visual variants sharing one base card style).
-- **Right panel**, tab-switchable — **Inspector** (selected node's fields; for `condition`, a live-validated expression input with inline parse-error display) and **Execution Log** (step list + scrubber timeline + play/step/pause controls + per-step input/output/reason detail).
+- **Top `Toolbar`** — workflow picker (`<select>` of the built-in examples), the current `ValidationResult` shown as a single text count ("N error(s)" / "N warning(s)" / "Valid" — no per-node badges), and a Run button (disabled while errors exist or a run is in progress).
+- **`Canvas`** — fills the remaining width; a React Flow canvas with a custom node component per `NodeType` (six visual variants sharing one base card style).
+- **Right-side panel**, tab-switchable — **Inspector** (selected node's fields; for `condition`, a live-validated expression input with inline parse-error display) and **Execution Log** (step list + scrubber timeline + play/step/pause controls + per-step input/output/reason detail).
 
 First visit loads the "New Member Onboarding" example populated on the canvas — never an empty canvas by default.
 
@@ -191,3 +193,4 @@ Engine core gets thorough coverage; UI gets light smoke coverage only.
 - **Single-thread concurrency** (interleaved async, not real multi-core): fine here since nodes are I/O-simulated (timers), not CPU-bound; real parallel *execution* would need workers or server-side orchestration.
 - **Deliberately small expression grammar** (no ternary, no user-defined functions, no assignment): scoped exactly to what Condition nodes need — comparisons, boolean logic, field/index access, calls, and basic arithmetic. Documented as an intentional boundary, not an oversight — a real rules engine would grow this incrementally as workflows demanded it.
 - **No real side effects**: Action nodes simulate their effect (log + mock output) rather than actually sending email/SMS — appropriate for a fully offline portfolio demo; a production version would need an adapter layer per action type.
+- **Persistence wired for edits, not for delete/history**: `saveWorkflow`/`loadWorkflows` are hooked into `useWorkflowStore` so edits survive a reload; `deleteWorkflow` and `loadRuns` are implemented and unit-tested but have no UI hook — no way to delete a saved workflow or reopen a past run's trace from the Execution Log. Disclosed scope boundary, not an oversight; both are one small component away from being wired up.

@@ -11,6 +11,7 @@ export function Toolbar() {
   const validation = useWorkflowStore((s) => s.validation);
   const runStatus = useExecutionStore((s) => s.status);
   const run = useExecutionStore((s) => s.run);
+  const resetExecution = useExecutionStore((s) => s.reset);
 
   const canRun = validation.errors.length === 0 && runStatus !== 'running';
 
@@ -23,7 +24,10 @@ export function Toolbar() {
         value={graph.id}
         onChange={(e) => {
           const next = exampleWorkflows.find((w) => w.id === e.target.value);
-          if (next) loadGraph(next);
+          if (next) {
+            loadGraph(next);
+            resetExecution();
+          }
         }}
       >
         {exampleWorkflows.map((w) => (
